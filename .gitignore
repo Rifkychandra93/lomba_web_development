@@ -1,0 +1,22 @@
+# Python virtual environment
+SafeRoute-ML/.venv/
+**/.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Node
+**/node_modules/
+
+# Build
+**/dist/
+**/build/
+**/.next/
+
+# Environment
+.env
+**/.env
+
+# Logs
+*.log
