@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ReportStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum IncidentType {
+  BEGAL
+  KEBAKARAN
+  KECELAKAAN
+  TAWURAN
+  PENCURIAN
+  PEMBACOKAN
+  LAINNYA
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  reports Report[]
+}
+
+model Report {
+  id          String  @id @default(cuid())
+  title       String
+  description String
+  latitude    Decimal @db.Decimal(10, 7)
+  longitude   Decimal @db.Decimal(10, 7)
+  location    String?
+  dangerLevel String
+
+  incidentType IncidentType
+  riskLevel    RiskLevel    @default(MEDIUM)
+  status       ReportStatus @default(PENDING)
+
+  imageUrl String?
+  address  String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  verifiedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([latitude, longitude])
+  @@index([status])
+  @@index([riskLevel])
+}
+
+model NewsArticle {
+  id          String  @id @default(cuid())
+  title       String
+  url         String  @unique
+  description String?
+  source      String?
+
+  publishedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  incidents Incident[]
+}
+
+model Incident {
+  id          String  @id @default(cuid())
+  title       String
+  description String?
+
+  latitude  Decimal @db.Decimal(10, 7)
+  longitude Decimal @db.Decimal(10, 7)
+  address   String?
+
+  incidentType IncidentType
+  riskLevel    RiskLevel    @default(MEDIUM)
+
+  mlConfidence Decimal? @db.Decimal(5, 4)
+
+  newsId String?
+  news   NewsArticle? @relation(fields: [newsId], references: [id], onDelete: SetNull)
+
+  detectedAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([latitude, longitude])
+  @@index([riskLevel])
+  @@index([incidentType])
+}

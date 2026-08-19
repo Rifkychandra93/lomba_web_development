@@ -1,0 +1,10002 @@
+[
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Margonda pada Senin pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 45,
+        "label": "LOCATION"
+      },
+      {
+        "start": 51,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Margonda pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 56,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait tawuran di Jalan Diponegoro pada Kamis malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 39,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 43,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 76,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kebakaran terjadi sekitar Jalan Arif Rahman Hakim pada Minggu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 77,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Dewi Sartika pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 39,
+        "label": "LOCATION"
+      },
+      {
+        "start": 45,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Sawangan pada Minggu malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kecelakaan di Jalan Siliwangi pada Minggu sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kebakaran di Jalan Sudirman pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 76,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Siliwangi pada Senin malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 43,
+        "label": "LOCATION"
+      },
+      {
+        "start": 49,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Dewi Sartika pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 56,
+        "label": "LOCATION"
+      },
+      {
+        "start": 62,
+        "end": 72,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pembegalan di Jalan Raya Bogor pada Rabu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 55,
+        "label": "LOCATION"
+      },
+      {
+        "start": 61,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kebakaran di Jalan Dewi Sartika pada Minggu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 39,
+        "label": "LOCATION"
+      },
+      {
+        "start": 45,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pembegalan di Jalan Kartini pada Minggu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 53,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kecelakaan di Jalan Citayam pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 76,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus begal dilaporkan terjadi di Jalan Juanda pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Merdeka pada Jumat sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 39,
+        "label": "LOCATION"
+      },
+      {
+        "start": 45,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa begal terjadi sekitar Jalan Margonda pada Minggu sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Merdeka pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 30,
+        "label": "LOCATION"
+      },
+      {
+        "start": 36,
+        "end": 47,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait begal di Jalan Nusantara pada Minggu sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 37,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 41,
+        "end": 56,
+        "label": "LOCATION"
+      },
+      {
+        "start": 62,
+        "end": 73,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pencurian di Jalan Sudirman pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 75,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Raya Bogor pada Selasa malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pencurian di Jalan Raya Bogor pada Senin pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pembegalan di Jalan Sawangan pada Rabu sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait tawuran di Jalan Raya Bogor pada Jumat sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 39,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 43,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 75,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Diponegoro pada Senin pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 51,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pencurian terjadi sekitar Jalan Arif Rahman Hakim pada Rabu sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 74,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kebakaran di Jalan Kartini pada Jumat sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 58,
+        "label": "LOCATION"
+      },
+      {
+        "start": 64,
+        "end": 74,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Citayam pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 34,
+        "label": "LOCATION"
+      },
+      {
+        "start": 40,
+        "end": 50,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Kartini pada Jumat sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 32,
+        "label": "LOCATION"
+      },
+      {
+        "start": 38,
+        "end": 48,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Raya Bogor pada Minggu sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa begal terjadi sekitar Jalan Dewi Sartika pada Jumat sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan begal di Jalan Merdeka pada Rabu sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kebakaran di Jalan Sawangan pada Senin pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pencurian di Jalan Diponegoro pada Kamis malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 61,
+        "label": "LOCATION"
+      },
+      {
+        "start": 67,
+        "end": 78,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Arif Rahman Hakim pada Rabu sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 62,
+        "label": "LOCATION"
+      },
+      {
+        "start": 68,
+        "end": 77,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Sudirman pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi tawuran terjadi di Jalan Juanda pada Minggu malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 12,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 24,
+        "end": 36,
+        "label": "LOCATION"
+      },
+      {
+        "start": 42,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Juanda pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 31,
+        "label": "LOCATION"
+      },
+      {
+        "start": 37,
+        "end": 48,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Kemang pada Jumat malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan tawuran di Jalan Raya Bogor pada Rabu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan begal di Jalan Diponegoro pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 22,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 42,
+        "label": "LOCATION"
+      },
+      {
+        "start": 48,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kecelakaan di Jalan Kartini pada Kamis malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Kemang pada Jumat sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 31,
+        "label": "LOCATION"
+      },
+      {
+        "start": 37,
+        "end": 47,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pembegalan terjadi di Jalan Sawangan pada Minggu sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 41,
+        "label": "LOCATION"
+      },
+      {
+        "start": 47,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Margonda pada Rabu sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 50,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Juanda pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 33,
+        "label": "LOCATION"
+      },
+      {
+        "start": 39,
+        "end": 49,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pencurian terjadi sekitar Jalan Citayam pada Rabu sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Sawangan pada Minggu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi begal terjadi di Jalan Diponegoro pada Kamis malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 10,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pencurian di Jalan Siliwangi pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pencurian di Jalan Kartini pada Minggu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Juanda pada Jumat sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Citayam pada Minggu sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 30,
+        "label": "LOCATION"
+      },
+      {
+        "start": 36,
+        "end": 47,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Kemang pada Kamis malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pencurian di Jalan Diponegoro pada Minggu sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pembegalan terjadi sekitar Jalan Merdeka pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Siliwangi pada Senin pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 61,
+        "label": "LOCATION"
+      },
+      {
+        "start": 67,
+        "end": 77,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Pemuda pada Jumat malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Siliwangi pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kecelakaan di Jalan Kemang pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kecelakaan terjadi di Jalan Merdeka pada Minggu sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pencurian di Jalan Arif Rahman Hakim pada Senin malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kebakaran terjadi sekitar Jalan Margonda pada Senin malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Citayam pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 34,
+        "label": "LOCATION"
+      },
+      {
+        "start": 40,
+        "end": 50,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus begal dilaporkan terjadi di Jalan Juanda pada Senin malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa begal terjadi sekitar Jalan Raya Bogor pada Minggu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pembegalan dilaporkan terjadi di Jalan Juanda pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kebakaran di Jalan Kartini pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 34,
+        "label": "LOCATION"
+      },
+      {
+        "start": 40,
+        "end": 50,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi begal terjadi di Jalan Sudirman pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 10,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 36,
+        "label": "LOCATION"
+      },
+      {
+        "start": 42,
+        "end": 53,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pencurian terjadi sekitar Jalan Nusantara pada Minggu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus tawuran di Jalan Merdeka pada Rabu malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pencurian di Jalan Juanda pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Nusantara pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 61,
+        "label": "LOCATION"
+      },
+      {
+        "start": 67,
+        "end": 78,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan begal di Jalan Sudirman pada Jumat sore.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 22,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 56,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi begal terjadi di Jalan Merdeka pada Selasa malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 10,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 53,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kecelakaan terjadi di Jalan Arif Rahman Hakim pada Rabu malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Diponegoro pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 53,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan begal di Jalan Merdeka pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus tawuran di Jalan Sudirman pada Senin pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Siliwangi pada Jumat malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Juanda pada Minggu sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pembegalan di Jalan Margonda pada Rabu malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus begal dilaporkan terjadi di Jalan Kartini pada Rabu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Merdeka pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 41,
+        "label": "LOCATION"
+      },
+      {
+        "start": 47,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Margonda pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait tawuran di Jalan Raya Bogor pada Rabu sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 39,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 43,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 74,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kecelakaan di Jalan Raya Bogor pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 62,
+        "label": "LOCATION"
+      },
+      {
+        "start": 68,
+        "end": 79,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kebakaran di Jalan Dewi Sartika pada Minggu sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 63,
+        "label": "LOCATION"
+      },
+      {
+        "start": 69,
+        "end": 80,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kebakaran di Jalan Citayam pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kecelakaan di Jalan Diponegoro pada Jumat sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 62,
+        "label": "LOCATION"
+      },
+      {
+        "start": 68,
+        "end": 78,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Nusantara pada Senin malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 34,
+        "label": "LOCATION"
+      },
+      {
+        "start": 40,
+        "end": 51,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pembegalan dilaporkan terjadi di Jalan Arif Rahman Hakim pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 62,
+        "label": "LOCATION"
+      },
+      {
+        "start": 68,
+        "end": 79,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Merdeka pada Rabu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Pemuda pada Senin malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan tawuran di Jalan Siliwangi pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Arif Rahman Hakim pada Selasa malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Kemang pada Rabu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 58,
+        "label": "LOCATION"
+      },
+      {
+        "start": 64,
+        "end": 74,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pembegalan di Jalan Merdeka pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Juanda pada Rabu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 56,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Kemang pada Senin malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kebakaran di Jalan Diponegoro pada Minggu malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kebakaran di Jalan Diponegoro pada Rabu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Nusantara pada Minggu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Kemang pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 43,
+        "label": "LOCATION"
+      },
+      {
+        "start": 49,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait tawuran di Jalan Margonda pada Selasa malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 39,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 43,
+        "end": 57,
+        "label": "LOCATION"
+      },
+      {
+        "start": 63,
+        "end": 75,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Raya Bogor pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kebakaran di Jalan Sawangan pada Jumat malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 76,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Arif Rahman Hakim pada Selasa malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 69,
+        "label": "LOCATION"
+      },
+      {
+        "start": 75,
+        "end": 87,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Raya Bogor pada Minggu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 72,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi tawuran terjadi di Jalan Kartini pada Senin pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 12,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 24,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 53,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pencurian dilaporkan terjadi di Jalan Siliwangi pada Minggu sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Kartini pada Senin malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Sudirman pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pembegalan di Jalan Margonda pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pembegalan di Jalan Arif Rahman Hakim pada Rabu sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 60,
+        "label": "LOCATION"
+      },
+      {
+        "start": 66,
+        "end": 75,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Sudirman pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kebakaran di Jalan Sawangan pada Minggu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 77,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pembegalan dilaporkan terjadi di Jalan Juanda pada Senin malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Kemang pada Jumat malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pencurian di Jalan Raya Bogor pada Rabu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 61,
+        "label": "LOCATION"
+      },
+      {
+        "start": 67,
+        "end": 77,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kebakaran di Jalan Raya Bogor pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pembegalan di Jalan Kemang pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pencurian di Jalan Siliwangi pada Senin malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 60,
+        "label": "LOCATION"
+      },
+      {
+        "start": 66,
+        "end": 77,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pencurian di Jalan Raya Bogor pada Jumat sore.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus tawuran di Jalan Siliwangi pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Nusantara pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 43,
+        "label": "LOCATION"
+      },
+      {
+        "start": 49,
+        "end": 59,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Pemuda pada Rabu sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 29,
+        "label": "LOCATION"
+      },
+      {
+        "start": 35,
+        "end": 44,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Sudirman pada Selasa malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 53,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Sudirman pada Rabu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Merdeka pada Senin pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 39,
+        "label": "LOCATION"
+      },
+      {
+        "start": 45,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Dewi Sartika pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 64,
+        "label": "LOCATION"
+      },
+      {
+        "start": 70,
+        "end": 81,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kebakaran di Jalan Sawangan pada Senin pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Sawangan pada Minggu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 45,
+        "label": "LOCATION"
+      },
+      {
+        "start": 51,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kecelakaan di Jalan Arif Rahman Hakim pada Jumat sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 45,
+        "label": "LOCATION"
+      },
+      {
+        "start": 51,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Pemuda pada Minggu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 43,
+        "label": "LOCATION"
+      },
+      {
+        "start": 49,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Kemang pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Dewi Sartika pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa tawuran terjadi sekitar Jalan Nusantara pada Kamis malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan begal di Jalan Dewi Sartika pada Rabu sore.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 22,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 59,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pembegalan dilaporkan terjadi di Jalan Sudirman pada Jumat sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pembegalan terjadi di Jalan Merdeka pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Raya Bogor pada Jumat sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 55,
+        "label": "LOCATION"
+      },
+      {
+        "start": 61,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Merdeka pada Senin malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Merdeka pada Jumat sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Sawangan pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 45,
+        "label": "LOCATION"
+      },
+      {
+        "start": 51,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kecelakaan di Jalan Sawangan pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 45,
+        "label": "LOCATION"
+      },
+      {
+        "start": 51,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pencurian terjadi sekitar Jalan Arif Rahman Hakim pada Selasa malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 77,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kebakaran di Jalan Sawangan pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pembegalan di Jalan Sudirman pada Rabu sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Pemuda pada Rabu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kebakaran di Jalan Kartini pada Minggu sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Arif Rahman Hakim pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 42,
+        "label": "LOCATION"
+      },
+      {
+        "start": 48,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Pemuda pada Minggu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 31,
+        "label": "LOCATION"
+      },
+      {
+        "start": 37,
+        "end": 49,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pembegalan dilaporkan terjadi di Jalan Kemang pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa begal terjadi sekitar Jalan Dewi Sartika pada Rabu sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kebakaran di Jalan Dewi Sartika pada Rabu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa tawuran terjadi sekitar Jalan Arif Rahman Hakim pada Senin pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 57,
+        "label": "LOCATION"
+      },
+      {
+        "start": 63,
+        "end": 73,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kecelakaan di Jalan Margonda pada Kamis malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kebakaran di Jalan Sawangan pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 51,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Sawangan pada Rabu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 51,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Kemang pada Rabu sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 53,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Sudirman pada Selasa malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 42,
+        "label": "LOCATION"
+      },
+      {
+        "start": 48,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan begal di Jalan Dewi Sartika pada Rabu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 22,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus begal di Jalan Kemang pada Rabu sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 28,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 59,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus begal di Jalan Diponegoro pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 28,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kebakaran di Jalan Raya Bogor pada Senin pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pembegalan di Jalan Kemang pada Rabu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 34,
+        "label": "LOCATION"
+      },
+      {
+        "start": 40,
+        "end": 50,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Nusantara pada Minggu sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Merdeka pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Juanda pada Rabu malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi tawuran terjadi di Jalan Sudirman pada Senin pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 12,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 24,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pembegalan di Jalan Kemang pada Selasa malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 34,
+        "label": "LOCATION"
+      },
+      {
+        "start": 40,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pencurian terjadi sekitar Jalan Pemuda pada Senin malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kebakaran terjadi sekitar Jalan Kartini pada Minggu sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait begal di Jalan Nusantara pada Kamis malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 37,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 41,
+        "end": 56,
+        "label": "LOCATION"
+      },
+      {
+        "start": 62,
+        "end": 73,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pencurian di Jalan Merdeka pada Jumat malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 58,
+        "label": "LOCATION"
+      },
+      {
+        "start": 64,
+        "end": 75,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Kemang pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pembegalan terjadi di Jalan Arif Rahman Hakim pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pembegalan terjadi di Jalan Margonda pada Jumat sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 41,
+        "label": "LOCATION"
+      },
+      {
+        "start": 47,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kecelakaan di Jalan Nusantara pada Jumat sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 61,
+        "label": "LOCATION"
+      },
+      {
+        "start": 67,
+        "end": 77,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa begal terjadi sekitar Jalan Juanda pada Minggu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Citayam pada Jumat malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 39,
+        "label": "LOCATION"
+      },
+      {
+        "start": 45,
+        "end": 56,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kebakaran di Jalan Citayam pada Senin pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi begal terjadi di Jalan Raya Bogor pada Selasa malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 10,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 56,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kebakaran di Jalan Nusantara pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 45,
+        "label": "LOCATION"
+      },
+      {
+        "start": 51,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pembegalan di Jalan Merdeka pada Senin pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa tawuran terjadi sekitar Jalan Citayam pada Jumat malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi tawuran terjadi di Jalan Arif Rahman Hakim pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 12,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 24,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pembegalan terjadi di Jalan Kemang pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 39,
+        "label": "LOCATION"
+      },
+      {
+        "start": 45,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pembegalan di Jalan Pemuda pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pembegalan di Jalan Merdeka pada Jumat malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Siliwangi pada Rabu sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Kartini pada Jumat malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 76,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pencurian di Jalan Margonda pada Senin malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pembegalan terjadi di Jalan Sawangan pada Jumat sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 41,
+        "label": "LOCATION"
+      },
+      {
+        "start": 47,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kecelakaan di Jalan Diponegoro pada Senin pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 62,
+        "label": "LOCATION"
+      },
+      {
+        "start": 68,
+        "end": 78,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Nusantara pada Senin pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 34,
+        "label": "LOCATION"
+      },
+      {
+        "start": 40,
+        "end": 50,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kebakaran di Jalan Dewi Sartika pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait begal di Jalan Arif Rahman Hakim pada Rabu sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 37,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 41,
+        "end": 64,
+        "label": "LOCATION"
+      },
+      {
+        "start": 70,
+        "end": 79,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan begal di Jalan Citayam pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kebakaran di Jalan Nusantara pada Minggu sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 36,
+        "label": "LOCATION"
+      },
+      {
+        "start": 42,
+        "end": 53,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait begal di Jalan Pemuda pada Minggu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 37,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 41,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pembegalan terjadi sekitar Jalan Pemuda pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pembegalan di Jalan Siliwangi pada Rabu sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kebakaran di Jalan Kemang pada Selasa malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Kartini pada Senin pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus begal di Jalan Sawangan pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 28,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan begal di Jalan Merdeka pada Minggu sore.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 22,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 39,
+        "label": "LOCATION"
+      },
+      {
+        "start": 45,
+        "end": 56,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pencurian dilaporkan terjadi di Jalan Margonda pada Jumat sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pembegalan di Jalan Sudirman pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 36,
+        "label": "LOCATION"
+      },
+      {
+        "start": 42,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait tawuran di Jalan Siliwangi pada Minggu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 39,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 43,
+        "end": 58,
+        "label": "LOCATION"
+      },
+      {
+        "start": 64,
+        "end": 76,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Dewi Sartika pada Jumat sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 55,
+        "label": "LOCATION"
+      },
+      {
+        "start": 61,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Citayam pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 41,
+        "label": "LOCATION"
+      },
+      {
+        "start": 47,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Sawangan pada Selasa malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pembegalan dilaporkan terjadi di Jalan Arif Rahman Hakim pada Minggu sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 62,
+        "label": "LOCATION"
+      },
+      {
+        "start": 68,
+        "end": 79,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pencurian di Jalan Juanda pada Jumat sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Diponegoro pada Jumat malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 62,
+        "label": "LOCATION"
+      },
+      {
+        "start": 68,
+        "end": 79,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pencurian di Jalan Margonda pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi tawuran terjadi di Jalan Nusantara pada Minggu sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 12,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 24,
+        "end": 39,
+        "label": "LOCATION"
+      },
+      {
+        "start": 45,
+        "end": 56,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Merdeka pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 32,
+        "label": "LOCATION"
+      },
+      {
+        "start": 38,
+        "end": 49,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Juanda pada Rabu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 58,
+        "label": "LOCATION"
+      },
+      {
+        "start": 64,
+        "end": 74,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Merdeka pada Jumat malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 39,
+        "label": "LOCATION"
+      },
+      {
+        "start": 45,
+        "end": 56,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Citayam pada Kamis malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Citayam pada Jumat sore.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 41,
+        "label": "LOCATION"
+      },
+      {
+        "start": 47,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus begal dilaporkan terjadi di Jalan Pemuda pada Rabu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus tawuran di Jalan Kemang pada Senin malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kecelakaan terjadi di Jalan Citayam pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 56,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Kartini pada Rabu sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa tawuran terjadi sekitar Jalan Kartini pada Selasa malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kecelakaan di Jalan Raya Bogor pada Jumat malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pembegalan dilaporkan terjadi di Jalan Kemang pada Rabu sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kebakaran terjadi sekitar Jalan Arif Rahman Hakim pada Senin malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 76,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa begal terjadi sekitar Jalan Raya Bogor pada Selasa malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa tawuran terjadi sekitar Jalan Citayam pada Rabu sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pembegalan di Jalan Sawangan pada Minggu malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Arif Rahman Hakim pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Merdeka pada Rabu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Kartini pada Rabu sore.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 59,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kebakaran di Jalan Raya Bogor pada Senin malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kecelakaan di Jalan Arif Rahman Hakim pada Senin malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Nusantara pada Minggu sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pembegalan di Jalan Diponegoro pada Jumat sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kebakaran di Jalan Nusantara pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pencurian terjadi sekitar Jalan Margonda pada Minggu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pencurian dilaporkan terjadi di Jalan Sudirman pada Minggu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan tawuran di Jalan Merdeka pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan tawuran di Jalan Pemuda pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait tawuran di Jalan Merdeka pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 39,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 43,
+        "end": 56,
+        "label": "LOCATION"
+      },
+      {
+        "start": 62,
+        "end": 73,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kebakaran di Jalan Margonda pada Kamis malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pembegalan terjadi di Jalan Citayam pada Selasa malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pembegalan di Jalan Arif Rahman Hakim pada Jumat sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 60,
+        "label": "LOCATION"
+      },
+      {
+        "start": 66,
+        "end": 76,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Diponegoro pada Kamis malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pembegalan terjadi sekitar Jalan Kartini pada Jumat sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Kartini pada Rabu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Sawangan pada Senin malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 31,
+        "label": "LOCATION"
+      },
+      {
+        "start": 37,
+        "end": 48,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa tawuran terjadi sekitar Jalan Kartini pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Kemang pada Minggu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pembegalan dilaporkan terjadi di Jalan Diponegoro pada Kamis malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 55,
+        "label": "LOCATION"
+      },
+      {
+        "start": 61,
+        "end": 72,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pembegalan terjadi sekitar Jalan Raya Bogor pada Kamis malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pembegalan di Jalan Pemuda pada Selasa malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 34,
+        "label": "LOCATION"
+      },
+      {
+        "start": 40,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa begal terjadi sekitar Jalan Pemuda pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pencurian di Jalan Raya Bogor pada Senin malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Nusantara pada Jumat malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Merdeka pada Rabu sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 39,
+        "label": "LOCATION"
+      },
+      {
+        "start": 45,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kebakaran di Jalan Dewi Sartika pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kecelakaan di Jalan Arif Rahman Hakim pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kebakaran terjadi sekitar Jalan Sawangan pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Pemuda pada Minggu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 43,
+        "label": "LOCATION"
+      },
+      {
+        "start": 49,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kebakaran di Jalan Sudirman pada Senin malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pembegalan terjadi sekitar Jalan Arif Rahman Hakim pada Selasa malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 60,
+        "label": "LOCATION"
+      },
+      {
+        "start": 66,
+        "end": 78,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Pemuda pada Rabu sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 31,
+        "label": "LOCATION"
+      },
+      {
+        "start": 37,
+        "end": 46,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Pemuda pada Kamis malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Nusantara pada Jumat sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 34,
+        "label": "LOCATION"
+      },
+      {
+        "start": 40,
+        "end": 50,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kebakaran di Jalan Diponegoro pada Senin pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kecelakaan di Jalan Kartini pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pencurian di Jalan Pemuda pada Selasa malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 42,
+        "label": "LOCATION"
+      },
+      {
+        "start": 48,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kebakaran terjadi sekitar Jalan Citayam pada Minggu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Kemang pada Kamis malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa begal terjadi sekitar Jalan Sawangan pada Minggu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pembegalan dilaporkan terjadi di Jalan Arif Rahman Hakim pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 62,
+        "label": "LOCATION"
+      },
+      {
+        "start": 68,
+        "end": 78,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Siliwangi pada Kamis malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 43,
+        "label": "LOCATION"
+      },
+      {
+        "start": 49,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kebakaran di Jalan Dewi Sartika pada Senin pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pencurian di Jalan Kartini pada Senin malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pencurian di Jalan Nusantara pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 60,
+        "label": "LOCATION"
+      },
+      {
+        "start": 66,
+        "end": 76,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pencurian di Jalan Margonda pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 51,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus tawuran di Jalan Margonda pada Minggu sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan begal di Jalan Citayam pada Senin pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Kemang pada Kamis malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pencurian dilaporkan terjadi di Jalan Juanda pada Rabu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus begal dilaporkan terjadi di Jalan Siliwangi pada Kamis malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pencurian di Jalan Nusantara pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 60,
+        "label": "LOCATION"
+      },
+      {
+        "start": 66,
+        "end": 76,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus begal dilaporkan terjadi di Jalan Sawangan pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pencurian terjadi sekitar Jalan Citayam pada Senin malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Sawangan pada Selasa malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Juanda pada Rabu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Siliwangi pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus begal dilaporkan terjadi di Jalan Siliwangi pada Senin malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kebakaran terjadi sekitar Jalan Siliwangi pada Minggu sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kecelakaan di Jalan Dewi Sartika pada Jumat sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 56,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pembegalan terjadi sekitar Jalan Sawangan pada Jumat malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Diponegoro pada Senin pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pencurian dilaporkan terjadi di Jalan Siliwangi pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pembegalan di Jalan Citayam pada Rabu malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Kemang pada Minggu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 43,
+        "label": "LOCATION"
+      },
+      {
+        "start": 49,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Siliwangi pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi tawuran terjadi di Jalan Arif Rahman Hakim pada Rabu sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 12,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 24,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Merdeka pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Juanda pada Rabu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kecelakaan terjadi di Jalan Sudirman pada Minggu sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 41,
+        "label": "LOCATION"
+      },
+      {
+        "start": 47,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait begal di Jalan Kemang pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 37,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 41,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kebakaran di Jalan Siliwangi pada Senin pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 45,
+        "label": "LOCATION"
+      },
+      {
+        "start": 51,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pembegalan di Jalan Citayam pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus begal di Jalan Pemuda pada Rabu sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 28,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 59,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pencurian di Jalan Siliwangi pada Rabu sore.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 45,
+        "label": "LOCATION"
+      },
+      {
+        "start": 51,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kecelakaan di Jalan Sawangan pada Rabu malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa begal terjadi sekitar Jalan Pemuda pada Minggu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kebakaran di Jalan Citayam pada Minggu malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kecelakaan di Jalan Nusantara pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 53,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kecelakaan di Jalan Sudirman pada Kamis malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 60,
+        "label": "LOCATION"
+      },
+      {
+        "start": 66,
+        "end": 77,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus begal di Jalan Pemuda pada Jumat malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 28,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa tawuran terjadi sekitar Jalan Sawangan pada Rabu sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pembegalan di Jalan Sudirman pada Rabu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 36,
+        "label": "LOCATION"
+      },
+      {
+        "start": 42,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kecelakaan di Jalan Merdeka pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus begal dilaporkan terjadi di Jalan Sawangan pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kebakaran di Jalan Merdeka pada Selasa malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 34,
+        "label": "LOCATION"
+      },
+      {
+        "start": 40,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pembegalan terjadi sekitar Jalan Kartini pada Jumat malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan begal di Jalan Kemang pada Minggu sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pencurian terjadi sekitar Jalan Kartini pada Senin malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus tawuran di Jalan Juanda pada Senin pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Siliwangi pada Jumat sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 41,
+        "label": "LOCATION"
+      },
+      {
+        "start": 47,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi begal terjadi di Jalan Siliwangi pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 10,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kecelakaan terjadi di Jalan Diponegoro pada Senin pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 43,
+        "label": "LOCATION"
+      },
+      {
+        "start": 49,
+        "end": 59,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Kemang pada Rabu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kebakaran di Jalan Pemuda pada Jumat malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 33,
+        "label": "LOCATION"
+      },
+      {
+        "start": 39,
+        "end": 50,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan begal di Jalan Nusantara pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pembegalan di Jalan Kemang pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 34,
+        "label": "LOCATION"
+      },
+      {
+        "start": 40,
+        "end": 51,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Kemang pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kebakaran di Jalan Dewi Sartika pada Senin pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Merdeka pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 41,
+        "label": "LOCATION"
+      },
+      {
+        "start": 47,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pencurian di Jalan Juanda pada Kamis malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 57,
+        "label": "LOCATION"
+      },
+      {
+        "start": 63,
+        "end": 74,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kebakaran di Jalan Dewi Sartika pada Senin malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Sudirman pada Kamis malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan begal di Jalan Sudirman pada Rabu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kecelakaan terjadi di Jalan Merdeka pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 56,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi tawuran terjadi di Jalan Citayam pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 12,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 24,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus begal di Jalan Sawangan pada Jumat malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 28,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan tawuran di Jalan Juanda pada Rabu sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa tawuran terjadi sekitar Jalan Diponegoro pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait begal di Jalan Nusantara pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 37,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 41,
+        "end": 56,
+        "label": "LOCATION"
+      },
+      {
+        "start": 62,
+        "end": 72,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Raya Bogor pada Selasa malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 42,
+        "label": "LOCATION"
+      },
+      {
+        "start": 48,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait tawuran di Jalan Diponegoro pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 39,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 43,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 75,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Siliwangi pada Senin pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 41,
+        "label": "LOCATION"
+      },
+      {
+        "start": 47,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pembegalan terjadi sekitar Jalan Dewi Sartika pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 55,
+        "label": "LOCATION"
+      },
+      {
+        "start": 61,
+        "end": 72,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Kemang pada Senin pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 43,
+        "label": "LOCATION"
+      },
+      {
+        "start": 49,
+        "end": 59,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Sudirman pada Senin malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 33,
+        "label": "LOCATION"
+      },
+      {
+        "start": 39,
+        "end": 50,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kebakaran di Jalan Sawangan pada Minggu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 77,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus begal di Jalan Nusantara pada Rabu sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 28,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pembegalan terjadi di Jalan Raya Bogor pada Rabu sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 43,
+        "label": "LOCATION"
+      },
+      {
+        "start": 49,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pembegalan di Jalan Sudirman pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan tawuran di Jalan Margonda pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Arif Rahman Hakim pada Rabu malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kecelakaan di Jalan Diponegoro pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Dewi Sartika pada Minggu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 64,
+        "label": "LOCATION"
+      },
+      {
+        "start": 70,
+        "end": 82,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pembegalan terjadi sekitar Jalan Merdeka pada Rabu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi tawuran terjadi di Jalan Citayam pada Jumat malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 12,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 24,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Kemang pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kecelakaan di Jalan Dewi Sartika pada Rabu sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 64,
+        "label": "LOCATION"
+      },
+      {
+        "start": 70,
+        "end": 79,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa begal terjadi sekitar Jalan Kemang pada Senin malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kecelakaan terjadi di Jalan Nusantara pada Selasa malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 42,
+        "label": "LOCATION"
+      },
+      {
+        "start": 48,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kebakaran di Jalan Merdeka pada Senin malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 43,
+        "label": "LOCATION"
+      },
+      {
+        "start": 49,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pencurian di Jalan Merdeka pada Rabu sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kecelakaan di Jalan Nusantara pada Selasa malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Dewi Sartika pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 55,
+        "label": "LOCATION"
+      },
+      {
+        "start": 61,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Kemang pada Rabu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Sawangan pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 31,
+        "label": "LOCATION"
+      },
+      {
+        "start": 37,
+        "end": 48,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus begal di Jalan Citayam pada Kamis malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 28,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 45,
+        "label": "LOCATION"
+      },
+      {
+        "start": 51,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Pemuda pada Minggu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Juanda pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kecelakaan terjadi di Jalan Pemuda pada Senin pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 39,
+        "label": "LOCATION"
+      },
+      {
+        "start": 45,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Arif Rahman Hakim pada Minggu sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 42,
+        "label": "LOCATION"
+      },
+      {
+        "start": 48,
+        "end": 59,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kebakaran terjadi sekitar Jalan Sudirman pada Senin pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Arif Rahman Hakim pada Jumat malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kecelakaan di Jalan Siliwangi pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Siliwangi pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pencurian dilaporkan terjadi di Jalan Juanda pada Kamis malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus begal dilaporkan terjadi di Jalan Nusantara pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kecelakaan di Jalan Siliwangi pada Rabu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Arif Rahman Hakim pada Kamis malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kebakaran di Jalan Sudirman pada Rabu sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Merdeka pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 30,
+        "label": "LOCATION"
+      },
+      {
+        "start": 36,
+        "end": 47,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kebakaran di Jalan Juanda pada Rabu sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Dewi Sartika pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 57,
+        "label": "LOCATION"
+      },
+      {
+        "start": 63,
+        "end": 74,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Sawangan pada Rabu sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pembegalan dilaporkan terjadi di Jalan Margonda pada Minggu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Arif Rahman Hakim pada Jumat sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 69,
+        "label": "LOCATION"
+      },
+      {
+        "start": 75,
+        "end": 85,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pencurian di Jalan Arif Rahman Hakim pada Selasa malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Nusantara pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pencurian di Jalan Kartini pada Senin pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 58,
+        "label": "LOCATION"
+      },
+      {
+        "start": 64,
+        "end": 74,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi tawuran terjadi di Jalan Dewi Sartika pada Kamis malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 12,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 24,
+        "end": 42,
+        "label": "LOCATION"
+      },
+      {
+        "start": 48,
+        "end": 59,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pembegalan di Jalan Pemuda pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kebakaran di Jalan Siliwangi pada Rabu sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Raya Bogor pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pencurian di Jalan Margonda pada Jumat sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Merdeka pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa pembegalan terjadi sekitar Jalan Raya Bogor pada Minggu sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Margonda pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Arif Rahman Hakim pada Senin malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 69,
+        "label": "LOCATION"
+      },
+      {
+        "start": 75,
+        "end": 86,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Sudirman pada Senin pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 45,
+        "label": "LOCATION"
+      },
+      {
+        "start": 51,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Merdeka pada Rabu sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pencurian di Jalan Sudirman pada Jumat sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 59,
+        "label": "LOCATION"
+      },
+      {
+        "start": 65,
+        "end": 75,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Dewi Sartika pada Jumat sore.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 55,
+        "label": "LOCATION"
+      },
+      {
+        "start": 61,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan begal di Jalan Sudirman pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 22,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Pemuda pada Senin malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 29,
+        "label": "LOCATION"
+      },
+      {
+        "start": 35,
+        "end": 46,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kebakaran di Jalan Kemang pada Kamis malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 48,
+        "label": "LOCATION"
+      },
+      {
+        "start": 54,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus tawuran di Jalan Kemang pada Rabu sore.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pencurian di Jalan Siliwangi pada Kamis malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kebakaran di Jalan Margonda pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 51,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi tawuran di Jalan Sawangan pada Minggu sore.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 19,
+        "end": 33,
+        "label": "LOCATION"
+      },
+      {
+        "start": 39,
+        "end": 50,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Diponegoro pada Minggu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 33,
+        "label": "LOCATION"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pencurian di Jalan Pemuda pada Senin pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 57,
+        "label": "LOCATION"
+      },
+      {
+        "start": 63,
+        "end": 73,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan kebakaran di Jalan Arif Rahman Hakim pada Rabu sore.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kecelakaan di Jalan Sawangan pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 60,
+        "label": "LOCATION"
+      },
+      {
+        "start": 66,
+        "end": 77,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Kartini pada Senin malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Raya Bogor pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Sudirman pada Senin pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 56,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Diponegoro pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 42,
+        "label": "LOCATION"
+      },
+      {
+        "start": 48,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Juanda pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pencurian dilaporkan terjadi di Jalan Sudirman pada Jumat sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus begal dilaporkan terjadi di Jalan Citayam pada Jumat sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 63,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kebakaran di Jalan Pemuda pada Senin pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 33,
+        "label": "LOCATION"
+      },
+      {
+        "start": 39,
+        "end": 49,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus tawuran di Jalan Siliwangi pada Selasa malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi tawuran terjadi di Jalan Raya Bogor pada Minggu malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 12,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 24,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan begal di Jalan Merdeka pada Senin malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Arif Rahman Hakim pada Minggu sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 69,
+        "label": "LOCATION"
+      },
+      {
+        "start": 75,
+        "end": 86,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pencurian di Jalan Citayam pada Senin malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 43,
+        "label": "LOCATION"
+      },
+      {
+        "start": 49,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan tawuran di Jalan Raya Bogor pada Rabu sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait begal di Jalan Sawangan pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 37,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 41,
+        "end": 55,
+        "label": "LOCATION"
+      },
+      {
+        "start": 61,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa begal terjadi sekitar Jalan Citayam pada Jumat malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 45,
+        "label": "LOCATION"
+      },
+      {
+        "start": 51,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pembegalan di Jalan Diponegoro pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 55,
+        "label": "LOCATION"
+      },
+      {
+        "start": 61,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Citayam pada Jumat malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Juanda pada Senin pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pencurian dilaporkan terjadi di Jalan Sawangan pada Senin malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kebakaran di Jalan Merdeka pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 58,
+        "label": "LOCATION"
+      },
+      {
+        "start": 64,
+        "end": 75,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pencurian dilaporkan terjadi di Jalan Diponegoro pada Senin pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pencurian dilaporkan terjadi di Jalan Arif Rahman Hakim pada Rabu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 61,
+        "label": "LOCATION"
+      },
+      {
+        "start": 67,
+        "end": 77,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pencurian di Jalan Kartini pada Senin malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 45,
+        "end": 58,
+        "label": "LOCATION"
+      },
+      {
+        "start": 64,
+        "end": 75,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pembegalan di Jalan Nusantara pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 27,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 31,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Dewi Sartika pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 55,
+        "label": "LOCATION"
+      },
+      {
+        "start": 61,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan begal di Jalan Dewi Sartika pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa kecelakaan terjadi sekitar Jalan Merdeka pada Kamis malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 20,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Raya Bogor pada Senin pagi.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan begal di Jalan Siliwangi pada Rabu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 22,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 41,
+        "label": "LOCATION"
+      },
+      {
+        "start": 47,
+        "end": 57,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa tawuran terjadi sekitar Jalan Juanda pada Senin pagi.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 46,
+        "label": "LOCATION"
+      },
+      {
+        "start": 52,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Peristiwa tawuran terjadi sekitar Jalan Arif Rahman Hakim pada Rabu malam.",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 57,
+        "label": "LOCATION"
+      },
+      {
+        "start": 63,
+        "end": 73,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pembegalan di Jalan Nusantara pada Rabu malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus tawuran di Jalan Merdeka pada Selasa malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus tawuran di Jalan Dewi Sartika pada Rabu malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 30,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Siliwangi pada Kamis malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pembegalan di Jalan Kemang pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Pemuda pada Senin malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 29,
+        "label": "LOCATION"
+      },
+      {
+        "start": 35,
+        "end": 46,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi kebakaran di Jalan Kemang pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 17,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 21,
+        "end": 33,
+        "label": "LOCATION"
+      },
+      {
+        "start": 39,
+        "end": 50,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Nusantara pada Minggu sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 41,
+        "label": "LOCATION"
+      },
+      {
+        "start": 47,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Juanda pada Kamis malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait kecelakaan di Jalan Pemuda pada Senin pagi.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 58,
+        "label": "LOCATION"
+      },
+      {
+        "start": 64,
+        "end": 74,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pencurian terjadi di Jalan Raya Bogor pada Selasa malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 42,
+        "label": "LOCATION"
+      },
+      {
+        "start": 48,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi tawuran terjadi di Jalan Sudirman pada Senin pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 12,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 24,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 54,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kecelakaan dilaporkan terjadi di Jalan Sawangan pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Raya Bogor pada Rabu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 33,
+        "label": "LOCATION"
+      },
+      {
+        "start": 39,
+        "end": 49,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait begal di Jalan Kemang pada Rabu sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 37,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 41,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus begal di Jalan Kartini pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 28,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 32,
+        "end": 45,
+        "label": "LOCATION"
+      },
+      {
+        "start": 51,
+        "end": 61,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus pencurian di Jalan Citayam pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 66,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi pembegalan di Jalan Merdeka pada Selasa malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 18,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 35,
+        "label": "LOCATION"
+      },
+      {
+        "start": 41,
+        "end": 53,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus kebakaran dilaporkan terjadi di Jalan Kartini pada Minggu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Citayam pada Rabu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Merdeka pada Selasa malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 30,
+        "label": "LOCATION"
+      },
+      {
+        "start": 36,
+        "end": 48,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kecelakaan di Jalan Dewi Sartika pada Rabu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 35,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 57,
+        "label": "LOCATION"
+      },
+      {
+        "start": 63,
+        "end": 73,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Kartini pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 49,
+        "label": "LOCATION"
+      },
+      {
+        "start": 55,
+        "end": 65,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pembegalan terjadi di Jalan Kemang pada Sabtu pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 39,
+        "label": "LOCATION"
+      },
+      {
+        "start": 45,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi pembegalan terjadi di Jalan Citayam pada Selasa malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 15,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 27,
+        "end": 40,
+        "label": "LOCATION"
+      },
+      {
+        "start": 46,
+        "end": 58,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi begal terjadi di Jalan Siliwangi pada Minggu malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 10,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Juanda pada Jumat malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 38,
+        "label": "LOCATION"
+      },
+      {
+        "start": 44,
+        "end": 55,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi begal terjadi di Jalan Siliwangi pada Rabu sore.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 10,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 22,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 52,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus begal dilaporkan terjadi di Jalan Merdeka pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 47,
+        "label": "LOCATION"
+      },
+      {
+        "start": 53,
+        "end": 64,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Sudirman pada Jumat sore.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 60,
+        "label": "LOCATION"
+      },
+      {
+        "start": 66,
+        "end": 76,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan tawuran di Jalan Sawangan pada Jumat malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 28,
+        "end": 42,
+        "label": "LOCATION"
+      },
+      {
+        "start": 48,
+        "end": 59,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kebakaran di Jalan Arif Rahman Hakim pada Minggu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 61,
+        "label": "LOCATION"
+      },
+      {
+        "start": 67,
+        "end": 79,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menerima laporan terkait pembegalan di Jalan Arif Rahman Hakim pada Selasa malam.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 42,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 46,
+        "end": 69,
+        "label": "LOCATION"
+      },
+      {
+        "start": 75,
+        "end": 87,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pencurian di Jalan Raya Bogor pada Sabtu malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 54,
+        "label": "LOCATION"
+      },
+      {
+        "start": 60,
+        "end": 71,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan tawuran di Jalan Raya Bogor pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 32,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 69,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Warga melaporkan pencurian di Jalan Margonda pada Minggu malam.",
+    "entities": [
+      {
+        "start": 17,
+        "end": 26,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 30,
+        "end": 44,
+        "label": "LOCATION"
+      },
+      {
+        "start": 50,
+        "end": 62,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi kebakaran terjadi di Jalan Raya Bogor pada Selasa malam.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 14,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 26,
+        "end": 42,
+        "label": "LOCATION"
+      },
+      {
+        "start": 48,
+        "end": 60,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan pencurian di Jalan Pemuda pada Senin malam.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus tawuran dilaporkan terjadi di Jalan Diponegoro pada Rabu sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 36,
+        "end": 52,
+        "label": "LOCATION"
+      },
+      {
+        "start": 58,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Polisi menangani kasus kecelakaan di Jalan Merdeka pada Jumat malam.",
+    "entities": [
+      {
+        "start": 23,
+        "end": 33,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 37,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kebakaran di Jalan Citayam pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 51,
+        "label": "LOCATION"
+      },
+      {
+        "start": 57,
+        "end": 68,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus pembegalan dilaporkan terjadi di Jalan Margonda pada Selasa pagi.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 16,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 39,
+        "end": 53,
+        "label": "LOCATION"
+      },
+      {
+        "start": 59,
+        "end": 70,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Kasus begal dilaporkan terjadi di Jalan Arif Rahman Hakim pada Jumat sore.",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 34,
+        "end": 57,
+        "label": "LOCATION"
+      },
+      {
+        "start": 63,
+        "end": 73,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Terjadi begal di Jalan Raya Bogor pada Rabu malam.",
+    "entities": [
+      {
+        "start": 8,
+        "end": 13,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 17,
+        "end": 33,
+        "label": "LOCATION"
+      },
+      {
+        "start": 39,
+        "end": 49,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Aksi tawuran terjadi di Jalan Kartini pada Kamis pagi.",
+    "entities": [
+      {
+        "start": 5,
+        "end": 12,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 24,
+        "end": 37,
+        "label": "LOCATION"
+      },
+      {
+        "start": 43,
+        "end": 53,
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "text": "Petugas menerima laporan kebakaran di Jalan Juanda pada Minggu sore.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 34,
+        "label": "INCIDENT"
+      },
+      {
+        "start": 38,
+        "end": 50,
+        "label": "LOCATION"
+      },
+      {
+        "start": 56,
+        "end": 67,
+        "label": "TIME"
+      }
+    ]
+  }
+]
