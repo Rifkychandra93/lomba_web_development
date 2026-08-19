@@ -4,7 +4,7 @@ from pathlib import Path
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import classification_report, accuracy_score
 
@@ -20,7 +20,6 @@ def load_dataset():
     texts = []
     labels = []
 
-    # Load synthetic dataset
     if DATASET_PATH.exists():
         with open(DATASET_PATH, "r", encoding="utf-8") as file:
             reader = csv.DictReader(file)
@@ -29,7 +28,6 @@ def load_dataset():
                 labels.append(row["label"])
         print(f"Loaded synthetic data: {len(texts)} samples")
 
-    # Load real-world dataset if exists
     real_count = 0
     if REAL_DATASET_PATH.exists():
         with open(REAL_DATASET_PATH, "r", encoding="utf-8") as file:
@@ -57,29 +55,38 @@ def train_model():
     )
 
     model = Pipeline([
-        (
-            "tfidf",
-            TfidfVectorizer(
-                lowercase=True,
-                ngram_range=(1, 2)
-            )
-        ),
-        (
-            "classifier",
-            LogisticRegression(
-                max_iter=1000
-            )
-        )
+        ("tfidf", TfidfVectorizer(lowercase=True)),
+        ("classifier", LogisticRegression(max_iter=1000))
     ])
 
-    model.fit(X_train, y_train)
+    param_grid = {
+        "tfidf__ngram_range": [(1, 1), (1, 2)],
+        "tfidf__max_df": [0.8, 0.9, 1.0],
+        "tfidf__min_df": [1, 2],
+        "classifier__C": [0.1, 1.0, 10.0]
+    }
 
-    predictions = model.predict(X_test)
+    print("\nMelakukan Hyperparameter Tuning menggunakan GridSearchCV...")
+    grid_search = GridSearchCV(
+        model,
+        param_grid,
+        cv=5,
+        n_jobs=-1,
+        scoring="accuracy"
+    )
+    
+    grid_search.fit(X_train, y_train)
+
+    best_model = grid_search.best_estimator_
+    print(f"Best Parameters: {grid_search.best_params_}")
+    print(f"Best Cross-Validation Accuracy: {grid_search.best_score_:.2f}")
+
+    predictions = best_model.predict(X_test)
 
     accuracy = accuracy_score(y_test, predictions)
 
-    print("\n=== HASIL EVALUASI ===")
-    print(f"Accuracy: {accuracy:.2f}")
+    print("\n=== HASIL EVALUASI MODEL TERBAIK ===")
+    print(f"Accuracy on Test Set: {accuracy:.2f}")
 
     print("\nClassification Report:")
     print(classification_report(y_test, predictions, zero_division=0))
@@ -87,9 +94,9 @@ def train_model():
     MODEL_PATH.parent.mkdir(exist_ok=True)
 
     with open(MODEL_PATH, "wb") as file:
-        pickle.dump(model, file)
+        pickle.dump(best_model, file)
 
-    print(f"\nModel berhasil disimpan:")
+    print(f"\nModel terbaik berhasil disimpan:")
     print(MODEL_PATH)
 
 

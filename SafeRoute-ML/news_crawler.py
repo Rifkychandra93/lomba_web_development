@@ -1,20 +1,37 @@
+import os
 import requests
+# pyrefly: ignore [missing-import]
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 # pyrefly: ignore [missing-import]
 from bs4 import BeautifulSoup
 import json
 import time
 from pathlib import Path
 
-# Import scraper dan pipeline yang sudah ada
 from scraper import scrape_article
 from pipeline import analyze_article
+from mapper import map_incident_type
+from risk_classifier import calculate_risk
+from geocoder import geocode_location
 
 BASE_DIR = Path(__file__).resolve().parent
 DATASET_DIR = BASE_DIR / "dataset"
 DATASET_DIR.mkdir(exist_ok=True)
 OUTPUT_FILE = DATASET_DIR / "scraped_real_cases.json"
 
-# Fokus ke Depok
+BACKEND_ML_URL = os.getenv("BACKEND_ML_URL")
+ML_API_KEY = os.getenv("ML_API_KEY")
+
+if not BACKEND_ML_URL:
+    raise RuntimeError("BACKEND_ML_URL belum d isi")
+
+if not ML_API_KEY:
+    raise RuntimeError("ML_API belum di isi")
+
 KEYWORDS = ["begal depok", "tawuran depok", "pembacokan depok", "perampokan depok"]
 
 def search_detik(keyword, max_pages=2):
@@ -32,7 +49,7 @@ def search_detik(keyword, max_pages=2):
                 a_tag = article.find("a")
                 if a_tag and a_tag.get("href"):
                     links.append(a_tag.get("href"))
-            time.sleep(1) # delay antar halaman
+            time.sleep(1)
         except Exception as e:
             print(f"     Gagal detik (page {page}): {e}")
             
@@ -146,6 +163,65 @@ def is_in_depok(locations, text):
             return True
     return False
 
+def send_incident_to_backend(analysis: dict, url: str) -> bool:
+    article = analysis["article"]
+    ana = analysis["analysis"]
+    
+    title = article["title"]
+    content = article["content"]
+    category = ana["category"]
+    confidence = float(ana["confidence"])
+    
+    incident_type = map_incident_type(category)
+    
+    risk_level = calculate_risk(confidence)
+    
+    locations = ana["locations"]
+    location_name = locations[0] if locations else "Depok"
+    coords = geocode_location(location_name)
+    
+    if not coords:
+        print(f"       [SKIPPED] Geocoding gagal untuk lokasi: {location_name}")
+        return False
+        
+    payload = {
+        "title": title,
+        "url": url,
+        "description": content,
+        "source": article.get("source", "Internet"),
+        "publishedAt": None,
+        
+        "incidentTitle": f"[{incident_type}] {title[:50]}...",
+        "incidentDescription": content[:200] + "..." if content else None,
+        
+        "location": location_name,
+        "latitude": coords["latitude"],
+        "longitude": coords["longitude"],
+        
+        "incidentType": incident_type,
+        "riskLevel": risk_level,
+        "mlConfidence": confidence
+    }
+    
+    headers = {
+        "x-ml-key": ML_API_KEY
+    }
+    
+    try:
+        response = requests.post(BACKEND_ML_URL, json=payload, headers=headers, timeout=20)
+        if response.status_code == 201:
+            print(f"    -> [DATABASE SAVED] Berhasil disimpan di backend DB.")
+            return True
+        elif response.status_code == 409:
+            print(f"    -> [DATABASE SKIPPED] Data sudah ada di backend DB (duplikat).")
+            return True
+        else:
+            print(f"    -> [DATABASE ERROR] Gagal menyimpan ke backend DB: {response.status_code} - {response.text}")
+            return False
+    except Exception as e:
+        print(f"    -> [DATABASE ERROR] Gagal menghubungi backend: {e}")
+        return False
+
 def crawl_and_analyze():
     all_results = []
     
@@ -170,7 +246,6 @@ def crawl_and_analyze():
             try:
                 analysis = analyze_article(link)
                 
-                # Filter Depok
                 title = analysis["article"]["title"]
                 content = analysis["article"]["content"]
                 full_text = title + " " + content
@@ -182,6 +257,8 @@ def crawl_and_analyze():
                 all_results.append(analysis)
                 print(f"    -> [DITERIMA] Kategori: {analysis['analysis']['category']} (Confidence: {analysis['analysis']['confidence']})")
                 print(f"    -> Lokasi: {analysis['analysis']['locations']}")
+                
+                send_incident_to_backend(analysis, link)
                 
                 time.sleep(2)
             except Exception as e:

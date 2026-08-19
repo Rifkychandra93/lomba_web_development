@@ -3,6 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
 import reportRoutes from "./routes/report.routes";
+import newsRoutes from "./routes/news.routes";
+import incidentRoutes from "./routes/incident.routes";
+import mlRoutes from "./routes/ml.routes";
 
 dotenv.config();
 
@@ -26,5 +29,8 @@ app.get("/", (_req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api/news", newsRoutes);
+app.use("/api/incident", incidentRoutes);
+app.use("/api/ml", mlRoutes);
 
 export default app;

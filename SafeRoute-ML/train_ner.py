@@ -32,7 +32,6 @@ def train_ner_model(training_data, iterations=30):
     else:
         ner = nlp.get_pipe("ner")
     
-    # Tambahkan label
     for _, annotations in training_data:
         for ent in annotations.get("entities"):
             ner.add_label(ent[2])

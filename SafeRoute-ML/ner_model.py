@@ -15,7 +15,6 @@ def create_ner_model():
     ruler = nlp.add_pipe("entity_ruler")
 
     patterns = [
-        # Lokasi
         {
             "label": "LOCATION",
             "pattern": [
@@ -31,7 +30,6 @@ def create_ner_model():
             ]
         },
 
-        # Waktu
         {
             "label": "TIME",
             "pattern": [

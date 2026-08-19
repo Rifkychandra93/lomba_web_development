@@ -20,8 +20,10 @@ export const create = async (
       latitude,
       longitude,
       location,
+      address,
       incidentType,
-      dangerLevel,
+      riskLevel,
+      imageUrl,
     } = req.body;
 
     if (
@@ -29,13 +31,12 @@ export const create = async (
       !description ||
       latitude === undefined ||
       longitude === undefined ||
-      !location ||
       !incidentType
     ) {
       res.status(400).json({
         success: false,
         message:
-          "Title, description, latitude, longitude, location, dan incidentType wajib diisi",
+          "Title, description, latitude, longitude, dan incidentType wajib diisi",
       });
       return;
     }
@@ -51,12 +52,26 @@ export const create = async (
       return;
     }
 
+    if (
+      latitude < -90 ||
+      latitude > 90 ||
+      longitude < -180 ||
+      longitude > 180
+    ) {
+      res.status(400).json({
+        success: false,
+        message: "Koordinat latitude atau longitude tidak valid",
+      });
+      return;
+    }
+
     const validIncidentTypes = [
       "BEGAL",
       "KEBAKARAN",
       "KECELAKAAN",
       "TAWURAN",
       "PENCURIAN",
+      "PEMBACOKAN",
       "LAINNYA",
     ];
 
@@ -68,7 +83,7 @@ export const create = async (
       return;
     }
 
-    const validDangerLevels = [
+    const validRiskLevels = [
       "LOW",
       "MEDIUM",
       "HIGH",
@@ -76,12 +91,12 @@ export const create = async (
     ];
 
     if (
-      dangerLevel &&
-      !validDangerLevels.includes(dangerLevel)
+      riskLevel &&
+      !validRiskLevels.includes(riskLevel)
     ) {
       res.status(400).json({
         success: false,
-        message: "Danger level tidak valid",
+        message: "Risk level tidak valid",
       });
       return;
     }
@@ -92,8 +107,10 @@ export const create = async (
       latitude,
       longitude,
       location,
+      address,
       incidentType,
-      dangerLevel,
+      riskLevel,
+      imageUrl,
       userId: req.user!.userId,
     });
 
@@ -138,7 +155,7 @@ export const getById = async (
     res: Response
 ): Promise<void> => {
     try {
-        const { id } = req.params;
+        const id = req.params.id as string;
 
         const report = await getReportById(id);
 
@@ -186,71 +203,71 @@ export const getMine = async (
 };
 
 export const updateStatus = async (
-  req: AuthRequest,
-  res: Response
+    req: AuthRequest,
+    res: Response
 ): Promise<void> => {
-  try {
-    const { id } = req.params;
-    const { status } = req.body;
+    try {
+        const id = req.params.id as string;
+        const status = req.body.status as "PENDING" | "VERIFIED" | "REJECTED";
 
-    const validStatuses = [
-      "PENDING",
-      "VERIFIED",
-      "REJECTED",
-    ];
+        const validStatuses = [
+            "PENDING",
+            "VERIFIED",
+            "REJECTED",
+        ];
 
-    if (!status || !validStatuses.includes(status)) {
-      res.status(400).json({
-        success: false,
-        message: "Status tidak valid",
-      });
-      return;
+        if (!status || !validStatuses.includes(status)) {
+            res.status(400).json({
+                success: false,
+                message: "Status tidak valid",
+            });
+            return;
+        }
+
+        const existingReport = await getReportById(id);
+
+        if (!existingReport) {
+            res.status(404).json({
+                success: false,
+                message: "Laporan tidak ditemukan",
+            });
+            return;
+        }
+
+        const report = await updateReportStatus(id, status);
+
+        res.json({
+            success: true,
+            message: `Status laporan berhasil diubah menjadi ${status}`,
+            data: report,
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Gagal mengubah status laporan",
+        });
     }
-
-    const existingReport = await getReportById(id);
-
-    if (!existingReport) {
-      res.status(404).json({
-        success: false,
-        message: "Laporan tidak ditemukan",
-      });
-      return;
-    }
-
-    const report = await updateReportStatus(id, status);
-
-    res.json({
-      success: true,
-      message: `Status laporan berhasil diubah menjadi ${status}`,
-      data: report,
-    });
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      success: false,
-      message: "Gagal mengubah status laporan",
-    });
-  }
 };
 
 export const getVerified = async (
-  _req: Request,
-  res: Response
+    _req: Request,
+    res: Response
 ): Promise<void> => {
-  try {
-    const reports = await getVerifiedReports();
+    try {
+        const reports = await getVerifiedReports();
 
-    res.json({
-      success: true,
-      data: reports,
-    });
-  } catch (error) {
-    console.error(error);
+        res.json({
+            success: true,
+            data: reports,
+        });
+    } catch (error) {
+        console.error(error);
 
-    res.status(500).json({
-      success: false,
-      message: "Gagal mengambil laporan terverifikasi",
-    });
-  }
+        res.status(500).json({
+            success: false,
+            message: "Gagal mengambil laporan terverifikasi",
+        });
+    }
 };

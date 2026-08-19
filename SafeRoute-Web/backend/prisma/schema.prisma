@@ -54,7 +54,6 @@ model Report {
   latitude    Decimal @db.Decimal(10, 7)
   longitude   Decimal @db.Decimal(10, 7)
   location    String?
-  dangerLevel String
 
   incidentType IncidentType
   riskLevel    RiskLevel    @default(MEDIUM)

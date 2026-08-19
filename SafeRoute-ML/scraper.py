@@ -26,9 +26,6 @@ def scrape_article(url: str):
         "html.parser"
     )
 
-    # =========================
-    # JUDUL
-    # =========================
 
     title = ""
 
@@ -44,9 +41,6 @@ def scrape_article(url: str):
             strip=True
         )
 
-    # =========================
-    # ISI BERITA
-    # =========================
 
     paragraphs = soup.find_all("p")
 
@@ -64,9 +58,6 @@ def scrape_article(url: str):
 
     content = " ".join(content_parts)
 
-    # =========================
-    # TANGGAL
-    # =========================
 
     published_at = None
 
@@ -82,9 +73,6 @@ def scrape_article(url: str):
             )
         )
 
-    # =========================
-    # HASIL
-    # =========================
 
     return {
         "title": title,

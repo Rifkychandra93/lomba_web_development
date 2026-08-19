@@ -1,4 +1,3 @@
-import { IncidentType } from "@prisma/client";
 import prisma from "../config/database";
 
 interface CreateReportData {
@@ -6,9 +5,21 @@ interface CreateReportData {
   description: string;
   latitude: number;
   longitude: number;
-  location: string;
-  incidentType: IncidentType;
-  dangerLevel?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+  location?: string;
+  address?: string;
+
+  incidentType:
+    | "BEGAL"
+    | "KEBAKARAN"
+    | "KECELAKAAN"
+    | "TAWURAN"
+    | "PENCURIAN"
+    | "PEMBACOKAN"
+    | "LAINNYA";
+
+  riskLevel?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+
+  imageUrl?: string;
   userId: string;
 }
 
@@ -18,8 +29,10 @@ export const createReport = async ({
   latitude,
   longitude,
   location,
+  address,
   incidentType,
-  dangerLevel = "MEDIUM",
+  riskLevel = "MEDIUM",
+  imageUrl,
   userId,
 }: CreateReportData) => {
   return prisma.report.create({
@@ -29,8 +42,10 @@ export const createReport = async ({
       latitude,
       longitude,
       location,
+      address,
       incidentType,
-      dangerLevel,
+      riskLevel,
+      imageUrl,
       userId,
     },
     include: {
@@ -89,29 +104,6 @@ export const getReportsByUser = async (userId: string) => {
   });
 };
 
-export const updateReportStatus = async (
-  id: string,
-  status: "PENDING" | "VERIFIED" | "REJECTED"
-) => {
-  return prisma.report.update({
-    where: {
-      id,
-    },
-    data: {
-      status,
-    },
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-        },
-      },
-    },
-  });
-};
-
 export const getVerifiedReports = async () => {
   return prisma.report.findMany({
     where: {
@@ -125,6 +117,30 @@ export const getVerifiedReports = async () => {
         select: {
           id: true,
           name: true,
+        },
+      },
+    },
+  });
+};
+
+export const updateReportStatus = async (
+  id: string,
+  status: "PENDING" | "VERIFIED" | "REJECTED"
+) => {
+  return prisma.report.update({
+    where: {
+      id,
+    },
+    data: {
+      status,
+      verifiedAt: status === "VERIFIED" ? new Date() : null,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
         },
       },
     },

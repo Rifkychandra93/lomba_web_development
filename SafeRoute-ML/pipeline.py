@@ -16,9 +16,6 @@ ner_model = spacy.load(NER_MODEL_PATH)
 
 def analyze_article(url: str):
 
-    # =========================
-    # SCRAPING
-    # =========================
 
     article = scrape_article(url)
 
@@ -28,15 +25,7 @@ def analyze_article(url: str):
         + article["content"]
     )
 
-    # =========================
-    # CLASSIFICATION
-    # =========================
-
     classification = predict(text)
-
-    # =========================
-    # NER
-    # =========================
 
     doc = ner_model(text)
 
@@ -57,9 +46,6 @@ def analyze_article(url: str):
                 entity.text
             )
 
-    # =========================
-    # RESULT
-    # =========================
 
     return {
         "article": article,

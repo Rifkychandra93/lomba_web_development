@@ -77,3 +77,22 @@ export const requireAdmin = (
 
   next();
 };
+
+export const authenticateML = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const mlApiKey = process.env.ML_API_KEY;
+  const apiKey = req.headers["x-ml-key"];
+
+  if (!apiKey || apiKey !== mlApiKey) {
+    res.status(401).json({
+      success: false,
+      message: "ML Service Unauthorized: Invalid API Key",
+    });
+    return;
+  }
+
+  next();
+};
