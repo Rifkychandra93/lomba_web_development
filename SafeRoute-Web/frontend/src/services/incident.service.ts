@@ -5,7 +5,7 @@ export const getMapIncidents = async () => {
   const response = await api.get<{
     success: boolean;
     data: Incident[];
-  }>("/incidents/map");
+  }>("/incident/map");
 
   return response.data;
 };

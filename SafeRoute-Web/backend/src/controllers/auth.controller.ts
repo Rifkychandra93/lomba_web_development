@@ -6,12 +6,12 @@ export const register = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, phone, password } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email || !phone || !password) {
       res.status(400).json({
         success: false,
-        message: "Name, email, dan password wajib diisi",
+        message: "Name, email, nomor telepon, dan password wajib diisi",
       });
       return;
     }
@@ -27,6 +27,7 @@ export const register = async (
     const result = await registerUser({
       name,
       email,
+      phone,
       password,
     });
 

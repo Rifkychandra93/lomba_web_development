@@ -67,6 +67,8 @@ export const create = async (
 
     const validIncidentTypes = [
       "BEGAL",
+      "JAMBRET",
+      "CURANMOR",
       "KEBAKARAN",
       "KECELAKAAN",
       "TAWURAN",

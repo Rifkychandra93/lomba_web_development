@@ -5,6 +5,7 @@ import prisma from "../config/database";
 interface RegisterData {
   name: string;
   email: string;
+  phone?: string;
   password: string;
 }
 
@@ -23,6 +24,7 @@ if (!JWT_SECRET) {
 export const registerUser = async ({
   name,
   email,
+  phone,
   password,
 }: RegisterData) => {
   const existingUser = await prisma.user.findUnique({
@@ -41,6 +43,7 @@ export const registerUser = async ({
     data: {
       name,
       email,
+      phone,
       password: hashedPassword,
     },
   });

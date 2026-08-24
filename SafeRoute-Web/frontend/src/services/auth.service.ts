@@ -4,6 +4,7 @@ import type { AuthResponse } from "@/src/types/auth";
 interface RegisterPayload {
   name: string;
   email: string;
+  phone: string;
   password: string;
 }
 
