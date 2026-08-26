@@ -71,77 +71,11 @@ function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon
   return R * c;
 }
 
-// Data Insiden Mock (Disesuaikan ke Depok)
-const MOCK_INCIDENTS: MapPoint[] = [
-  {
-    id: "mock-1",
-    sourceType: "ML_CRAWLER",
-    title: "Begal Motor Sajam di Margonda",
-    description: "Kejadian begal terjadi sekitar dini hari pukul 02:00 WIB. Pelaku berboncengan menggunakan senjata tajam.",
-    latitude: -6.372,
-    longitude: 106.832,
-    address: "Jl. Margonda Raya, Beji, Kota Depok",
-    incidentType: "BEGAL",
-    riskLevel: "HIGH",
-    detectedAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-  },
-  {
-    id: "mock-2",
-    sourceType: "ML_CRAWLER",
-    title: "Tawuran Remaja di Depok Lama",
-    description: "Tawuran antar kelompok remaja menggunakan batu dan petasan. Kepolisian telah membubarkan massa.",
-    latitude: -6.390,
-    longitude: 106.820,
-    address: "Depok Lama, Pancoran Mas, Kota Depok",
-    incidentType: "TAWURAN",
-    riskLevel: "CRITICAL",
-    detectedAt: new Date(Date.now() - 3600000 * 6).toISOString(),
-  },
-  {
-    id: "mock-3",
-    sourceType: "USER_REPORT",
-    title: "Pencurian Helm di Parkiran ITC Depok",
-    description: "Helm fullface hilang diambil orang di area parkiran luar motor. Kejadian siang hari.",
-    latitude: -6.390,
-    longitude: 106.823,
-    address: "ITC Depok, Depok Lama, Kota Depok",
-    incidentType: "PENCURIAN",
-    riskLevel: "MEDIUM",
-    detectedAt: new Date(Date.now() - 3600000 * 12).toISOString(),
-    reporterName: "Budi Santoso",
-  },
-  {
-    id: "mock-4",
-    sourceType: "ML_CRAWLER",
-    title: "Aksi Pembacokan Geng Motor Jalan Juanda",
-    description: "Korban mengalami luka di tangan setelah dihadang geng motor saat pulang kerja larut malam.",
-    latitude: -6.389,
-    longitude: 106.815,
-    address: "Jl. Juanda, Depok I, Kota Depok",
-    incidentType: "PEMBACOKAN",
-    riskLevel: "CRITICAL",
-    detectedAt: new Date().toISOString(),
-  },
-  {
-    id: "mock-5",
-    sourceType: "USER_REPORT",
-    title: "Begal Sadis di Cisalak Pasar Rebo",
-    description: "Korban diancam celurit dan motor matic berhasil dibawa kabur pelaku berjumlah 3 orang.",
-    latitude: -6.372,
-    longitude: 106.855,
-    address: "Cisalak, Cimanggis, Kota Depok",
-    incidentType: "BEGAL",
-    riskLevel: "CRITICAL",
-    detectedAt: new Date(Date.now() - 3600000 * 48).toISOString(),
-    reporterName: "Alvin Vino",
-  },
-];
 
-// Koordinat Pusat Depok & Batas Wilayah
 const DEPOK_CENTER: [number, number] = [-6.390, 106.825]; 
 const DEPOK_BOUNDS: L.LatLngBoundsExpression = L.latLngBounds(
-  [-6.33, 106.75], // Batas Utara-Barat (Cimanggis / Beji)
-  [-6.45, 106.90]  // Batas Selatan-Timur (Pancoran Mas / Sawangan)
+  [-6.33, 106.75],
+  [-6.45, 106.90] 
 );
 const DEPOK_MAX_ZOOM = 16;
 
@@ -177,7 +111,6 @@ export default function MapComponent() {
   const [tileLayerUrl, setTileLayerUrl] = useState<string>("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
   const [showTileSelector, setShowTileSelector] = useState(false);
 
-  // State untuk Modal Warning
   const [showLocationWarning, setShowLocationWarning] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -214,19 +147,20 @@ export default function MapComponent() {
       }
     };
 
-        const fetchIncidents = async () => {
+    const fetchIncidents = async () => {
       try {
         const res = await getMapIncidents();
-        if (res.success && res.data && res.data.length > 0) {
+        if (res.success && res.data) {
           setIncidents(res.data as any as MapPoint[]);
         } else {
-          setIncidents(MOCK_INCIDENTS);
+          setIncidents([]);
         }
       } catch (e) {
-        console.error("Gagal mengambil data peta, menggunakan mock data:", e);
-        setIncidents(MOCK_INCIDENTS);
+        console.error("Gagal mengambil data peta:", e);
+        setIncidents([]);
       }
     };
+
 
     fetchUser();
     fetchIncidents();
@@ -279,7 +213,7 @@ export default function MapComponent() {
           setDestPoint({ name: item.display_name, lat, lng: lon });
           setDestInput(item.display_name);
         } else {
-          setShowLocationWarning(true); // Munculkan modal
+          setShowLocationWarning(true); 
         }
       }
     } catch (e) {
@@ -341,7 +275,7 @@ export default function MapComponent() {
     setRouteLoading(true);
 
     if (lat < -6.45 || lat > -6.33 || lng < 106.75 || lng > 106.90) {
-      setShowLocationWarning(true); // Munculkan modal
+      setShowLocationWarning(true); 
       setClickMode("none");
       setRouteLoading(false);
       return;
@@ -377,7 +311,7 @@ export default function MapComponent() {
         const lng = position.coords.longitude;
 
         if (lat < -6.45 || lat > -6.33 || lng < 106.75 || lng > 106.90) {
-          setShowLocationWarning(true); // Munculkan modal
+          setShowLocationWarning(true); 
           return;
         }
 
@@ -504,7 +438,6 @@ export default function MapComponent() {
           </div>
         )}
 
-        {/* PANEL NAVIGASI KIRI */}
         <div className="absolute left-6 top-6 bottom-6 z-10 w-80 max-w-sm shrink-0 flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white/95 backdrop-blur-md shadow-2xl transition-all duration-300">
           
           <div className="flex flex-col overflow-y-auto p-5">
@@ -636,7 +569,7 @@ export default function MapComponent() {
                     </div>
                   ) : (
                     <p className="mt-4 text-xs font-semibold text-slate-500 text-center flex flex-col items-center justify-center py-2">
-                      <span>🎉 Tidak ada titik kejahatan terdeteksi di jalur ini!</span>
+                      <span>Tidak ada titik kejahatan terdeteksi di jalur ini!</span>
                       <span className="text-[10px] text-slate-400 font-medium mt-1">Sistem menyarankan rute ini aman dilalui.</span>
                     </p>
                   )}
@@ -663,7 +596,6 @@ export default function MapComponent() {
         </div>
       </div>
 
-      {/* MODAL WARNING (Pengganti Alert) */}
       {showLocationWarning && (
         <div className="fixed inset-0 z-[3000] flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in">
           <div className="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl border border-slate-100">

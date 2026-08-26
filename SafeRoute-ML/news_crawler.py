@@ -176,12 +176,24 @@ def send_incident_to_backend(analysis: dict, url: str) -> bool:
     
     risk_level = calculate_risk(confidence)
     
-    locations = ana["locations"]
-    location_name = locations[0] if locations else "Depok"
-    coords = geocode_location(location_name)
+    locations = ana.get("locations", [])
+    coords = None
+    location_name = "Depok"
     
+    for loc in locations:
+        if len(loc.strip()) < 3:
+            continue
+        coords = geocode_location(loc)
+        if coords:
+            location_name = loc
+            break
+            
     if not coords:
-        print(f"       [SKIPPED] Geocoding gagal untuk lokasi: {location_name}")
+        location_name = "Depok"
+        coords = geocode_location("Depok")
+        
+    if not coords:
+        print(f"       [SKIPPED] Geocoding gagal untuk lokasi fallback: {location_name}")
         return False
         
     payload = {
