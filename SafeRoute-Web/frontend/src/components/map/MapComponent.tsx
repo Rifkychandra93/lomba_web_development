@@ -217,18 +217,7 @@ export default function MapComponent() {
       try {
         const res = await getMapIncidents();
         if (res.success && res.data && res.data.length > 0) {
-          const rawIncidents = res.data as any[];
-          
-          const depokData = rawIncidents
-            .filter((inc: any) => 
-              inc.latitude > -6.45 && inc.latitude < -6.33 && inc.longitude > 106.75 && inc.longitude < 106.90
-            )
-            .map((inc: any) => ({
-              ...inc,
-              sourceType: inc.sourceType || "USER_REPORT",
-            })) as MapPoint[];
-            
-          setIncidents(depokData.length > 0 ? depokData : MOCK_INCIDENTS);
+          setIncidents(res.data as any as MapPoint[]);
         } else {
           setIncidents(MOCK_INCIDENTS);
         }
