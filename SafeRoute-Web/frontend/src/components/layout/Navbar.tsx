@@ -1,6 +1,9 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Search, User } from "lucide-react";
+import { LogOut, Search, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { getCurrentUser } from "@/src/services/auth.service";
 
 export function RouteIcon() {
   return (
@@ -12,7 +15,71 @@ export function RouteIcon() {
   );
 }
 
+interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
 export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" }) {
+  
+    const [showUserDropdown, setShowUserDropdown] = useState(false);
+    const [user, setUser] = useState<UserProfile | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
+    const [navbarSearch, setNavbarSearch] = useState("");
+    const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+
+    const handleNavbarSearch = async () => {
+      if (!navbarSearch.trim()) return;
+      setLoadingSuggestions(true);
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+            navbarSearch
+          )}&limit=5&countrycodes=id`,
+          { headers: { "User-Agent": "SafeRoute-NextJS" } }
+        );
+        const data = await res.json();
+        if (data && data.length > 0) {
+          const item = data[0];
+          router.push(`/home?lat=${item.lat}&lon=${item.lon}&zoom=15`);
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoadingSuggestions(false);
+      }
+    };
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          router.replace("/login");
+          return;
+        }
+        const loadUser = async () => {
+          try {
+            const res = await getCurrentUser();
+            setUser(res.data);
+            setIsLoading(false);
+          } catch {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            router.replace("/login");
+          }
+        };
+        loadUser();
+      }, [router]);
+
+    const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    router.push("/login");
+  };
+
   return (
     <header className="flex h-16 shrink-0 items-center justify-between border-b border-gray-200 px-6 bg-white">
       <div className="flex items-center gap-3">
@@ -46,12 +113,73 @@ export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" 
       </nav>
 
       <div className="flex items-center gap-5">
-        <button className="text-gray-500 hover:text-gray-900">
-          <Search className="h-5 w-5" />
-        </button>
-        <button className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 bg-gray-50 text-gray-600 hover:bg-gray-100">
-          <User className="h-4 w-4" />
-        </button>
+        <div className="relative hidden sm:flex items-center">
+            <input
+              type="text"
+              placeholder="Cari lokasi tujuan..."
+              value={navbarSearch}
+              onChange={(e) => setNavbarSearch(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleNavbarSearch()}
+              className="w-56 rounded-full bg-neutral-100 py-1.5 pl-4 pr-10 text-xs font-semibold text-neutral-700 outline-none transition-all focus:bg-white focus:ring-2 focus:ring-[#0B2540]/20 focus:shadow-inner"
+            />
+            <button
+              onClick={handleNavbarSearch}
+              className="absolute right-3 text-neutral-400 hover:text-[#0B2540] transition-colors"
+            >
+              {loadingSuggestions ? (
+                <div className="h-4.5 w-4.5 animate-spin rounded-full border-2 border-neutral-300 border-t-[#0B2540]" />
+              ) : (
+                <Search className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+       <div className="relative">
+            <button
+              onClick={() => setShowUserDropdown(!showUserDropdown)}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0B2540]/10 text-[#0B2540] hover:bg-[#0B2540]/20 transition-colors"
+            >
+              <User className="h-5 w-5" />
+            </button>
+
+            {showUserDropdown && (
+              <div className="absolute right-0 mt-2 w-52 rounded-2xl border border-neutral-100 bg-white p-2.5 shadow-xl ring-1 ring-black/5 z-[2000] animate-fade-in">
+                {user ? (
+                  <>
+                    <div className="px-3 py-2">
+                      <p className="text-[10px] uppercase font-bold tracking-wider text-neutral-400">
+                        Masuk sebagai
+                      </p>
+                      <p className="text-xs font-bold text-neutral-800 truncate mt-0.5">
+                        {user.name}
+                      </p>
+                      <p className="text-[10px] text-neutral-500 truncate">{user.email}</p>
+                    </div>
+                    <hr className="my-1.5 border-neutral-100" />
+                    <button
+                      onClick={handleLogout}
+                      className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-xs font-semibold text-rose-600 hover:bg-rose-50 transition-colors"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Keluar Akun
+                    </button>
+                  </>
+                ) : (
+                  <div className="p-1">
+                    <p className="px-2.5 py-1.5 text-[11px] text-neutral-500 font-medium leading-relaxed">
+                      Masuk untuk melaporkan insiden kriminalitas di sekitar Anda.
+                    </p>
+                    <Link
+                      href="/login"
+                      onClick={() => setShowUserDropdown(false)}
+                      className="mt-2 block w-full rounded-xl bg-[#0B2540] py-2 text-center text-xs font-bold text-white hover:bg-[#0e2f52] transition-colors shadow-md shadow-[#0B2540]/10"
+                    >
+                      Masuk / Daftar
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
       </div>
     </header>
   );
