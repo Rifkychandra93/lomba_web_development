@@ -1,5 +1,7 @@
 import os
 import requests
+import re
+from datetime import datetime, timedelta
 # pyrefly: ignore [missing-import]
 from dotenv import load_dotenv
 
@@ -17,6 +19,101 @@ from pipeline import analyze_article
 from mapper import map_incident_type
 from risk_classifier import calculate_risk
 from geocoder import geocode_location
+
+def parse_date_indonesia(date_str: str) -> datetime:
+    if not date_str:
+        return None
+        
+    date_str = date_str.strip()
+    
+    try:
+        return datetime.fromisoformat(date_str.replace("Z", "+00:00"))
+    except Exception:
+        pass
+
+    months_map = {
+        'jan': 1, 'januari': 1,
+        'feb': 2, 'februari': 2,
+        'mar': 3, 'maret': 3,
+        'apr': 4, 'april': 4,
+        'mei': 5,
+        'jun': 6, 'juni': 6,
+        'jul': 7, 'juli': 7,
+        'agu': 8, 'agustus': 8, 'agt': 8,
+        'sep': 9, 'september': 9,
+        'okt': 10, 'oktober': 10,
+        'nov': 11, 'november': 11,
+        'des': 12, 'desember': 12
+    }
+    
+    cleaned = date_str.lower()
+    for day in ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu', 'hari', 'ini', 'lalu']:
+        cleaned = cleaned.replace(day, '')
+    
+    cleaned = re.sub(r'[,\.\-]', ' ', cleaned)
+    cleaned = cleaned.replace('wib', '').replace('wita', '').replace('wit', '')
+    
+    tokens = cleaned.split()
+    if not tokens:
+        return None
+        
+    day = None
+    month = None
+    year = None
+    time_str = "00:00:00"
+    
+    for tok in tokens:
+        if tok in months_map:
+            month = months_map[tok]
+            break
+            
+    if month:
+        # Find and remove the month token
+        month_tok = [tok for tok in tokens if tok in months_map][0]
+        tokens.remove(month_tok)
+        
+    digits = []
+    for tok in tokens:
+        if tok.isdigit():
+            digits.append(int(tok))
+        elif ':' in tok:
+            time_parts = tok.split(':')
+            if len(time_parts) >= 2:
+                try:
+                    h = int(time_parts[0])
+                    m = int(time_parts[1])
+                    s = int(time_parts[2]) if len(time_parts) > 2 else 0
+                    time_str = f"{h:02d}:{m:02d}:{s:02d}"
+                except ValueError:
+                    pass
+                    
+    for num in digits:
+        if 1900 < num < 2100:
+            year = num
+        elif 1 <= num <= 31:
+            if day is None:
+                day = num
+
+    if day and month and year:
+        try:
+            h, m, s = map(int, time_str.split(':'))
+            return datetime(year, month, day, h, m, s)
+        except Exception:
+            pass
+            
+    for fmt in [
+        "%d %b %Y %H:%M",
+        "%d %B %Y %H:%M",
+        "%Y-%m-%d %H:%M:%S",
+        "%d/%m/%Y %H:%M:%S",
+        "%d-%m-%Y %H:%M:%S"
+    ]:
+        try:
+            return datetime.strptime(date_str, fmt)
+        except Exception:
+            pass
+            
+    return None
 
 BASE_DIR = Path(__file__).resolve().parent
 DATASET_DIR = BASE_DIR / "dataset"
@@ -196,12 +293,15 @@ def send_incident_to_backend(analysis: dict, url: str) -> bool:
         print(f"       [SKIPPED] Geocoding gagal untuk lokasi fallback: {location_name}")
         return False
         
+    pub_date = parse_date_indonesia(article.get("published_at"))
+    published_at_iso = pub_date.isoformat() if pub_date else None
+
     payload = {
         "title": title,
         "url": url,
         "description": content,
         "source": article.get("source", "Internet"),
-        "publishedAt": None,
+        "publishedAt": published_at_iso,
         
         "incidentTitle": f"[{incident_type}] {title[:50]}...",
         "incidentDescription": content[:200] + "..." if content else None,
@@ -257,6 +357,16 @@ def crawl_and_analyze():
             print(f"  [SCRAPING] {link}")
             try:
                 analysis = analyze_article(link)
+                
+                # Cek filter tanggal: hanya terima yang kurang dari 1 bulan (30 hari)
+                published_at_str = analysis.get("article", {}).get("published_at")
+                if published_at_str:
+                    pub_date = parse_date_indonesia(published_at_str)
+                    if pub_date:
+                        one_month_ago = datetime.now() - timedelta(days=30)
+                        if pub_date < one_month_ago:
+                            print(f"    -> [DITOLAK] Berita sudah lebih dari 1 bulan ({published_at_str}).")
+                            continue
                 
                 title = analysis["article"]["title"]
                 content = analysis["article"]["content"]

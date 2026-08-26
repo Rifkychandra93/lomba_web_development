@@ -25,6 +25,7 @@ interface CreateIncidentData {
   riskLevel?: RiskLevel;
   mlConfidence?: number;
   newsId?: string;
+  detectedAt?: Date;
 }
 
 export const createIncident = async (
@@ -41,6 +42,7 @@ export const createIncident = async (
       riskLevel: data.riskLevel ?? "MEDIUM",
       mlConfidence: data.mlConfidence,
       newsId: data.newsId,
+      detectedAt: data.detectedAt,
     },
     include: {
       news: true,
@@ -71,8 +73,16 @@ export const getIncidentById = async (id: string) => {
 };
 
 export const getMapIncidents = async () => {
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
   // 1. Ambil data insiden dari ML Crawler
   const incidents = await prisma.incident.findMany({
+    where: {
+      detectedAt: {
+        gte: oneMonthAgo,
+      },
+    },
     orderBy: {
       detectedAt: "desc",
     },
@@ -92,6 +102,9 @@ export const getMapIncidents = async () => {
   const verifiedReports = await prisma.report.findMany({
     where: {
       status: "VERIFIED",
+      createdAt: {
+        gte: oneMonthAgo,
+      },
     },
     orderBy: {
       createdAt: "desc",

@@ -129,6 +129,7 @@ export const analyzeNewsResult = async (
           ? Number(mlConfidence)
           : undefined,
       newsId: news.id,
+      detectedAt: publishedDate,
     });
 
     res.status(201).json({
