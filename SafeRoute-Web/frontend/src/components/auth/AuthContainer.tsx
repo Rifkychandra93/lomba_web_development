@@ -140,7 +140,7 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
   };
 
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-[#B9B9B4] flex">
+    <main className="relative min-h-screen w-full overflow-hidden bg-white flex">
       <div
         className={`absolute top-0 bottom-0 left-0 w-1/2 bg-[#0B2540] hidden md:flex flex-col items-center justify-center px-12 overflow-hidden z-20 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
           isRegister ? "translate-x-0" : "translate-x-full"
@@ -219,7 +219,7 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
                 <label className="mb-1.5 block text-xs font-bold text-neutral-800">
                   Email or Phone
                 </label>
-                <div className="flex items-center gap-3 rounded-xl bg-black/10 px-4 py-3 focus-within:ring-2 focus-within:ring-[#0B2540] transition">
+                <div className="flex items-center gap-3 rounded-xl bg-white border border-neutral-200 shadow-[0_2px_10px_rgba(0,0,0,0.04)] px-4 py-3 focus-within:border-[#0B2540] focus-within:ring-2 focus-within:ring-[#0B2540]/20 transition">
                   <UserIcon />
                   <input
                     value={emailOrPhone}
@@ -244,7 +244,7 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
                     Forgot password?
                   </a>
                 </div>
-                <div className="flex items-center gap-3 rounded-xl bg-black/10 px-4 py-3 focus-within:ring-2 focus-within:ring-[#0B2540] transition">
+                <div className="flex items-center gap-3 rounded-xl bg-white border border-neutral-200 shadow-[0_2px_10px_rgba(0,0,0,0.04)] px-4 py-3 focus-within:border-[#0B2540] focus-within:ring-2 focus-within:ring-[#0B2540]/20 transition">
                   <LockIcon />
                   <input
                     type={showLoginPassword ? "text" : "password"}
@@ -342,7 +342,7 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
                 <label className="mb-1.5 block text-xs font-bold text-neutral-800">
                   Full Name
                 </label>
-                <div className="flex items-center gap-3 rounded-xl bg-black/10 px-4 py-3 focus-within:ring-2 focus-within:ring-[#0B2540] transition">
+                <div className="flex items-center gap-3 rounded-xl bg-white border border-neutral-200 shadow-[0_2px_10px_rgba(0,0,0,0.04)] px-4 py-3 focus-within:border-[#0B2540] focus-within:ring-2 focus-within:ring-[#0B2540]/20 transition">
                   <UserIcon />
                   <input
                     value={name}
@@ -359,7 +359,7 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
                 <label className="mb-1.5 block text-xs font-bold text-neutral-800">
                   Phone Number
                 </label>
-                <div className="flex items-center gap-3 rounded-xl bg-black/10 px-4 py-3 focus-within:ring-2 focus-within:ring-[#0B2540] transition">
+                <div className="flex items-center gap-3 rounded-xl bg-white border border-neutral-200 shadow-[0_2px_10px_rgba(0,0,0,0.04)] px-4 py-3 focus-within:border-[#0B2540] focus-within:ring-2 focus-within:ring-[#0B2540]/20 transition">
                   <PhoneIcon />
                   <input
                     type="tel"
@@ -377,7 +377,7 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
                 <label className="mb-1.5 block text-xs font-bold text-neutral-800">
                   Email Address
                 </label>
-                <div className="flex items-center gap-3 rounded-xl bg-black/10 px-4 py-3 focus-within:ring-2 focus-within:ring-[#0B2540] transition">
+                <div className="flex items-center gap-3 rounded-xl bg-white border border-neutral-200 shadow-[0_2px_10px_rgba(0,0,0,0.04)] px-4 py-3 focus-within:border-[#0B2540] focus-within:ring-2 focus-within:ring-[#0B2540]/20 transition">
                   <MailIcon />
                   <input
                     type="email"
@@ -395,7 +395,7 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
                 <label className="mb-1.5 block text-xs font-bold text-neutral-800">
                   Password
                 </label>
-                <div className="flex items-center gap-3 rounded-xl bg-black/10 px-4 py-3 focus-within:ring-2 focus-within:ring-[#0B2540] transition">
+                <div className="flex items-center gap-3 rounded-xl bg-white border border-neutral-200 shadow-[0_2px_10px_rgba(0,0,0,0.04)] px-4 py-3 focus-within:border-[#0B2540] focus-within:ring-2 focus-within:ring-[#0B2540]/20 transition">
                   <LockIcon />
                   <input
                     type={showRegisterPassword ? "text" : "password"}
