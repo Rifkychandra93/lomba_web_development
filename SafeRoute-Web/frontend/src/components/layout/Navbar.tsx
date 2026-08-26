@@ -24,7 +24,7 @@ export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" 
 
       <nav className="flex h-full items-center gap-8">
         <div className="relative flex h-full items-center">
-          <Link href="/peta" className={`text-sm hover:text-gray-900 ${activePage === "peta" ? "text-[#0B2540] font-bold" : "text-gray-500 font-medium"}`}>
+          <Link href="/home" className={`text-sm hover:text-gray-900 ${activePage === "peta" ? "text-[#0B2540] font-bold" : "text-gray-500 font-medium"}`}>
             Peta
           </Link>
           {activePage === "peta" && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#0B2540]" />}
