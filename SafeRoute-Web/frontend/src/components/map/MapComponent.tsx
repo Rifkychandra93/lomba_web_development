@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -29,6 +29,7 @@ import {
   LogOut,
   Clock,
   Compass,
+  X,
 } from "lucide-react";
 import { getMapIncidents } from "@/src/services/incident.service";
 import { getCurrentUser } from "@/src/services/auth.service";
@@ -69,15 +70,16 @@ function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon
   return R * c;
 }
 
+// Data Insiden Mock (Disesuaikan ke Depok)
 const MOCK_INCIDENTS: MapPoint[] = [
   {
     id: "mock-1",
     sourceType: "ML_CRAWLER",
-    title: "Begal Motor Sajam di Kemang",
+    title: "Begal Motor Sajam di Margonda",
     description: "Kejadian begal terjadi sekitar dini hari pukul 02:00 WIB. Pelaku berboncengan menggunakan senjata tajam.",
-    latitude: -6.273,
-    longitude: 106.815,
-    address: "Jl. Kemang Raya, Mampang Prapatan, Jakarta Selatan",
+    latitude: -6.372,
+    longitude: 106.832,
+    address: "Jl. Margonda Raya, Beji, Kota Depok",
     incidentType: "BEGAL",
     riskLevel: "HIGH",
     detectedAt: new Date(Date.now() - 3600000 * 24).toISOString(),
@@ -85,11 +87,11 @@ const MOCK_INCIDENTS: MapPoint[] = [
   {
     id: "mock-2",
     sourceType: "ML_CRAWLER",
-    title: "Tawuran Remaja di Manggarai",
+    title: "Tawuran Remaja di Depok Lama",
     description: "Tawuran antar kelompok remaja menggunakan batu dan petasan. Kepolisian telah membubarkan massa.",
-    latitude: -6.209,
-    longitude: 106.849,
-    address: "Stasiun Manggarai, Tebet, Jakarta Selatan",
+    latitude: -6.390,
+    longitude: 106.820,
+    address: "Depok Lama, Pancoran Mas, Kota Depok",
     incidentType: "TAWURAN",
     riskLevel: "CRITICAL",
     detectedAt: new Date(Date.now() - 3600000 * 6).toISOString(),
@@ -97,11 +99,11 @@ const MOCK_INCIDENTS: MapPoint[] = [
   {
     id: "mock-3",
     sourceType: "USER_REPORT",
-    title: "Pencurian Helm di Parkiran Sunter Mall",
+    title: "Pencurian Helm di Parkiran ITC Depok",
     description: "Helm fullface hilang diambil orang di area parkiran luar motor. Kejadian siang hari.",
-    latitude: -6.139,
-    longitude: 106.883,
-    address: "Sunter Mall, Tanjung Priok, Jakarta Utara",
+    latitude: -6.390,
+    longitude: 106.823,
+    address: "ITC Depok, Depok Lama, Kota Depok",
     incidentType: "PENCURIAN",
     riskLevel: "MEDIUM",
     detectedAt: new Date(Date.now() - 3600000 * 12).toISOString(),
@@ -110,22 +112,43 @@ const MOCK_INCIDENTS: MapPoint[] = [
   {
     id: "mock-4",
     sourceType: "ML_CRAWLER",
-    title: "Aksi Pembacokan Geng Motor Daan Mogot",
+    title: "Aksi Pembacokan Geng Motor Jalan Juanda",
     description: "Korban mengalami luka di tangan setelah dihadang geng motor saat pulang kerja larut malam.",
-    latitude: -6.155,
-    longitude: 106.755,
-    address: "Jl. Daan Mogot, Kalideres, Jakarta Barat",
+    latitude: -6.389,
+    longitude: 106.815,
+    address: "Jl. Juanda, Depok I, Kota Depok",
     incidentType: "PEMBACOKAN",
     riskLevel: "CRITICAL",
     detectedAt: new Date().toISOString(),
   },
+  {
+    id: "mock-5",
+    sourceType: "USER_REPORT",
+    title: "Begal Sadis di Cisalak Pasar Rebo",
+    description: "Korban diancam celurit dan motor matic berhasil dibawa kabur pelaku berjumlah 3 orang.",
+    latitude: -6.372,
+    longitude: 106.855,
+    address: "Cisalak, Cimanggis, Kota Depok",
+    incidentType: "BEGAL",
+    riskLevel: "CRITICAL",
+    detectedAt: new Date(Date.now() - 3600000 * 48).toISOString(),
+    reporterName: "Alvin Vino",
+  },
 ];
+
+// Koordinat Pusat Depok & Batas Wilayah
+const DEPOK_CENTER: [number, number] = [-6.390, 106.825]; 
+const DEPOK_BOUNDS: L.LatLngBoundsExpression = L.latLngBounds(
+  [-6.33, 106.75], // Batas Utara-Barat (Cimanggis / Beji)
+  [-6.45, 106.90]  // Batas Selatan-Timur (Pancoran Mas / Sawangan)
+);
+const DEPOK_MAX_ZOOM = 16;
 
 function MapController({ center, zoom, bounds }: { center?: [number, number]; zoom?: number; bounds?: L.LatLngBoundsExpression | null; }) {
   const map = useMap();
   useEffect(() => {
     if (bounds) {
-      map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
+      map.fitBounds(bounds, { padding: [50, 50], maxZoom: DEPOK_MAX_ZOOM });
     } else if (center) {
       map.setView(center, zoom || map.getZoom(), { animate: true, duration: 1 });
     }
@@ -147,11 +170,14 @@ export default function MapComponent() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
 
-  const [mapCenter, setMapCenter] = useState<[number, number]>([-6.2088, 106.8456]);
-  const [mapZoom, setMapZoom] = useState<number>(12);
+  const [mapCenter, setMapCenter] = useState<[number, number]>(DEPOK_CENTER);
+  const [mapZoom, setMapZoom] = useState<number>(13);
   const [mapBounds, setMapBounds] = useState<L.LatLngBoundsExpression | null>(null);
   const [tileLayerUrl, setTileLayerUrl] = useState<string>("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
   const [showTileSelector, setShowTileSelector] = useState(false);
+
+  // State untuk Modal Warning
+  const [showLocationWarning, setShowLocationWarning] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
@@ -164,8 +190,6 @@ export default function MapComponent() {
   const [routeDuration, setRouteDuration] = useState<number | null>(null);
   const [incidentsNearRoute, setIncidentsNearRoute] = useState<MapPoint[]>([]);
   const [routeLoading, setRouteLoading] = useState(false);
-
-  // State Baru untuk Mengatur munculnya hasil setalah klik tombol
   const [isNavigating, setIsNavigating] = useState(false);
 
   const [clickMode, setClickMode] = useState<"none" | "start" | "dest" | "report">("none");
@@ -193,7 +217,10 @@ export default function MapComponent() {
       try {
         const res = await getMapIncidents();
         if (res.success && res.data && res.data.length > 0) {
-          setIncidents(res.data as any as MapPoint[]);
+          const depokData = res.data.filter((inc: any) => 
+            inc.latitude > -6.45 && inc.latitude < -6.33 && inc.longitude > 106.75 && inc.longitude < 106.90
+          );
+          setIncidents(depokData.length > 0 ? depokData : MOCK_INCIDENTS);
         } else {
           setIncidents(MOCK_INCIDENTS);
         }
@@ -247,10 +274,15 @@ export default function MapComponent() {
         const item = data[0];
         const lat = parseFloat(item.lat);
         const lon = parseFloat(item.lon);
-        setMapCenter([lat, lon]);
-        setMapZoom(15);
-        setDestPoint({ name: item.display_name, lat, lng: lon });
-        setDestInput(item.display_name);
+        
+        if (lat > -6.45 && lat < -6.33 && lon > 106.75 && lon < 106.90) {
+          setMapCenter([lat, lon]);
+          setMapZoom(15);
+          setDestPoint({ name: item.display_name, lat, lng: lon });
+          setDestInput(item.display_name);
+        } else {
+          setShowLocationWarning(true); // Munculkan modal
+        }
       }
     } catch (e) {
       console.error(e);
@@ -273,12 +305,11 @@ export default function MapComponent() {
     }
   };
 
-  // Fungsi Route Baru yang hanya dipanggil saat tombol diklik
   const handleStartNavigation = async () => {
     if (!startPoint || !destPoint) return;
     
     setRouteLoading(true);
-    setIsNavigating(true); // Munculkan card hasil navigasi
+    setIsNavigating(true);
 
     try {
       const res = await fetch(`https://router.project-osrm.org/route/v1/driving/${startPoint.lng},${startPoint.lat};${destPoint.lng},${destPoint.lat}?overview=full&geometries=geojson`);
@@ -311,6 +342,13 @@ export default function MapComponent() {
     if (clickMode === "none") return;
     setRouteLoading(true);
 
+    if (lat < -6.45 || lat > -6.33 || lng < 106.75 || lng > 106.90) {
+      setShowLocationWarning(true); // Munculkan modal
+      setClickMode("none");
+      setRouteLoading(false);
+      return;
+    }
+
     let displayName = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
     try {
       const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`, { headers: { "User-Agent": "SafeRoute-NextJS" } });
@@ -339,8 +377,14 @@ export default function MapComponent() {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
+
+        if (lat < -6.45 || lat > -6.33 || lng < 106.75 || lng > 106.90) {
+          setShowLocationWarning(true); // Munculkan modal
+          return;
+        }
+
         setMapCenter([lat, lng]);
-        setMapZoom(14);
+        setMapZoom(15);
 
         try {
           const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`, { headers: { "User-Agent": "SafeRoute-NextJS" } });
@@ -353,7 +397,7 @@ export default function MapComponent() {
         }
       }, (error) => {
         console.error(error);
-        alert("Gagal mengakses GPS. Harap berikan izin akses lokasi.");
+        setShowLocationWarning(true);
       });
     }
   };
@@ -397,7 +441,7 @@ export default function MapComponent() {
           <div className="relative hidden sm:flex items-center">
             <input
               type="text"
-              placeholder="Cari lokasi tujuan..."
+              placeholder="Cari lokasi di Depok..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleGlobalSearch()}
@@ -446,7 +490,16 @@ export default function MapComponent() {
 
       <div className="relative flex flex-1 w-full overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <MapContainer center={mapCenter} zoom={mapZoom} className="h-full w-full" zoomControl={false}>
+          <MapContainer 
+            center={mapCenter} 
+            zoom={mapZoom} 
+            className="h-full w-full" 
+            zoomControl={false}
+            maxBounds={DEPOK_BOUNDS}
+            maxBoundsViscosity={1.0}
+            minZoom={12}
+            maxZoom={DEPOK_MAX_ZOOM}
+          >
             <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url={tileLayerUrl} />
             <MapController center={mapCenter} zoom={mapZoom} bounds={mapBounds} />
             <MapEventsHandler onClick={handleMapClick} />
@@ -511,10 +564,10 @@ export default function MapComponent() {
           <button onClick={handleLocateUser} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg hover:bg-slate-50 transition-colors" title="Lokasi Saya">
             <Locate className="h-5 w-5" />
           </button>
-          <button onClick={() => setMapZoom((prev) => Math.min(prev + 1, 18))} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg hover:bg-slate-50 transition-colors" title="Perbesar">
+          <button onClick={() => setMapZoom((prev) => Math.min(prev + 1, DEPOK_MAX_ZOOM))} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg hover:bg-slate-50 transition-colors" title="Perbesar">
             <Plus className="h-5 w-5" />
           </button>
-          <button onClick={() => setMapZoom((prev) => Math.max(prev - 1, 3))} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg hover:bg-slate-50 transition-colors" title="Perkecil">
+          <button onClick={() => setMapZoom((prev) => Math.max(prev - 1, 12))} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg hover:bg-slate-50 transition-colors" title="Perkecil">
             <Minus className="h-5 w-5" />
           </button>
         </div>
@@ -527,7 +580,7 @@ export default function MapComponent() {
           </div>
         )}
 
-        {/* PANEL NAVIGASI KIRI (DIUBAH DISINI) */}
+        {/* PANEL NAVIGASI KIRI */}
         <div className="absolute left-6 top-6 bottom-6 z-10 w-80 max-w-sm shrink-0 flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white/95 backdrop-blur-md shadow-2xl transition-all duration-300">
           
           <div className="flex flex-col overflow-y-auto p-5">
@@ -536,7 +589,7 @@ export default function MapComponent() {
               Navigasi Aman
             </h2>
             <p className="mt-1 text-[11px] text-slate-400 leading-normal font-medium">
-              Pilih titik awal dan tujuan Anda untuk menganalisis tingkat keamanan rute perjalanan.
+              Pilih titik awal dan tujuan Anda untuk menganalisis tingkat keamanan rute perjalanan di Depok.
             </p>
 
             <div className="relative mt-5">
@@ -583,7 +636,6 @@ export default function MapComponent() {
               )}
             </div>
 
-            {/* TOMBOL MULAI NAVIGASI */}
             <button
               onClick={handleStartNavigation}
               disabled={routeLoading || !startPoint || !destPoint}
@@ -597,11 +649,8 @@ export default function MapComponent() {
               {routeLoading ? "Menghitung..." : "Mulai Navigasi"}
             </button>
 
-            {/* CARD HASIL NAVIGASI (HANYA MUNCUL SETELAH KLIK MULAI) */}
             {isNavigating && !routeLoading && routePolyline.length > 0 && (
               <div className="mt-6 animate-fade-in space-y-3">
-                
-                {/* Card 1: Rute Utama (Seperti gambar) */}
                 <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 flex justify-between items-center shadow-sm">
                   <div className="flex-1">
                     <div className="flex items-end gap-1">
@@ -623,7 +672,6 @@ export default function MapComponent() {
                   </div>
                 </div>
 
-                {/* Card 2: Alternatif (Opsional, meniru gambar jika ada risiko) */}
                 {incidentsNearRoute.length > 0 && (
                   <div className="rounded-xl border border-orange-200 bg-orange-50 p-3 flex justify-between items-center shadow-sm">
                     <div className="flex-1">
@@ -646,7 +694,6 @@ export default function MapComponent() {
                   </div>
                 )}
 
-                {/* Detail Analisis */}
                 <div className="rounded-xl border border-slate-100 bg-slate-50/50 p-4">
                   <h4 className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
                     <AlertTriangle className="h-4 w-4 text-amber-500" /> Titik Rawan ({incidentsNearRoute.length})
@@ -673,7 +720,6 @@ export default function MapComponent() {
               </div>
             )}
 
-            {/* Empty State Awal (Sebelum klik Mulai Navigasi) */}
             {!isNavigating && (
               <div className="mt-8 flex flex-col items-center justify-center p-6 text-center border border-dashed border-slate-200 rounded-2xl">
                 <Compass className="h-8 w-8 text-slate-300" />
@@ -692,6 +738,42 @@ export default function MapComponent() {
           </div>
         </div>
       </div>
+
+      {/* MODAL WARNING (Pengganti Alert) */}
+      {showLocationWarning && (
+        <div className="fixed inset-0 z-[3000] flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl border border-slate-100">
+            <button
+              onClick={() => setShowLocationWarning(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            
+            <div className="flex flex-col items-center text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-rose-50 text-rose-500 mb-4">
+                <AlertTriangle className="h-7 w-7" />
+              </div>
+              
+              <h3 className="text-lg font-extrabold text-slate-800">
+                Lokasi di Luar Area Depok
+              </h3>
+              
+              <p className="mt-2 text-xs text-slate-500 leading-relaxed font-medium">
+                Sistem SafeRoute saat ini hanya tersedia untuk wilayah <span className="font-bold text-slate-700">Kota Depok</span>. 
+                Silakan pilih atau cari lokasi lain yang masih berada di dalam area Depok.
+              </p>
+              
+              <button
+                onClick={() => setShowLocationWarning(false)}
+                className="mt-5 w-full rounded-xl bg-[#0B2540] py-2.5 text-sm font-bold text-white hover:bg-[#13315c] transition-colors shadow-lg shadow-blue-900/10"
+              >
+                Mengerti
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
