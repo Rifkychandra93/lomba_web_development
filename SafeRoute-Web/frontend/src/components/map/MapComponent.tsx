@@ -392,6 +392,11 @@ export default function MapComponent() {
                     </div>
                     <h4 className="mt-2 font-bold text-slate-800 text-sm leading-tight">{inc.title}</h4>
                     {inc.description && <p className="mt-1 text-slate-600 leading-normal text-[11px]">{inc.description}</p>}
+                    {inc.imageUrl && (
+                      <div className="mt-2 overflow-hidden rounded-lg border border-slate-100">
+                        <img src={inc.imageUrl} alt="Bukti Kejadian" className="w-full max-h-32 object-cover" />
+                      </div>
+                    )}
                     {inc.address && <p className="mt-2 flex items-start gap-1 text-[10px] text-slate-500 italic"><MapPin className="h-3 w-3 shrink-0 text-slate-400 mt-0.5" /><span>{inc.address}</span></p>}
                     <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2 text-[10px] text-slate-400">
                       <span>{new Date(inc.detectedAt).toLocaleDateString("id-ID")}</span>

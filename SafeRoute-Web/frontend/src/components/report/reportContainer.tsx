@@ -50,6 +50,15 @@ const CATEGORIES = [
   { value: "LAINNYA", label: "Lainnya" },
 ] as const;
 
+const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+};
+
 export default function LaporPage() {
   const router = useRouter();
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -253,6 +262,20 @@ export default function LaporPage() {
 
     setLoading(true);
     try {
+      let base64Image: string | undefined = undefined;
+      if (photoFile) {
+        base64Image = await fileToBase64(photoFile);
+      }
+
+      let reportCreatedAt: string | undefined = undefined;
+      if (incidentDate) {
+        if (incidentTime) {
+          reportCreatedAt = new Date(`${incidentDate}T${incidentTime}`).toISOString();
+        } else {
+          reportCreatedAt = new Date(`${incidentDate}T00:00:00`).toISOString();
+        }
+      }
+
       const title = `Laporan ${
         CATEGORIES.find((c) => c.value === category)?.label || category
       }`;
@@ -265,6 +288,8 @@ export default function LaporPage() {
         riskLevel: "MEDIUM",
         location: selectedAddress,
         address: selectedAddress,
+        imageUrl: base64Image,
+        createdAt: reportCreatedAt,
       });
 
       if (res.success) {

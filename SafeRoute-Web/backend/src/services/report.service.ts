@@ -10,6 +10,8 @@ interface CreateReportData {
 
   incidentType:
     | "BEGAL"
+    | "JAMBRET"
+    | "CURANMOR"
     | "KEBAKARAN"
     | "KECELAKAAN"
     | "TAWURAN"
@@ -21,6 +23,7 @@ interface CreateReportData {
 
   imageUrl?: string;
   userId: string;
+  createdAt?: Date;
 }
 
 export const createReport = async ({
@@ -34,6 +37,7 @@ export const createReport = async ({
   riskLevel = "MEDIUM",
   imageUrl,
   userId,
+  createdAt,
 }: CreateReportData) => {
   return prisma.report.create({
     data: {
@@ -47,6 +51,7 @@ export const createReport = async ({
       riskLevel,
       imageUrl,
       userId,
+      createdAt,
     },
     include: {
       user: {

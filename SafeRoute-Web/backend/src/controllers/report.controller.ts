@@ -24,8 +24,8 @@ export const create = async (
       incidentType,
       riskLevel,
       imageUrl,
+      createdAt,
     } = req.body;
-
     if (
       !title ||
       !description ||
@@ -114,6 +114,7 @@ export const create = async (
       riskLevel,
       imageUrl,
       userId: req.user!.userId,
+      createdAt: createdAt ? new Date(createdAt) : undefined,
     });
 
     res.status(201).json({
