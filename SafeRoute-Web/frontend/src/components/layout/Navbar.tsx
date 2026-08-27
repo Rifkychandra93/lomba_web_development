@@ -178,6 +178,14 @@ export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" 
                         <p className="text-[10px] text-neutral-500 truncate">{user.email}</p>
                       </div>
                       <hr className="my-1.5 border-neutral-100" />
+                      <Link
+                        href="/profile"
+                        onClick={() => setShowUserDropdown(false)}
+                        className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-xs font-semibold text-neutral-700 hover:bg-neutral-50 transition-colors"
+                      >
+                        <User className="h-4 w-4 text-neutral-500" />
+                        Profil Saya
+                      </Link>
                       <button
                         onClick={handleLogout}
                         className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-xs font-semibold text-rose-600 hover:bg-rose-50 transition-colors"
