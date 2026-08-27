@@ -40,3 +40,11 @@ export const getCurrentUser = async () => {
 
   return response.data;
 };
+
+export const googleLogin = async (idToken: string) => {
+  const response = await api.post<AuthResponse>("/auth/google",{
+    credential: idToken,
+  });
+
+  return response.data;
+};

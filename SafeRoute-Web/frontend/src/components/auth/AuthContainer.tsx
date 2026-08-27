@@ -1,8 +1,8 @@
 "use client";
 
-import { FormEvent, useMemo, useState, useEffect } from "react";
+import { FormEvent, useMemo, useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { loginUser, registerUser } from "@/src/services/auth.service";
+import { loginUser, registerUser, googleLogin } from "@/src/services/auth.service";
 
 interface AuthContainerProps {
   initialMode: "login" | "register";
@@ -30,6 +30,10 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   const [agreed, setAgreed] = useState(false);
 
+  // --- Tambahan untuk Google Sign-In ---
+  const googleButtonRef = useRef<HTMLDivElement>(null);
+  const [googleReady, setGoogleReady] = useState(false);
+
   useEffect(() => {
     const handlePopState = () => {
       const targetMode = window.location.pathname === "/register";
@@ -44,6 +48,42 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
     };
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  useEffect(() => {
+    const scriptId = "google-identity-script";
+
+    function initializeGoogle() {
+      // @ts-ignore -- window.google disuntik oleh script eksternal Google
+      if (!window.google || !googleButtonRef.current) return;
+
+      // @ts-ignore
+      window.google.accounts.id.initialize({
+        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+        callback: handleGoogleCredential,
+      });
+
+      // @ts-ignore
+      window.google.accounts.id.renderButton(googleButtonRef.current, {
+        theme: "outline",
+        size: "large",
+        width: 280,
+      });
+
+      setGoogleReady(true);
+    }
+
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.id = scriptId;
+      script.async = true;
+      script.defer = true;
+      script.onload = initializeGoogle;
+      document.body.appendChild(script);
+    } else {
+      initializeGoogle();
+    }
   }, []);
 
   const handleSwitchMode = (registerMode: boolean, preserveSuccess = false) => {
@@ -135,12 +175,53 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
     }
   };
 
+  // --- Tambahan: terima token dari Google, kirim ke backend ---
+  async function handleGoogleCredential(response: { credential: string }) {
+    setLoading(true);
+    setError("");
+
+    try {
+      const result = await googleLogin(response.credential);
+
+      localStorage.setItem("token", result.data.token);
+      localStorage.setItem("user", JSON.stringify(result.data.user));
+
+      router.push("/home");
+    } catch (err: any) {
+      console.error(err);
+      setError(
+        err?.response?.data?.message || "Login dengan Google gagal, coba lagi."
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // --- Diganti: sebelumnya cuma console.log, sekarang trigger tombol Google asli ---
   const handleGoogleSignIn = () => {
-    console.log("Sign in with Google");
+    if (!googleReady) {
+      setError("Google Sign-In belum siap, tunggu sebentar lalu coba lagi.");
+      return;
+    }
+
+    const hiddenGoogleButton = googleButtonRef.current?.querySelector(
+      'div[role="button"]'
+    ) as HTMLElement | null;
+
+    hiddenGoogleButton?.click();
   };
 
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-white flex">
+      <div
+        ref={googleButtonRef}
+        style={{
+          position: "absolute",
+          top: "-9999px",
+          left: "-9999px",
+        }}
+      />
+
       <div
         className={`absolute top-0 bottom-0 left-0 w-1/2 bg-[#0B2540] hidden md:flex flex-col items-center justify-center px-12 overflow-hidden z-20 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
           isRegister ? "translate-x-0" : "translate-x-full"
@@ -479,7 +560,6 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
   );
 }
 
-// Icons
 function UserIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="shrink-0 text-neutral-700">

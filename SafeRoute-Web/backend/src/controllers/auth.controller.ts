@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { loginUser, registerUser } from "../services/auth.service";
+import { loginUser, registerUser, googleLogin } from "../services/auth.service";
 
 export const register = async (
   req: Request,
@@ -70,6 +70,39 @@ export const login = async (
     res.status(200).json({
       success: true,
       message: "Login berhasil",
+      data: result,
+    });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Terjadi kesalahan";
+
+    res.status(401).json({
+      success: false,
+      message,
+    });
+  }
+};
+
+export const googleLoginHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { credential } = req.body;
+
+    if (!credential) {
+      res.status(400).json({
+        success: false,
+        message: "Token 'credential' wajib dikirim",
+      });
+      return;
+    }
+
+    const result = await googleLogin({ idToken: credential });
+
+    res.status(200).json({
+      success: true,
+      message: "Login dengan Google berhasil",
       data: result,
     });
   } catch (error) {
