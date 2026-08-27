@@ -414,7 +414,6 @@ export default function LaporPage() {
               <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <MousePointerClick className="h-4 w-4 text-[#0B2540]" />
                     <span className="text-xs font-bold text-[#0B2540]">
                       Klik Peta untuk Pilih Titik
                     </span>
@@ -458,9 +457,6 @@ export default function LaporPage() {
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
                   <h3 className="flex items-center gap-2 text-sm font-bold text-[#0B2540]">
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0B2540]/10 text-[10px] font-bold text-[#0B2540]">
-                      1
-                    </span>
                     Kategori Kejadian
                   </h3>
                   
