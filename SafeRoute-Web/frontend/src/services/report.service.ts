@@ -11,6 +11,7 @@ export interface CreateReportPayload {
   incidentType: Report["incidentType"];
   riskLevel?: Report["riskLevel"];
   imageUrl?: string;
+  createdAt?: string;
 }
 
 export const createReport = async (

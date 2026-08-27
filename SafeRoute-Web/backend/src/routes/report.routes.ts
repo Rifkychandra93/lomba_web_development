@@ -11,7 +11,7 @@ import { authenticate, requireAdmin } from "../middleware/auth.middleware";
 
 const router = Router();
 
-router.use(getVerified);
+router.get("/verified", getVerified);
 router.use(authenticate);
 
 router.post("/", create);
