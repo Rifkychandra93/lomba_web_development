@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, register } from "../controllers/auth.controller";
+import { login, register, googleLoginHandler } from "../controllers/auth.controller";
 import { authenticate, AuthRequest } from "../middleware/auth.middleware";
 import prisma from "../config/database";
 
@@ -7,6 +7,7 @@ const router = Router();
 
 router.post("/register", register);
 router.post("/login", login);
+router.post("/google", googleLoginHandler);
 
 router.get("/me", authenticate, async (req: AuthRequest, res) => {
   try {
