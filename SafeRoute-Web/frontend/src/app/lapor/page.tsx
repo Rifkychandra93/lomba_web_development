@@ -1,9 +1,13 @@
 "use client"
 
 import ReportForm from "@/src/components/report/reportContainer";
+import { Navbar } from "@/src/components/layout/Navbar"
 
 export default function ReportPage() {
     return (
-        <ReportForm />
+        <>
+            <Navbar activePage="lapor" />
+            <ReportForm />
+        </>
     );
 }

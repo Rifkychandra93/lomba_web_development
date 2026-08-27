@@ -24,7 +24,6 @@ import {
 } from "lucide-react";
 import { createReport } from "@/src/services/report.service";
 import { getCurrentUser } from "@/src/services/auth.service";
-import { Navbar } from "@/src/components/layout/Navbar";
 
 const ReportMap = dynamic(() => import("@/src/components/report/ReportMap"), {
   ssr: false,
@@ -57,7 +56,6 @@ export default function LaporPage() {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [navbarSearch, setNavbarSearch] = useState("");
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -115,34 +113,6 @@ export default function LaporPage() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const handleNavbarSearch = async () => {
-    if (!navbarSearch.trim()) return;
-    setLoadingSuggestions(true);
-    try {
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-          navbarSearch
-        )}&limit=5&countrycodes=id`,
-        { headers: { "User-Agent": "SafeRoute-NextJS" } }
-      );
-      const data = await res.json();
-      if (data && data.length > 0) {
-        const item = data[0];
-        const lat = parseFloat(item.lat);
-        const lng = parseFloat(item.lon);
-        setSelectedLat(lat);
-        setSelectedLng(lng);
-        setSelectedAddress(item.display_name);
-        setSearchQuery(item.display_name);
-        setNavbarSearch(item.display_name);
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoadingSuggestions(false);
-    }
-  };
 
   const handleSearch = async () => {
     if (searchQuery.length < 3) return;
@@ -320,18 +290,11 @@ export default function LaporPage() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-    router.push("/login");
-  };
 
   const selectedCategoryLabel = CATEGORIES.find((c) => c.value === category)?.label || "Pilih Kategori";
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 font-sans">
-      <Navbar activePage="lapor" />
 
       <main className="flex-1">
         <div className="mx-auto max-w-6xl px-6 py-8">
