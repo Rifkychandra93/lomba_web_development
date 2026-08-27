@@ -30,7 +30,6 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   const [agreed, setAgreed] = useState(false);
 
-  // --- Tambahan untuk Google Sign-In ---
   const googleButtonRef = useRef<HTMLDivElement>(null);
   const [googleReady, setGoogleReady] = useState(false);
 
@@ -197,7 +196,6 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
     }
   }
 
-  // --- Diganti: sebelumnya cuma console.log, sekarang trigger tombol Google asli ---
   const handleGoogleSignIn = () => {
     if (!googleReady) {
       setError("Google Sign-In belum siap, tunggu sebentar lalu coba lagi.");
