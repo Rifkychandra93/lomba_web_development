@@ -32,7 +32,6 @@ export default function ProfilePage() {
 
     const loadProfileData = async () => {
       try {
-        // Fetch user profile and user reports concurrently
         const [userRes, reportsRes] = await Promise.all([
           getCurrentUser(),
           getMyReports(),
@@ -66,7 +65,6 @@ export default function ProfilePage() {
     router.push("/login");
   };
 
-  // Calculate stats based on reports
   const total = reports.length;
   const verified = reports.filter((r) => r.status === "VERIFIED").length;
   const pending = reports.filter((r) => r.status === "PENDING").length;
@@ -90,19 +88,12 @@ export default function ProfilePage() {
     <div className="flex min-h-screen flex-col bg-[#F8FAFC]">
       <Navbar activePage={undefined} />
 
-      {/* Main Container */}
       <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-8 space-y-6">
-        {/* Profile Info Header */}
         <ProfileHeader user={user} stats={{ total, verified, pending }} />
-
-        {/* Content Layout Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-          {/* Left Column: Account Settings */}
           <div className="md:col-span-4 lg:col-span-3">
             <SidebarSettings onLogout={handleLogout} />
           </div>
-
-          {/* Right Column: Report History List */}
           <div className="md:col-span-8 lg:col-span-9">
             <ReportHistory reports={reports} />
           </div>

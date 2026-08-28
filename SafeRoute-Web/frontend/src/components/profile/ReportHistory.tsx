@@ -15,13 +15,11 @@ export function ReportHistory({ reports }: ReportHistoryProps) {
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [visibleCount, setVisibleCount] = useState(3);
 
-  // Apply filtering
   const filteredReports = reports.filter((report) => {
     if (filter === "ALL") return true;
     return report.status === filter;
   });
 
-  // Handle Load More
   const hasMore = visibleCount < filteredReports.length;
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 3);
@@ -29,19 +27,17 @@ export function ReportHistory({ reports }: ReportHistoryProps) {
 
   const handleFilterSelect = (selectedFilter: FilterStatus) => {
     setFilter(selectedFilter);
-    setVisibleCount(3); // Reset pagination on filter change
+    setVisibleCount(3); 
     setShowFilterDropdown(false);
   };
 
   return (
     <div className="space-y-5">
-      {/* Header with Filter */}
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-extrabold text-[#0B2540] uppercase tracking-wider">
           Report History
         </h2>
 
-        {/* Filter Dropdown */}
         <div className="relative">
           <button
             onClick={() => setShowFilterDropdown(!showFilterDropdown)}
@@ -98,7 +94,6 @@ export function ReportHistory({ reports }: ReportHistoryProps) {
         </div>
       </div>
 
-      {/* Reports Grid */}
       {filteredReports.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {filteredReports.slice(0, visibleCount).map((report) => (
@@ -115,7 +110,6 @@ export function ReportHistory({ reports }: ReportHistoryProps) {
         </div>
       )}
 
-      {/* Load More Button */}
       {hasMore && (
         <div className="pt-4 flex justify-center">
           <button
