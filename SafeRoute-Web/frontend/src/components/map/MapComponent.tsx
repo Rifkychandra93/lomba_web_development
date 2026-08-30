@@ -57,6 +57,17 @@ interface UserProfile {
   role: string;
 }
 
+interface RouteOption {
+  id: string;
+  name: string;
+  polyline: [number, number][];
+  distance: number;
+  duration: number;
+  incidents: MapPoint[];
+  riskScore: number;
+}
+
+
 function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 6371;
   const dLat = (lat2 - lat1) * (Math.PI / 180);
@@ -125,6 +136,27 @@ export default function MapComponent() {
   const [incidentsNearRoute, setIncidentsNearRoute] = useState<MapPoint[]>([]);
   const [routeLoading, setRouteLoading] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
+
+  const [routes, setRoutes] = useState<RouteOption[]>([]);
+  const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (selectedRouteId && routes.length > 0) {
+      const selected = routes.find((r) => r.id === selectedRouteId);
+      if (selected) {
+        setRoutePolyline(selected.polyline);
+        setRouteDistance(selected.distance);
+        setRouteDuration(selected.duration);
+        setIncidentsNearRoute(selected.incidents);
+      }
+    } else {
+      setRoutePolyline([]);
+      setRouteDistance(null);
+      setRouteDuration(null);
+      setIncidentsNearRoute([]);
+    }
+  }, [selectedRouteId, routes]);
+
 
   const [clickMode, setClickMode] = useState<"none" | "start" | "dest" | "report">("none");
   const [incidents, setIncidents] = useState<MapPoint[]>([]);
@@ -237,6 +269,30 @@ export default function MapComponent() {
     }
   };
 
+  const buildRouteOption = (route: any, index: number): RouteOption => {
+    const coords: [number, number][] = route.geometry.coordinates.map((c: number[]) => [c[1], c[0]]);
+    const near = incidents.filter((inc) => {
+      return coords.some((coord) => getDistanceFromLatLonInKm(coord[0], coord[1], inc.latitude, inc.longitude) < 0.5);
+    });
+    const riskScore = near.reduce((acc, inc) => {
+      let weight = 1;
+      if (inc.riskLevel === "CRITICAL") weight = 5;
+      else if (inc.riskLevel === "HIGH") weight = 3;
+      else if (inc.riskLevel === "MEDIUM") weight = 2;
+      return acc + weight;
+    }, 0);
+
+    return {
+      id: `route-${index}`,
+      polyline: coords,
+      distance: route.distance,
+      duration: route.duration,
+      incidents: near,
+      riskScore: riskScore,
+      name: ""
+    };
+  };
+
   const handleStartNavigation = async () => {
     if (!startPoint || !destPoint) return;
     
@@ -244,23 +300,115 @@ export default function MapComponent() {
     setIsNavigating(true);
 
     try {
-      const res = await fetch(`https://router.project-osrm.org/route/v1/driving/${startPoint.lng},${startPoint.lat};${destPoint.lng},${destPoint.lat}?overview=full&geometries=geojson`);
+      const res = await fetch(`https://router.project-osrm.org/route/v1/driving/${startPoint.lng},${startPoint.lat};${destPoint.lng},${destPoint.lat}?overview=full&geometries=geojson&alternatives=true`);
       const data = await res.json();
 
       if (data.routes && data.routes.length > 0) {
-        const route = data.routes[0];
-        const coords: [number, number][] = route.geometry.coordinates.map((c: number[]) => [c[1], c[0]]);
-        
-        setRoutePolyline(coords);
-        setRouteDistance(route.distance);
-        setRouteDuration(route.duration);
+        let routeOptions: RouteOption[] = data.routes.map((route: any, index: number) => buildRouteOption(route, index));
 
-        const near = incidents.filter((inc) => {
-          return coords.some((coord) => getDistanceFromLatLonInKm(coord[0], coord[1], inc.latitude, inc.longitude) < 0.5);
-        });
-        setIncidentsNearRoute(near);
+        if (routeOptions.length < 2) {
+          const midLat = (startPoint.lat + destPoint.lat) / 2;
+          const midLng = (startPoint.lng + destPoint.lng) / 2;
 
-        const latLngs = coords.map((c) => L.latLng(c[0], c[1]));
+          const dLat = destPoint.lat - startPoint.lat;
+          const dLng = destPoint.lng - startPoint.lng;
+          const len = Math.sqrt(dLat * dLat + dLng * dLng);
+          const perpLat = -dLng / len;
+          const perpLng = dLat / len;
+
+          const offsetMagnitude = 0.005;
+
+          const waypoints = [
+            { lat: midLat + perpLat * offsetMagnitude, lng: midLng + perpLng * offsetMagnitude },
+            { lat: midLat - perpLat * offsetMagnitude, lng: midLng - perpLng * offsetMagnitude },
+          ];
+
+          for (const wp of waypoints) {
+            const wpLat = Math.max(-6.45, Math.min(-6.33, wp.lat));
+            const wpLng = Math.max(106.75, Math.min(106.90, wp.lng));
+
+            try {
+              const altRes = await fetch(
+                `https://router.project-osrm.org/route/v1/driving/${startPoint.lng},${startPoint.lat};${wpLng},${wpLat};${destPoint.lng},${destPoint.lat}?overview=full&geometries=geojson`
+              );
+              const altData = await altRes.json();
+
+              if (altData.routes && altData.routes.length > 0) {
+                const altRoute = buildRouteOption(altData.routes[0], routeOptions.length);
+                
+                const distDiff = Math.abs(altRoute.distance - routeOptions[0].distance) / routeOptions[0].distance;
+                if (distDiff > 0.1) {
+                  routeOptions.push(altRoute);
+                  break;
+                }
+              }
+            } catch (altErr) {
+              console.error("Alt route fetch error:", altErr);
+            }
+          }
+          if (routeOptions.length < 2) {
+            const largerOffset = 0.008;
+            const wp = { lat: midLat + perpLat * largerOffset, lng: midLng + perpLng * largerOffset };
+            const wpLat = Math.max(-6.45, Math.min(-6.33, wp.lat));
+            const wpLng = Math.max(106.75, Math.min(106.90, wp.lng));
+
+            try {
+              const altRes = await fetch(
+                `https://router.project-osrm.org/route/v1/driving/${startPoint.lng},${startPoint.lat};${wpLng},${wpLat};${destPoint.lng},${destPoint.lat}?overview=full&geometries=geojson`
+              );
+              const altData = await altRes.json();
+              if (altData.routes && altData.routes.length > 0) {
+                routeOptions.push(buildRouteOption(altData.routes[0], routeOptions.length));
+              }
+            } catch (altErr) {
+              console.error("Alt route (larger offset) fetch error:", altErr);
+            }
+          }
+        }
+
+        if (routeOptions.length > 1) {
+          let fastestIndex = 0;
+          for (let i = 1; i < routeOptions.length; i++) {
+            if (routeOptions[i].duration < routeOptions[fastestIndex].duration) {
+              fastestIndex = i;
+            }
+          }
+
+          let safestIndex = -1;
+          let minRisk = Infinity;
+          for (let i = 0; i < routeOptions.length; i++) {
+            if (i !== fastestIndex && routeOptions[i].riskScore < minRisk) {
+              minRisk = routeOptions[i].riskScore;
+              safestIndex = i;
+            }
+          }
+          if (safestIndex === -1) safestIndex = 0; 
+
+          routeOptions.forEach((r, idx) => {
+            if (idx === fastestIndex) {
+              r.name = "Rute Tercepat & Terpendek";
+            } else if (idx === safestIndex) {
+              r.name = "Rute Teraman";
+            } else {
+              r.name = `Alternatif ${idx + 1}`;
+            }
+          });
+        } else if (routeOptions.length === 1) {
+          routeOptions[0].name = "Rute Tercepat & Teraman";
+        }
+
+        setRoutes(routeOptions);
+
+        let safestIndex = 0;
+        for (let i = 1; i < routeOptions.length; i++) {
+          if (routeOptions[i].riskScore < routeOptions[safestIndex].riskScore) {
+            safestIndex = i;
+          }
+        }
+        setSelectedRouteId(routeOptions[safestIndex].id);
+
+        const allCoords = routeOptions.flatMap(r => r.polyline);
+        const latLngs = allCoords.map((c) => L.latLng(c[0], c[1]));
         setMapBounds(L.latLngBounds(latLngs));
       }
     } catch (e) {
@@ -373,12 +521,47 @@ export default function MapComponent() {
               </Marker>
             )}
 
-            {routePolyline.length > 0 && (
+            {routes.length > 0 && (
               <>
-                {startPoint && destPoint && (
-                  <Polyline positions={[[startPoint.lat, startPoint.lng], [destPoint.lat, destPoint.lng]]} color="#f97316" dashArray="8, 10" weight={2.5} opacity={0.8} />
-                )}
-                <Polyline positions={routePolyline} color="#15803d" weight={6} opacity={0.95} />
+                {/* Render unselected routes in gray */}
+                {routes
+                  .filter((r) => r.id !== selectedRouteId)
+                  .map((r) => (
+                    <Polyline
+                      key={r.id}
+                      positions={r.polyline}
+                      color="#94a3b8"
+                      weight={6}
+                      opacity={0.6}
+                      eventHandlers={{
+                        click: (e) => {
+                          if (e.originalEvent) {
+                            e.originalEvent.stopPropagation();
+                          }
+                          setSelectedRouteId(r.id);
+                        },
+                      }}
+                    />
+                  ))}
+                {routes
+                  .filter((r) => r.id === selectedRouteId)
+                  .map((r) => (
+                    <Polyline
+                      key={r.id}
+                      positions={r.polyline}
+                      color="#2563eb"
+                      weight={7}
+                      opacity={0.95}
+                      eventHandlers={{
+                        click: (e) => {
+                          if (e.originalEvent) {
+                            e.originalEvent.stopPropagation();
+                          }
+                          setSelectedRouteId(r.id);
+                        },
+                      }}
+                    />
+                  ))}
               </>
             )}
 
@@ -447,7 +630,6 @@ export default function MapComponent() {
           
           <div className="flex flex-col overflow-y-auto p-5">
             <h2 className="text-sm font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-              <Navigation className="h-4 w-4 text-blue-600" />
               Navigasi Aman
             </h2>
             <p className="mt-1 text-[11px] text-slate-400 leading-normal font-medium">
@@ -459,7 +641,7 @@ export default function MapComponent() {
               <div className="flex gap-1.5 items-center">
                 <div className="relative flex-1">
                   <input type="text" placeholder="Cari lokasi awal..." value={startInput} onChange={(e) => { setStartInput(e.target.value); fetchSuggestions(e.target.value, setStartSuggestions); }} className="w-full rounded-xl bg-slate-50 border border-slate-200/60 py-2.5 pl-3 pr-8 text-xs font-semibold text-slate-700 outline-none focus:bg-white focus:border-blue-500 transition-colors" />
-                  {startInput && (<button onClick={() => { setStartInput(""); setStartPoint(null); setStartSuggestions([]); }} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs font-bold">&times;</button>)}
+                  {startInput && (<button onClick={() => { setStartInput(""); setStartPoint(null); setStartSuggestions([]); setRoutes([]); setSelectedRouteId(null); setIsNavigating(false); setMapBounds(null); }} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs font-bold">&times;</button>)}
                 </div>
                 <button onClick={() => setClickMode("start")} className={`rounded-xl border p-2.5 shadow-sm transition-all duration-200 ${clickMode === "start" ? "bg-blue-600 border-blue-600 text-white" : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50"}`} title="Pilih di Peta">
                   <MapPin className="h-4.5 w-4.5" />
@@ -481,7 +663,7 @@ export default function MapComponent() {
               <div className="flex gap-1.5 items-center">
                 <div className="relative flex-1">
                   <input type="text" placeholder="Cari lokasi tujuan..." value={destInput} onChange={(e) => { setDestInput(e.target.value); fetchSuggestions(e.target.value, setDestSuggestions); }} className="w-full rounded-xl bg-slate-50 border border-slate-200/60 py-2.5 pl-3 pr-8 text-xs font-semibold text-slate-700 outline-none focus:bg-white focus:border-blue-500 transition-colors" />
-                  {destInput && (<button onClick={() => { setDestInput(""); setDestPoint(null); setDestSuggestions([]); }} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs font-bold">&times;</button>)}
+                  {destInput && (<button onClick={() => { setDestInput(""); setDestPoint(null); setDestSuggestions([]); setRoutes([]); setSelectedRouteId(null); setIsNavigating(false); setMapBounds(null); }} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs font-bold">&times;</button>)}
                 </div>
                 <button onClick={() => setClickMode("dest")} className={`rounded-xl border p-2.5 shadow-sm transition-all duration-200 ${clickMode === "dest" ? "bg-blue-600 border-blue-600 text-white" : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50"}`} title="Pilih di Peta">
                   <MapPin className="h-4.5 w-4.5" />
@@ -503,58 +685,74 @@ export default function MapComponent() {
               disabled={routeLoading || !startPoint || !destPoint}
               className="mt-6 w-full flex items-center justify-center gap-2 rounded-xl bg-[#0B2540] py-3 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-[#13315c] disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {routeLoading ? (
-                <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-              ) : (
-                <Navigation className="h-4 w-4" />
-              )}
               {routeLoading ? "Menghitung..." : "Mulai Navigasi"}
             </button>
 
-            {isNavigating && !routeLoading && routePolyline.length > 0 && (
+            {isNavigating && !routeLoading && routes.length > 0 && (
               <div className="mt-6 animate-fade-in space-y-3">
-                <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 flex justify-between items-center shadow-sm">
-                  <div className="flex-1">
-                    <div className="flex items-end gap-1">
-                      <span className="text-xl font-black text-slate-900">{(routeDistance! / 1000).toFixed(1)}</span>
-                      <span className="text-[10px] text-slate-500 font-semibold mb-1">km</span>
-                    </div>
-                    <p className="text-[11px] font-semibold text-slate-600 truncate">Via {startPoint?.name.split(',')[0]}</p>
-                    <span className="text-[10px] font-bold text-emerald-600 flex items-center gap-1 mt-1">
-                      <Shield className="h-3 w-3" /> 
-                      {incidentsNearRoute.length === 0 ? "Terverifikasi Aman" : incidentsNearRoute.length <= 2 ? "Perlu Waspada" : "Rawan Tinggi"}
-                    </span>
-                  </div>
-                  <div className="text-right">
-                    <div className="flex items-end justify-end gap-1">
-                      <span className="text-xl font-black text-slate-900">{Math.round(routeDuration! / 60)}</span>
-                      <span className="text-[10px] text-slate-500 font-semibold mb-1">mnt</span>
-                    </div>
-                    <p className="text-[10px] text-slate-400 font-semibold mt-1">Perjalanan</p>
-                  </div>
-                </div>
+                {routes.map((r) => {
+                  const isSelected = r.id === selectedRouteId;
+                  const isSafest = r.name.includes("Teraman");
+                  const isFastest = r.name.includes("Tercepat");
+                  const isShortest = r.name.includes("Terpendek");
+                  
+                  let borderClass = isSelected 
+                    ? "border-blue-600 bg-blue-50/50 ring-1 ring-blue-600 shadow-md" 
+                    : "border-slate-100 bg-white hover:bg-slate-50";
+                  
+                  let safetyText = "Terverifikasi Aman";
+                  let safetyColor = "text-emerald-600";
+                  if (r.incidents.length > 0) {
+                    if (r.incidents.length <= 2) {
+                      safetyText = "Perlu Waspada";
+                      safetyColor = "text-amber-600";
+                    } else {
+                      safetyText = "Rawan Tinggi";
+                      safetyColor = "text-rose-600";
+                    }
+                  }
 
-                {incidentsNearRoute.length > 0 && (
-                  <div className="rounded-xl border border-orange-200 bg-orange-50 p-3 flex justify-between items-center shadow-sm">
-                    <div className="flex-1">
-                      <div className="flex items-end gap-1">
-                        <span className="text-xl font-black text-slate-900">{((routeDistance! * 1.2) / 1000).toFixed(1)}</span>
-                        <span className="text-[10px] text-slate-500 font-semibold mb-1">km</span>
+                  return (
+                    <div
+                      key={r.id}
+                      onClick={() => setSelectedRouteId(r.id)}
+                      className={`rounded-xl border p-3 flex justify-between items-center shadow-sm cursor-pointer transition-all duration-200 ${borderClass}`}
+                    >
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                          <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded text-white ${
+                            isSafest ? "bg-emerald-500" : isFastest ? "bg-blue-600" : isShortest ? "bg-amber-500" : "bg-slate-500"
+                          }`}>
+                            {r.name}
+                          </span>
+                          {r.incidents.length > 0 && (
+                            <span className="text-[9px] font-bold text-slate-500 flex items-center gap-0.5">
+                              <AlertTriangle className="h-2.5 w-2.5 text-amber-500" /> {r.incidents.length} Insiden
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-end gap-1">
+                          <span className="text-xl font-black text-slate-900">{(r.distance / 1000).toFixed(1)}</span>
+                          <span className="text-[10px] text-slate-500 font-semibold mb-1">km</span>
+                        </div>
+                        <p className="text-[11px] font-semibold text-slate-600 truncate">
+                          Via {startPoint?.name.split(',')[0]}
+                        </p>
+                        <span className={`text-[10px] font-bold flex items-center gap-1 mt-1 ${safetyColor}`}>
+                          <Shield className="h-3 w-3" />
+                          {safetyText}
+                        </span>
                       </div>
-                      <p className="text-[11px] font-semibold text-slate-600 truncate">Rute Alternatif</p>
-                      <span className="text-[10px] font-bold text-orange-600 flex items-center gap-1 mt-1">
-                        <AlertTriangle className="h-3 w-3" /> {incidentsNearRoute.length} Insiden Dekat Rute
-                      </span>
-                    </div>
-                    <div className="text-right">
-                      <div className="flex items-end justify-end gap-1">
-                        <span className="text-xl font-black text-slate-900">{Math.round((routeDuration! * 1.2) / 60)}</span>
-                        <span className="text-[10px] text-slate-500 font-semibold mb-1">mnt</span>
+                      <div className="text-right shrink-0">
+                        <div className="flex items-end justify-end gap-1">
+                          <span className="text-xl font-black text-slate-900">{Math.round(r.duration / 60)}</span>
+                          <span className="text-[10px] text-slate-500 font-semibold mb-1">mnt</span>
+                        </div>
+                        <p className="text-[10px] text-slate-400 font-semibold mt-1">Perjalanan</p>
                       </div>
-                      <p className="text-[10px] text-slate-400 font-semibold mt-1">Lebih Lama</p>
                     </div>
-                  </div>
-                )}
+                  );
+                })}
 
                 <div className="rounded-xl border border-slate-100 bg-slate-50/50 p-4">
                   <h4 className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
@@ -587,16 +785,13 @@ export default function MapComponent() {
                 <Compass className="h-8 w-8 text-slate-300" />
                 <p className="mt-2.5 text-xs font-bold text-slate-500">Rute Belum Terbentuk</p>
                 <p className="mt-1 text-[10px] text-slate-400">Masukkan titik awal dan tujuan Anda untuk menampilkan jalur teraman di peta.</p>
-                <button onClick={handleLocateUser} className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 px-4 py-2 text-xs font-bold text-blue-600 transition-colors shadow-sm">
-                  <Locate className="h-3.5 w-3.5" /> Gunakan Lokasi GPS Saya
+                <button onClick={handleLocateUser} className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 px-4 py-2 text-xs font-bold text-blue-600 transition-colors shadow-sm"> Gunakan Lokasi GPS Saya
                 </button>
               </div>
             )}
           </div>
 
           <div className="shrink-0 bg-slate-50 border-t border-slate-100 px-5 py-3 flex items-center justify-between text-[10px] text-slate-400 font-bold tracking-wider uppercase">
-            <span className="flex items-center gap-1"><Shield className="h-3.5 w-3.5 text-emerald-500" /> Sistem Aktif</span>
-            <span className="flex items-center gap-1 font-extrabold text-blue-600"><Activity className="h-3 w-3 text-blue-500 animate-pulse" /> 106.8°E / 6.2°S</span>
           </div>
         </div>
       </div>
