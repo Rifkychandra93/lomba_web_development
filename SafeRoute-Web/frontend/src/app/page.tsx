@@ -6,6 +6,7 @@ import FeaturesSection from "@/src/components/landing/features"
 import HowItWorksSection from "@/src/components/landing/howItWorks"
 import TestimonialsSection from "@/src/components/landing/testimonials"
 import Footer from "@/src/components/landing/footer"
+import BenefitSection from "@/src/components/landing/Benefitssection"
 
 export default function LandingPage() {
   return (
@@ -15,6 +16,7 @@ export default function LandingPage() {
       <AboutSection />
       <FeaturesSection />
       <HowItWorksSection />
+      <BenefitSection />
       <TestimonialsSection />
       <Footer />
     </>

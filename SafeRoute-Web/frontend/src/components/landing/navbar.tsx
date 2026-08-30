@@ -15,7 +15,7 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const sections = ["beranda", "fitur", "cara-kerja", "testimoni"];
+    const sections = ["beranda", "fitur", "cara-kerja", "manfaat", "testimoni"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -35,6 +35,7 @@ export default function Navbar() {
     { id: "beranda", label: "Beranda" },
     { id: "fitur", label: "Fitur" },
     { id: "cara-kerja", label: "Cara Kerja" },
+    { id: "manfaat", label: "Keunggulan" },
     { id: "testimoni", label: "Testimoni" },
   ];
 
