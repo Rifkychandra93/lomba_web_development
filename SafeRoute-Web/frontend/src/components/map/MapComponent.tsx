@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { getToken, clearAuth } from "@/src/lib/tokenStorage";
 import {
   MapContainer,
   TileLayer,
@@ -168,7 +169,7 @@ export default function MapComponent() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       if (token) {
         try {
           const res = await getCurrentUser();
@@ -483,8 +484,7 @@ export default function MapComponent() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    clearAuth();
     setUser(null);
     setShowUserDropdown(false);
     router.push("/login");

@@ -3,6 +3,7 @@
 import { FormEvent, useMemo, useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { loginUser, registerUser, googleLogin } from "@/src/services/auth.service";
+import { saveAuth } from "@/src/lib/tokenStorage";
 
 interface AuthContainerProps {
   initialMode: "login" | "register";
@@ -125,8 +126,7 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
         password: loginPassword,
       });
 
-      localStorage.setItem("token", result.data.token);
-      localStorage.setItem("user", JSON.stringify(result.data.user));
+      saveAuth(result.data.token, result.data.user, remember);
 
       router.push("/home");
     } catch (error: any) {
@@ -182,8 +182,7 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
     try {
       const result = await googleLogin(response.credential);
 
-      localStorage.setItem("token", result.data.token);
-      localStorage.setItem("user", JSON.stringify(result.data.user));
+      saveAuth(result.data.token, result.data.user, remember);
 
       router.push("/home");
     } catch (err: any) {

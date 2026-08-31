@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getToken, clearAuth } from "@/src/lib/tokenStorage";
 import { Navbar } from "@/src/components/layout/Navbar";
 import { Footer } from "@/src/components/layout/Footer";
 import { ProfileHeader } from "@/src/components/profile/ProfileHeader";
@@ -24,7 +25,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
     if (!token) {
       router.replace("/login");
       return;
@@ -48,8 +49,7 @@ export default function ProfilePage() {
         }
       } catch (error) {
         console.error("Terjadi kesalahan memuat data profil:", error);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        clearAuth();
         router.replace("/login");
       } finally {
         setLoading(false);
@@ -60,8 +60,7 @@ export default function ProfilePage() {
   }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    clearAuth();
     router.push("/login");
   };
 

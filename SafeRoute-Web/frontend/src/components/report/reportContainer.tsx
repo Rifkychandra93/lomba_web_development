@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { getToken, clearAuth } from "@/src/lib/tokenStorage";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
@@ -92,7 +93,7 @@ export default function LaporPage() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
     if (!token) {
       router.replace("/login");
       return;
@@ -103,8 +104,7 @@ export default function LaporPage() {
         setUser(res.data);
         setIsLoading(false);
       } catch {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        clearAuth();
         router.replace("/login");
       }
     };
