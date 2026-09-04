@@ -128,7 +128,11 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
 
       saveAuth(result.data.token, result.data.user, remember);
 
-      router.push("/home");
+      if (result.data.user?.role === "ADMIN") {
+        router.push("/admin");
+      } else {
+        router.push("/home");
+      }
     } catch (error: any) {
       console.error(error);
       setError(
@@ -184,7 +188,11 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
 
       saveAuth(result.data.token, result.data.user, remember);
 
-      router.push("/home");
+      if (result.data.user?.role === "ADMIN") {
+        router.push("/admin");
+      } else {
+        router.push("/home");
+      }
     } catch (err: any) {
       console.error(err);
       setError(
