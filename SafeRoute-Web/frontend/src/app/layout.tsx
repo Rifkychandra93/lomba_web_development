@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AOS from "@/src/components/aos-init";
+import SplashScreen from "@/src/components/SplashScreen";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <SplashScreen />
         <AOS />
         {children}
       </body>

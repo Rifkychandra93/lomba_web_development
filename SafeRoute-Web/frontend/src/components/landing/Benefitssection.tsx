@@ -27,41 +27,41 @@ const BENEFITS: Benefit[] = [
     id: "radar",
     icon: Radar,
     title: "Radar Keamanan Real-Time",
-    desc: "Memantau kondisi jalan dari data kriminalitas, penerangan, dan laporan warga secara terus-menerus, bukan sekadar snapshot statis.",
-    accent: "#2563EB",
-    accentSoft: "#EFF6FF",
+    desc: "Bukan sekadar potret sesaat — kondisi jalan terus dipantau dari data resmi dan laporan warga, jadi info yang Anda lihat selalu segar kapan pun dibutuhkan.",
+    accent: "#0B2540",
+    accentSoft: "#EEF2F6",
     big: true,
   },
   {
     id: "rute",
     icon: Navigation,
     title: "Rute Tercepat & Teraman",
-    desc: "Bukan cuma jalan terdekat — SafeRoute menyeimbangkan waktu tempuh dengan tingkat risiko di sepanjang jalur.",
-    accent: "#16A34A",
-    accentSoft: "#F0FDF4",
+    desc: "Sistem menyeimbangkan waktu tempuh dengan tingkat risiko sepanjang jalan, jadi Anda tidak perlu memilih antara cepat atau aman.",
+    accent: "#0D5C4B",
+    accentSoft: "#EAF6F2",
   },
   {
     id: "komunitas",
     icon: Users,
     title: "Komunitas Aktif 24 Jam",
-    desc: "Ribuan pengguna saling melaporkan kondisi terkini, membuat data selalu segar setiap jam.",
-    accent: "#D97706",
-    accentSoft: "#FFFBEB",
+    desc: "Setiap laporan yang Anda kirim langsung membantu warga lain di sekitar. Makin banyak yang ikut serta, makin akurat peta keamanan untuk semua.",
+    accent: "#E8930A",
+    accentSoft: "#FFF7EC",
   },
   {
     id: "notifikasi",
     icon: BellRing,
     title: "Notifikasi Instan",
-    desc: "Dapat peringatan seketika saat memasuki area yang baru saja dilaporkan berisiko.",
-    accent: "#E11D48",
-    accentSoft: "#FFF1F2",
+    desc: "Begitu ada laporan baru di jalur yang sedang Anda lalui, peringatan langsung muncul — masih cukup waktu untuk berpindah jalur.",
+    accent: "#E14B4B",
+    accentSoft: "#FDEDED",
   },
   {
     id: "privasi",
     icon: Lock,
     title: "Privasi Terlindungi",
-    desc: "Lokasi Anda terenkripsi dan tidak pernah dibagikan ke pihak lain tanpa izin.",
-    accent: "#0B2540",
+    desc: "Lokasi Anda dienkripsi dan tidak pernah dibagikan tanpa izin, jadi Anda bisa melapor dan mencari rute aman tanpa khawatir data disalahgunakan.",
+    accent: "#334155",
     accentSoft: "#F1F5F9",
   },
 ];
@@ -161,15 +161,15 @@ export default function BenefitsSection() {
 
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-          <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-[#2563EB]">
+          <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-[#0D5C4B]">
             Kenapa SafeRoute
           </p>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#0B2540]">
-            Manfaat yang Anda Dapatkan
+            Keunggulan SafeRoute untuk Anda dan Sesama
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-neutral-500">
-            Lebih dari sekadar navigasi — SafeRoute dirancang untuk membuat setiap perjalanan
-            terasa lebih tenang dan terinformasi.
+            Lebih dari sekadar navigasi — SafeRoute membantu Anda memilih jalan yang lebih tenang,
+            sekaligus menjaga warga lain tetap waspada lewat data yang sama-sama dibangun bersama.
           </p>
         </div>
 
@@ -178,6 +178,7 @@ export default function BenefitsSection() {
             <BenefitCard key={benefit.id} benefit={benefit} delay={i * 100} />
           ))}
         </div>
+
       </div>
     </section>
   );
