@@ -4,6 +4,7 @@ import Link from "next/link";
 import { LogOut, Search, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getCurrentUser } from "@/src/services/auth.service";
+import { getToken, clearAuth } from "@/src/lib/tokenStorage";
 
 export function RouteIcon() {
   return (
@@ -32,7 +33,6 @@ export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" 
     const [loadingSuggestions, setLoadingSuggestions] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
 
-    // Effect untuk mendeteksi scroll
     useEffect(() => {
       const handleScroll = () => {
         const scrollY = window.scrollY;
@@ -66,7 +66,7 @@ export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" 
     };
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        const token = getToken();
         if (!token) {
           router.replace("/login");
           return;
@@ -77,8 +77,7 @@ export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" 
             setUser(res.data);
             setIsLoading(false);
           } catch {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
+            clearAuth();
             router.replace("/login");
           }
         };
@@ -86,8 +85,7 @@ export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" 
       }, [router]);
 
     const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    clearAuth();
     setUser(null);
     router.push("/login");
   };

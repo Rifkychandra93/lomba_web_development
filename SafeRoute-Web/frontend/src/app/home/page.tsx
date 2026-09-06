@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getToken } from "@/src/lib/tokenStorage";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 
@@ -29,7 +30,7 @@ export default function HomePage() {
   const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
     if (!token) {
       router.replace("/login");
     } else {
