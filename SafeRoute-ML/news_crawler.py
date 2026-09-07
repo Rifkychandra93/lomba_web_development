@@ -372,6 +372,11 @@ def crawl_and_analyze():
                 content = analysis["article"]["content"]
                 full_text = title + " " + content
                 
+                # Cek filter kategori: abaikan jika kategori kebakaran
+                if analysis.get("analysis", {}).get("category", "").lower() == "kebakaran":
+                    print(f"    -> [DITOLAK] Kategori kebakaran diabaikan.")
+                    continue
+
                 if not is_in_depok(analysis["analysis"]["locations"], full_text):
                     print(f"    -> [DITOLAK] Bukan kasus di Depok.")
                     continue

@@ -76,12 +76,28 @@ export const getMapIncidents = async () => {
   const oneMonthAgo = new Date();
   oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
-  // 1. Ambil data insiden dari ML Crawler
   const incidents = await prisma.incident.findMany({
     where: {
-      detectedAt: {
-        gte: oneMonthAgo,
+      incidentType: {
+        not: "KEBAKARAN" as any,
       },
+      OR: [
+        {
+          news: {
+            publishedAt: {
+              gte: oneMonthAgo,
+            },
+          },
+        },
+        {
+          news: {
+            publishedAt: null,
+          },
+          detectedAt: {
+            gte: oneMonthAgo,
+          },
+        },
+      ],
     },
     orderBy: {
       detectedAt: "desc",
@@ -105,6 +121,9 @@ export const getMapIncidents = async () => {
       createdAt: {
         gte: oneMonthAgo,
       },
+      incidentType: {
+        not: "KEBAKARAN" as any,
+      },
     },
     orderBy: {
       createdAt: "desc",
@@ -119,20 +138,25 @@ export const getMapIncidents = async () => {
   });
 
   const mapPoints = [
-    ...incidents.map((inc) => ({
-      id: inc.id,
-      sourceType: "ML_CRAWLER",
-      title: inc.title,
-      description: inc.description,
-      latitude: Number(inc.latitude),
-      longitude: Number(inc.longitude),
-      address: inc.address,
-      incidentType: inc.incidentType,
-      riskLevel: inc.riskLevel,
-      detectedAt: inc.detectedAt,
-      news: inc.news,
-      mlConfidence: inc.mlConfidence ? Number(inc.mlConfidence) : null,
-    })),
+    ...incidents
+      .filter((inc) => {
+        const pubDate = inc.news?.publishedAt || inc.detectedAt;
+        return pubDate && new Date(pubDate) >= oneMonthAgo;
+      })
+      .map((inc) => ({
+        id: inc.id,
+        sourceType: "ML_CRAWLER",
+        title: inc.title,
+        description: inc.description,
+        latitude: Number(inc.latitude),
+        longitude: Number(inc.longitude),
+        address: inc.address,
+        incidentType: inc.incidentType,
+        riskLevel: inc.riskLevel,
+        detectedAt: (inc.news?.publishedAt || inc.detectedAt) as any,
+        news: inc.news,
+        mlConfidence: inc.mlConfidence ? Number(inc.mlConfidence) : null,
+      })),
     ...verifiedReports.map((rep) => ({
       id: rep.id,
       sourceType: "USER_REPORT",

@@ -4,7 +4,6 @@ import { MoreVertical, Paperclip, Send } from "lucide-react";
 export function ChatArea() {
   return (
     <section className="flex flex-1 flex-col bg-white">
-      {/* Chat Header */}
       <header className="flex shrink-0 items-center justify-between border-b border-gray-200 px-6 py-4">
         <div className="flex items-center gap-3">
           <div className="relative shrink-0">
@@ -25,14 +24,12 @@ export function ChatArea() {
         </button>
       </header>
 
-      {/* Chat History */}
       <div className="flex-1 overflow-y-auto p-6 bg-white">
         <div className="flex flex-col space-y-5">
           <div className="text-center w-full flex justify-end mb-2">
              <span className="text-[11px] font-medium text-gray-400">10:02 AM</span>
           </div>
 
-          {/* Message 1: User */}
           <div className="flex justify-end">
             <div className="max-w-[70%] rounded-2xl rounded-tr-sm bg-[#1D4ED8] px-5 py-3.5 text-[13px] leading-relaxed text-white shadow-sm">
               Selamat pagi, bagaimana status laporan saya mengenai perbaikan lampu jalan di Jl. Sudirman?
@@ -43,14 +40,12 @@ export function ChatArea() {
             Admin Support <span className="text-gray-300 mx-0.5">•</span> 10:03 AM
           </div>
 
-          {/* Message 2: Admin */}
           <div className="flex justify-start">
             <div className="max-w-[70%] rounded-2xl rounded-tl-sm bg-[#E0E7FF] px-5 py-3.5 text-[13px] leading-relaxed text-[#0B2540]">
               Selamat pagi! Kami sedang mengecek status laporan Anda. Mohon ditunggu sebentar.
             </div>
           </div>
 
-          {/* Message 3: Admin */}
           <div className="flex justify-start">
             <div className="max-w-[70%] rounded-2xl rounded-tl-sm bg-[#E0E7FF] px-5 py-3.5 text-[13px] leading-relaxed text-[#0B2540]">
               Tim kami sudah menjadwalkan perbaikan untuk besok pagi.
@@ -61,14 +56,12 @@ export function ChatArea() {
              <span className="text-[11px] font-medium text-gray-400">10:04 AM</span>
           </div>
 
-          {/* Message 4: User */}
           <div className="flex justify-end">
             <div className="max-w-[70%] rounded-2xl rounded-tr-sm bg-[#1D4ED8] px-5 py-3.5 text-[13px] leading-relaxed text-white shadow-sm">
               Terima kasih informasinya.
             </div>
           </div>
 
-          {/* Typing indicator */}
           <div className="flex items-center gap-2 mt-6 text-xs text-gray-400 font-medium">
             <span className="flex gap-1 text-gray-400 text-lg leading-none tracking-widest font-bold">
               ...
@@ -78,7 +71,6 @@ export function ChatArea() {
         </div>
       </div>
 
-      {/* Chat Input Footer */}
       <div className="shrink-0 border-t border-gray-200 bg-white p-4 px-6">
         <div className="mb-4 flex gap-2">
           <button className="rounded-full bg-[#EEF2FF] px-5 py-1.5 text-xs font-semibold text-[#1D4ED8] hover:bg-blue-100 transition">

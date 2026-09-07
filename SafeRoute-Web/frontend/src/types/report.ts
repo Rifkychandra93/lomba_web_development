@@ -2,7 +2,6 @@ export type IncidentType =
   | "BEGAL"
   | "JAMBRET"
   | "CURANMOR"
-  | "KEBAKARAN"
   | "KECELAKAAN"
   | "TAWURAN"
   | "PENCURIAN"

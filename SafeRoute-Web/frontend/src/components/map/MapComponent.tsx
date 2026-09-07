@@ -49,6 +49,12 @@ interface MapPoint {
   detectedAt: string;
   reporterName?: string;
   imageUrl?: string | null;
+  news?: {
+    publishedAt?: string | null;
+    title?: string;
+    url?: string;
+    source?: string | null;
+  } | null;
 }
 
 interface UserProfile {
@@ -184,7 +190,17 @@ export default function MapComponent() {
       try {
         const res = await getMapIncidents();
         if (res.success && res.data) {
-          setIncidents(res.data as any as MapPoint[]);
+          const oneMonthAgoMs = Date.now() - 30 * 24 * 60 * 60 * 1000;
+          const filteredIncidents = (res.data as any as MapPoint[]).filter((inc) => {
+            if (inc.incidentType === "KEBAKARAN") return false;
+            const targetDate = inc.news?.publishedAt || inc.detectedAt;
+            if (targetDate) {
+              const dt = new Date(targetDate).getTime();
+              if (!isNaN(dt) && dt < oneMonthAgoMs) return false;
+            }
+            return true;
+          });
+          setIncidents(filteredIncidents);
         } else {
           setIncidents([]);
         }
@@ -294,6 +310,17 @@ export default function MapComponent() {
     };
   };
 
+  const isPseudoLoopRoute = (primaryPoly: [number, number][], altPoly: [number, number][]): boolean => {
+    if (primaryPoly.length === 0 || altPoly.length === 0) return false;
+    let overlapCount = 0;
+    for (const pt of altPoly) {
+      const nearPrimary = primaryPoly.some((p) => getDistanceFromLatLonInKm(pt[0], pt[1], p[0], p[1]) < 0.06);
+      if (nearPrimary) overlapCount++;
+    }
+    const overlapRatio = overlapCount / altPoly.length;
+    return overlapRatio > 0.78;
+  };
+
   const handleStartNavigation = async () => {
     if (!startPoint || !destPoint) return;
     
@@ -301,68 +328,55 @@ export default function MapComponent() {
     setIsNavigating(true);
 
     try {
-      const res = await fetch(`https://router.project-osrm.org/route/v1/driving/${startPoint.lng},${startPoint.lat};${destPoint.lng},${destPoint.lat}?overview=full&geometries=geojson&alternatives=true`);
+      const res = await fetch(
+        `https://router.project-osrm.org/route/v1/driving/${startPoint.lng},${startPoint.lat};${destPoint.lng},${destPoint.lat}?overview=full&geometries=geojson&alternatives=3`
+      );
       const data = await res.json();
 
       if (data.routes && data.routes.length > 0) {
-        let routeOptions: RouteOption[] = data.routes.map((route: any, index: number) => buildRouteOption(route, index));
+        const rawRoutes: RouteOption[] = data.routes.map((route: any, index: number) => buildRouteOption(route, index));
 
-        if (routeOptions.length < 2) {
+        let routeOptions: RouteOption[] = [];
+        if (rawRoutes.length > 0) {
+          routeOptions.push(rawRoutes[0]);
+          for (let i = 1; i < rawRoutes.length; i++) {
+            if (!isPseudoLoopRoute(rawRoutes[0].polyline, rawRoutes[i].polyline)) {
+              routeOptions.push(rawRoutes[i]);
+            }
+          }
+        }
+
+        if (routeOptions.length < 2 && routeOptions[0].riskScore > 0) {
           const midLat = (startPoint.lat + destPoint.lat) / 2;
           const midLng = (startPoint.lng + destPoint.lng) / 2;
-
           const dLat = destPoint.lat - startPoint.lat;
           const dLng = destPoint.lng - startPoint.lng;
           const len = Math.sqrt(dLat * dLat + dLng * dLng);
-          const perpLat = -dLng / len;
-          const perpLng = dLat / len;
 
-          const offsetMagnitude = 0.005;
+          if (len > 0.001) {
+            const perpLat = -dLng / len;
+            const perpLng = dLat / len;
+            const offsets = [0.015, -0.015, 0.025, -0.025];
 
-          const waypoints = [
-            { lat: midLat + perpLat * offsetMagnitude, lng: midLng + perpLng * offsetMagnitude },
-            { lat: midLat - perpLat * offsetMagnitude, lng: midLng - perpLng * offsetMagnitude },
-          ];
+            for (const offset of offsets) {
+              const wpLat = Math.max(-6.45, Math.min(-6.33, midLat + perpLat * offset));
+              const wpLng = Math.max(106.75, Math.min(106.90, midLng + perpLng * offset));
 
-          for (const wp of waypoints) {
-            const wpLat = Math.max(-6.45, Math.min(-6.33, wp.lat));
-            const wpLng = Math.max(106.75, Math.min(106.90, wp.lng));
-
-            try {
-              const altRes = await fetch(
-                `https://router.project-osrm.org/route/v1/driving/${startPoint.lng},${startPoint.lat};${wpLng},${wpLat};${destPoint.lng},${destPoint.lat}?overview=full&geometries=geojson`
-              );
-              const altData = await altRes.json();
-
-              if (altData.routes && altData.routes.length > 0) {
-                const altRoute = buildRouteOption(altData.routes[0], routeOptions.length);
-                
-                const distDiff = Math.abs(altRoute.distance - routeOptions[0].distance) / routeOptions[0].distance;
-                if (distDiff > 0.1) {
-                  routeOptions.push(altRoute);
-                  break;
+              try {
+                const altRes = await fetch(
+                  `https://router.project-osrm.org/route/v1/driving/${startPoint.lng},${startPoint.lat};${wpLng},${wpLat};${destPoint.lng},${destPoint.lat}?overview=full&geometries=geojson`
+                );
+                const altData = await altRes.json();
+                if (altData.routes && altData.routes.length > 0) {
+                  const altRoute = buildRouteOption(altData.routes[0], routeOptions.length);
+                  if (!isPseudoLoopRoute(routeOptions[0].polyline, altRoute.polyline)) {
+                    routeOptions.push(altRoute);
+                    break;
+                  }
                 }
+              } catch (altErr) {
+                console.error("Alt route fetch error:", altErr);
               }
-            } catch (altErr) {
-              console.error("Alt route fetch error:", altErr);
-            }
-          }
-          if (routeOptions.length < 2) {
-            const largerOffset = 0.008;
-            const wp = { lat: midLat + perpLat * largerOffset, lng: midLng + perpLng * largerOffset };
-            const wpLat = Math.max(-6.45, Math.min(-6.33, wp.lat));
-            const wpLng = Math.max(106.75, Math.min(106.90, wp.lng));
-
-            try {
-              const altRes = await fetch(
-                `https://router.project-osrm.org/route/v1/driving/${startPoint.lng},${startPoint.lat};${wpLng},${wpLat};${destPoint.lng},${destPoint.lat}?overview=full&geometries=geojson`
-              );
-              const altData = await altRes.json();
-              if (altData.routes && altData.routes.length > 0) {
-                routeOptions.push(buildRouteOption(altData.routes[0], routeOptions.length));
-              }
-            } catch (altErr) {
-              console.error("Alt route (larger offset) fetch error:", altErr);
             }
           }
         }
@@ -375,27 +389,24 @@ export default function MapComponent() {
             }
           }
 
-          let safestIndex = -1;
-          let minRisk = Infinity;
-          for (let i = 0; i < routeOptions.length; i++) {
-            if (i !== fastestIndex && routeOptions[i].riskScore < minRisk) {
-              minRisk = routeOptions[i].riskScore;
+          let safestIndex = 0;
+          for (let i = 1; i < routeOptions.length; i++) {
+            if (routeOptions[i].riskScore < routeOptions[safestIndex].riskScore) {
               safestIndex = i;
             }
           }
-          if (safestIndex === -1) safestIndex = 0; 
 
           routeOptions.forEach((r, idx) => {
-            if (idx === fastestIndex) {
-              r.name = "Rute Tercepat & Terpendek";
-            } else if (idx === safestIndex) {
+            if (idx === safestIndex && routeOptions[safestIndex].riskScore < routeOptions[fastestIndex].riskScore) {
               r.name = "Rute Teraman";
+            } else if (idx === fastestIndex) {
+              r.name = routeOptions[safestIndex].riskScore === routeOptions[fastestIndex].riskScore ? "Rute Tercepat & Teraman" : "Rute Tercepat";
             } else {
               r.name = `Alternatif ${idx + 1}`;
             }
           });
         } else if (routeOptions.length === 1) {
-          routeOptions[0].name = "Rute Tercepat & Teraman";
+          routeOptions[0].name = routeOptions[0].riskScore === 0 ? "Rute Tercepat & Teraman" : "Rute Utama";
         }
 
         setRoutes(routeOptions);
@@ -408,7 +419,7 @@ export default function MapComponent() {
         }
         setSelectedRouteId(routeOptions[safestIndex].id);
 
-        const allCoords = routeOptions.flatMap(r => r.polyline);
+        const allCoords = routeOptions.flatMap((r) => r.polyline);
         const latLngs = allCoords.map((c) => L.latLng(c[0], c[1]));
         setMapBounds(L.latLngBounds(latLngs));
       }

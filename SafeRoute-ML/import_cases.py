@@ -126,6 +126,9 @@ def import_all():
         full_text = f"{title} {content}"
         locations = analysis.get("locations", [])
         
+        if analysis.get("category", "").lower() == "kebakaran":
+            continue
+
         if not is_in_depok(locations, full_text):
             continue
             

@@ -5,8 +5,6 @@ def map_incident_type(category: str) -> str:
         "begal": "BEGAL",
         "pembegalan": "BEGAL",
 
-        "kebakaran": "KEBAKARAN",
-
         "kecelakaan": "KECELAKAAN",
         "tabrakan": "KECELAKAAN",
 
