@@ -33,8 +33,8 @@ INCIDENTS_JSON_PATH = BASE_DIR / "dataset" / "scraped_real_cases.json"
 BACKEND_ML_URL = os.getenv("BACKEND_ML_URL")
 ML_API_KEY = os.getenv("ML_API_KEY")
 
-if not BACKEND_ML_URL:
-    raise RuntimeError("BACKEND_ML_URL belum diisi di .env")
+# if not BACKEND_ML_URL:
+#     raise RuntimeError("BACKEND_ML_URL belum diisi di .env")
 
 if not ML_API_KEY:
     raise RuntimeError("ML_API_KEY belum diisi di .env")
