@@ -1,4 +1,14 @@
-import { Shield, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
+
+function RouteIconFooter() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#0B2540]">
+      <circle cx="6" cy="6" r="3" stroke="currentColor" strokeWidth="2.2" />
+      <circle cx="18" cy="18" r="3" stroke="currentColor" strokeWidth="2.2" />
+      <path d="M6 9c0 3 12 3 12 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 function InstagramIcon() {
   return (
@@ -34,12 +44,8 @@ export default function Footer() {
           {/* Brand */}
           <div className="flex flex-col items-center gap-3 text-center md:items-start md:text-left">
             <div className="flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#0B2540] text-white">
-                <Shield size={18} strokeWidth={2.4} />
-              </span>
-              <span className="text-lg font-extrabold tracking-tight text-[#0B2540]">
-                Safe<span className="text-[#E8930A]">Route</span>
-              </span>
+              <RouteIconFooter />
+              <span className="text-lg font-bold tracking-tight text-[#0B2540]">SafeRoute</span>
             </div>
             <p className="max-w-xs text-xs leading-relaxed text-[#57687A]">
               Melindungi langkah Anda dengan rute paling aman, dipilihkan otomatis dari data yang

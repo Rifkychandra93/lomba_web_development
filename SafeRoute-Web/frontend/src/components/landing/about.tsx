@@ -103,9 +103,6 @@ function InteractiveRouteIllustration() {
         .particle {
           animation: float 6s ease-in-out infinite;
         }
-        .badge-float {
-          animation: float 5s ease-in-out infinite;
-        }
         @keyframes pulse {
           0%,
           100% {
@@ -130,8 +127,7 @@ function InteractiveRouteIllustration() {
           .route-line,
           .pin,
           .pin-pulse,
-          .particle,
-          .badge-float {
+          .particle {
             transition: none !important;
             animation: none !important;
             opacity: 1 !important;
@@ -222,30 +218,10 @@ function InteractiveRouteIllustration() {
         </g>
       </svg>
 
-      {/* Badges - ALL MOVED TO BOTTOM */}
-      <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center justify-start gap-2">
-        {/* Security Score Badge */}
-        <div className="badge-float flex items-center gap-3 rounded-2xl border border-[#E2E6E9] bg-white px-3 py-2 shadow-md">
-          <span className="relative flex h-3 w-3 flex-shrink-0">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0D5C4B] opacity-60" />
-            <span className="relative inline-flex h-3 w-3 rounded-full bg-[#0D5C4B]" />
-          </span>
-          <div>
-            <p className="text-[8px] font-medium tracking-[0.06em] uppercase text-[#57687A]">
-              Skor Keamanan
-            </p>
-            <p className="font-mono text-sm font-bold leading-none text-[#0B2540] transition-all duration-300">
-              {avoidRisk ? "97" : "92"}
-              <span className="text-[10px] font-medium text-[#57687A]">/100</span>
-            </p>
-          </div>
-        </div>
-
+      {/* Badges - di luar area animasi peta, dirapikan supaya sejajar */}
+      <div className="grid grid-cols-2 gap-2 border-t border-[#E2E6E9] p-4">
         {/* Active Route Badge */}
-        <div
-          className="badge-float rounded-2xl border border-[#E2E6E9] bg-white px-3 py-2 shadow-md"
-          style={{ animationDelay: "1s" }}
-        >
+        <div className="flex flex-col justify-center rounded-2xl border border-[#E2E6E9] bg-white px-3 py-2">
           <p className="text-[8px] font-medium tracking-[0.06em] uppercase text-[#57687A]">
             Rute Aktif
           </p>
@@ -259,10 +235,7 @@ function InteractiveRouteIllustration() {
         </div>
 
         {/* Reports Badge */}
-        <div
-          className="badge-float flex items-center gap-2 rounded-full border border-[#E2E6E9] bg-white px-3 py-1.5 shadow-md"
-          style={{ animationDelay: "2s" }}
-        >
+        <div className="flex items-center gap-2 rounded-2xl border border-[#E2E6E9] bg-white px-3 py-2">
           <span className="relative flex h-2 w-2 flex-shrink-0">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#E8930A] opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-[#E8930A]" />
@@ -273,10 +246,7 @@ function InteractiveRouteIllustration() {
         </div>
 
         {/* Live Data Badge */}
-        <div
-          className="badge-float flex items-center gap-2 rounded-full border border-[#0D5C4B]/20 bg-white px-3 py-1.5 shadow-md"
-          style={{ animationDelay: "0.5s" }}
-        >
+        <div className="col-span-2 flex items-center gap-2 rounded-2xl border border-[#0D5C4B]/20 bg-white px-3 py-2">
           <span className="relative flex h-2 w-2 flex-shrink-0">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0D5C4B] opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-[#0D5C4B]" />
