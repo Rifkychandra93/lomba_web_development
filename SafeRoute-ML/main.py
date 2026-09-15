@@ -13,7 +13,7 @@ import requests
 import spacy
 
 # pyrefly: ignore [missing-import]
-from fastapi import FastAPI
+from fastapi import FastAPI,Request
 # pyrefly: ignore [missing-import]
 from fastapi.middleware.cors import CORSMiddleware
 # pyrefly: ignore [missing-import]
@@ -23,6 +23,7 @@ from classifier import predict
 from mapper import map_incident_type
 from risk_classifier import calculate_risk
 from geocoder import geocode_location
+from news_crawler import crawl_batch
     
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -32,6 +33,7 @@ INCIDENTS_JSON_PATH = BASE_DIR / "dataset" / "scraped_real_cases.json"
 
 BACKEND_ML_URL = os.getenv("BACKEND_ML_URL")
 ML_API_KEY = os.getenv("ML_API_KEY")
+CRON_SECRET=os.getenv("CRON_SECRET")
 
 # if not BACKEND_ML_URL:
 #     raise RuntimeError("BACKEND_ML_URL belum diisi di .env")
@@ -249,4 +251,37 @@ def get_incidents():
         return {
             "success": False,
             "message": f"Gagal membaca data: {str(e)}"
+        }
+
+@app.get("/api/cron/news")
+def cron_news(request: Request):
+
+    authorization = request.headers.get("authorization")
+
+    if CRON_SECRET:
+        if authorization != f"Bearer {CRON_SECRET}":
+            return {
+                "success": False,
+                "message": "Unauthorized"
+            }
+
+    try:
+        result = crawl_batch(
+            keyword="begal depok",
+            max_articles=2
+        )
+
+        return {
+            "success": True,
+            "message": "SafeRoute News Cron berhasil menjalankan crawler",
+            "data": result
+        }
+
+    except Exception as e:
+        print(f"[CRON ERROR] {e}")
+
+        return {
+            "success": False,
+            "message": "Crawler gagal dijalankan",
+            "error": str(e)
         }

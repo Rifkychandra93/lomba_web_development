@@ -23,11 +23,20 @@ from geocoder import geocode_location
 def parse_date_indonesia(date_str: str) -> datetime:
     if not date_str:
         return None
-        
+
     date_str = date_str.strip()
-    
+
     try:
-        return datetime.fromisoformat(date_str.replace("Z", "+00:00"))
+        parsed = datetime.fromisoformat(
+            date_str.replace("Z", "+00:00")
+        )
+
+        # Samakan semua datetime menjadi naive
+        if parsed.tzinfo is not None:
+            parsed = parsed.replace(tzinfo=None)
+
+        return parsed
+
     except Exception:
         pass
 
@@ -45,62 +54,113 @@ def parse_date_indonesia(date_str: str) -> datetime:
         'nov': 11, 'november': 11,
         'des': 12, 'desember': 12
     }
-    
+
     cleaned = date_str.lower()
-    for day in ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu', 'hari', 'ini', 'lalu']:
-        cleaned = cleaned.replace(day, '')
-    
+
+    for day_name in [
+        'senin',
+        'selasa',
+        'rabu',
+        'kamis',
+        'jumat',
+        'sabtu',
+        'minggu',
+        'hari',
+        'ini',
+        'lalu'
+    ]:
+        cleaned = cleaned.replace(day_name, '')
+
     cleaned = re.sub(r'[,\.\-]', ' ', cleaned)
-    cleaned = cleaned.replace('wib', '').replace('wita', '').replace('wit', '')
-    
+
+    cleaned = (
+        cleaned
+        .replace('wib', '')
+        .replace('wita', '')
+        .replace('wit', '')
+    )
+
     tokens = cleaned.split()
+
     if not tokens:
         return None
-        
+
     day = None
     month = None
     year = None
     time_str = "00:00:00"
-    
+
     for tok in tokens:
         if tok in months_map:
             month = months_map[tok]
             break
-            
+
     if month:
-        # Find and remove the month token
-        month_tok = [tok for tok in tokens if tok in months_map][0]
+        month_tok = [
+            tok for tok in tokens
+            if tok in months_map
+        ][0]
+
         tokens.remove(month_tok)
-        
+
     digits = []
+
     for tok in tokens:
+
         if tok.isdigit():
             digits.append(int(tok))
+
         elif ':' in tok:
+
             time_parts = tok.split(':')
+
             if len(time_parts) >= 2:
+
                 try:
                     h = int(time_parts[0])
                     m = int(time_parts[1])
-                    s = int(time_parts[2]) if len(time_parts) > 2 else 0
+                    s = (
+                        int(time_parts[2])
+                        if len(time_parts) > 2
+                        else 0
+                    )
+
                     time_str = f"{h:02d}:{m:02d}:{s:02d}"
+
                 except ValueError:
                     pass
-                    
+
     for num in digits:
+
         if 1900 < num < 2100:
             year = num
+
         elif 1 <= num <= 31:
+
             if day is None:
                 day = num
 
     if day and month and year:
+
         try:
-            h, m, s = map(int, time_str.split(':'))
-            return datetime(year, month, day, h, m, s)
+
+            h, m, s = map(
+                int,
+                time_str.split(':')
+            )
+
+            return datetime(
+                year,
+                month,
+                day,
+                h,
+                m,
+                s
+            )
+
         except Exception:
             pass
-            
+
     for fmt in [
         "%d %b %Y %H:%M",
         "%d %B %Y %H:%M",
@@ -108,12 +168,18 @@ def parse_date_indonesia(date_str: str) -> datetime:
         "%d/%m/%Y %H:%M:%S",
         "%d-%m-%Y %H:%M:%S"
     ]:
+
         try:
-            return datetime.strptime(date_str, fmt)
+            return datetime.strptime(
+                date_str,
+                fmt
+            )
+
         except Exception:
             pass
-            
+
     return None
+
 
 BASE_DIR = Path(__file__).resolve().parent
 DATASET_DIR = BASE_DIR / "dataset"
@@ -130,6 +196,37 @@ if not ML_API_KEY:
     raise RuntimeError("ML_API belum di isi")
 
 KEYWORDS = ["begal depok", "tawuran depok", "pembacokan depok", "perampokan depok"]
+
+INCIDENT_KEYWORDS = [
+    "begal", "pembegalan", "dibegal", "membegal", 
+    "jambret", "penjambretan", 
+    "perampokan", "dirampok", 
+    "pencurian", "dicuri", "maling", "kemalingan", 
+    "tawuran", 
+    "pembacokan", "dibacok", "bacok", 
+    "penusukan", "ditusuk", 
+    "pengeroyokan", "dikeroyok" 
+]
+
+def is_relevant_article(title: str, keyword: str) -> bool:
+    """ Mengecek apakah judul berita relevan dengan keyword kejadian yang sedang dicari. """
+    title_lower = title.lower()
+    keyword_lower = keyword.lower()
+    
+    keyword_parts = keyword_lower.split()
+    
+    incident_match = any( incident_keyword in title_lower for incident_keyword in INCIDENT_KEYWORDS )
+    
+    if not incident_match:
+        return False
+    
+    location_parts = [ part for part in keyword_parts if part != "depok" ]
+    if "depok" in keyword_parts:
+        if "depok" not in title_lower:
+            return False
+            
+    return True
+
 
 def search_detik(keyword, max_pages=2):
     print(f"  -> Mencari di detik.com: '{keyword}'")
@@ -397,5 +494,214 @@ def crawl_and_analyze():
     print(f"\nSelesai! Total data saat ini: {len(all_results)}")
     print(f"Disimpan di: {OUTPUT_FILE}")
 
+def crawl_batch(keyword: str, max_articles: int = 5):
+    """
+    Menjalankan crawler dalam batch kecil untuk production/Cron.
+
+    Hanya memproses maksimal max_articles berita untuk satu keyword.
+    Penyimpanan permanen tetap dilakukan oleh Backend PostgreSQL.
+    """
+
+    print("\n================================")
+    print("SAFEROUTE CRON NEWS CRAWLER")
+    print("================================")
+    print(f"Keyword: {keyword}")
+    print(f"Max articles: {max_articles}")
+
+    links = search_internet(keyword)
+
+    if not links:
+        return {
+            "success": True,
+            "keyword": keyword,
+            "found": 0,
+            "processed": 0,
+            "saved": 0,
+            "skipped": 0,
+            "message": "Tidak ada berita ditemukan"
+        }
+
+
+    filtered_links = []
+
+    for link in links:
+
+        link_lower = link.lower()
+
+        if "depok" not in link_lower:
+            continue
+
+        if not any(
+            incident_keyword in link_lower
+            for incident_keyword in INCIDENT_KEYWORDS
+        ):
+            continue
+
+        filtered_links.append(link)
+
+
+    print(
+        f"Setelah filter URL: "
+        f"{len(filtered_links)} link relevan."
+    )
+
+    links = filtered_links[:max_articles]
+
+
+    if not links:
+        return {
+            "success": True,
+            "keyword": keyword,
+            "found": 0,
+            "processed": 0,
+            "saved": 0,
+            "skipped": 0,
+            "message": "Tidak ada link relevan setelah filter"
+        }
+
+
+    processed = 0
+    saved = 0
+    skipped = 0
+
+    for link in links:
+
+        print(f"\n[PROCESSING] {link}")
+
+        try:
+
+            analysis = analyze_article(link)
+
+            article = analysis.get("article", {})
+            ana = analysis.get("analysis", {})
+
+            title = article.get("title", "")
+            content = article.get("content", "")
+            published_at_str = article.get("published_at")
+
+
+            if not is_relevant_article(title, keyword):
+
+                print(
+                    f"  -> [SKIPPED] "
+                    f"Judul tidak relevan: {title}"
+                )
+
+                skipped += 1
+                continue
+
+
+            if published_at_str:
+
+                pub_date = parse_date_indonesia(
+                    published_at_str
+                )
+
+                if pub_date:
+
+                    one_month_ago = (
+                        datetime.now()
+                        - timedelta(days=30)
+                    )
+
+                    if pub_date < one_month_ago:
+
+                        print(
+                            "  -> [SKIPPED] "
+                            "Berita lebih dari 30 hari"
+                        )
+
+                        skipped += 1
+                        continue
+
+            category = ana.get("category", "")
+
+            if category.lower() == "kebakaran":
+
+                print(
+                    "  -> [SKIPPED] "
+                    "Kategori kebakaran"
+                )
+
+                skipped += 1
+                continue
+
+            locations = ana.get(
+                "locations",
+                []
+            )
+
+            full_text = (
+                title
+                + " "
+                + content
+            )
+
+            if not is_in_depok(
+                locations,
+                full_text
+            ):
+
+                print(
+                    "  -> [SKIPPED] "
+                    "Bukan kasus Depok"
+                )
+
+                skipped += 1
+                continue
+
+            print(
+                f"  -> [ACCEPTED] "
+                f"{category} "
+                f"(confidence: "
+                f"{ana.get('confidence')})"
+            )
+
+            processed += 1
+
+            success = send_incident_to_backend(
+                analysis,
+                link
+            )
+
+            if success:
+                saved += 1
+            else:
+                skipped += 1
+
+
+            time.sleep(1)
+
+
+        except Exception as error:
+
+            print(
+            f"  -> [ERROR] {error}"
+        )
+
+
+    return {
+        "success": True,
+        "keyword": keyword,
+        "found": len(links),
+        "processed": processed,
+        "saved": saved,
+        "skipped": skipped
+    }
+
 if __name__ == "__main__":
-    crawl_and_analyze()
+
+    result = crawl_batch(
+        "begal depok",
+        max_articles=2
+    )
+
+    print("\n================================")
+    print("HASIL CRON TEST")
+    print("================================")
+
+    print(json.dumps(
+        result,
+        indent=2,
+        ensure_ascii=False
+    ))
