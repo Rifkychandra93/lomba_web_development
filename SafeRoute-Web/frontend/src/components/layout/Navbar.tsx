@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { LogOut, Search, User } from "lucide-react";
+import { LogOut, Search, User, LayoutDashboard } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getCurrentUser } from "@/src/services/auth.service";
 import { getToken, clearAuth } from "@/src/lib/tokenStorage";
@@ -176,6 +176,16 @@ export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" 
                         <p className="text-[10px] text-neutral-500 truncate">{user.email}</p>
                       </div>
                       <hr className="my-1.5 border-neutral-100" />
+                      {user.role === "ADMIN" && (
+                        <Link
+                          href="/admin"
+                          onClick={() => setShowUserDropdown(false)}
+                          className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-xs font-semibold text-neutral-700 hover:bg-neutral-50 transition-colors"
+                        >
+                          <LayoutDashboard className="h-4 w-4 text-neutral-500" />
+                          Admin Dashboard
+                        </Link>
+                      )}
                       <Link
                         href="/profile"
                         onClick={() => setShowUserDropdown(false)}
