@@ -104,64 +104,12 @@ def health():
 
 @app.post("/analyze")
 def analyze(request: AnalyzeRequest):
-
-    print("[DEBUG] ANALYZE START")
-
-    text = request.text
-    print("[DEBUG] TEXT:", text)
-
-    classification = predict(text)
-    print("[DEBUG] CLASSIFICATION:", classification)
-
-    category = classification["category"]
-    confidence = float(classification["confidence"])
-
-    incident_type = map_incident_type(category)
-    print("[DEBUG] INCIDENT TYPE:", incident_type)
-
-    risk_level = calculate_risk(confidence)
-    print("[DEBUG] RISK LEVEL:", risk_level)
-
-    doc = ner_model(text)
-    print("[DEBUG] NER DONE")
-
-    locations = []
-    times = []
-
-    for entity in doc.ents:
-
-        if entity.label_ == "LOCATION":
-            locations.append(entity.text)
-
-        elif entity.label_ == "TIME":
-            times.append(entity.text)
-
-    print("[DEBUG] LOCATIONS:", locations)
-    print("[DEBUG] TIMES:", times)
-
-    coordinates = None
-
-    if locations:
-        print("[DEBUG] START GEOCODING:", locations[0])
-
-        coordinates = geocode_location(
-            locations[0]
-        )
-
-        print("[DEBUG] COORDINATES:", coordinates)
-
-    print("[DEBUG] ANALYZE FINISHED")
+    print("[DEBUG] ANALYZE MASUK")
 
     return {
         "success": True,
-        "data": {
-            "category": category,
-            "incidentType": incident_type,
-            "confidence": confidence,
-            "riskLevel": risk_level,
-            "locations": locations,
-            "times": times
-        }
+        "message": "Analyze endpoint works",
+        "text": request.text
     }
 
 
