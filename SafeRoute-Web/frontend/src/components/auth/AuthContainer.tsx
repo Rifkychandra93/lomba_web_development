@@ -67,6 +67,7 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
       window.google.accounts.id.initialize({
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
         callback: handleGoogleCredential,
+        use_fedcm_for_button: true,
       });
 
       // @ts-ignore
@@ -214,11 +215,6 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
 
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-white flex">
-      <div
-        ref={googleButtonRef}
-        className="mt-6 flex w-full justify-center"
-      />
-
       <div
         className={`absolute top-0 bottom-0 left-0 w-1/2 bg-[#0B2540] hidden md:flex flex-col items-center justify-center px-12 overflow-hidden z-20 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
           isRegister ? "translate-x-0" : "translate-x-full"
