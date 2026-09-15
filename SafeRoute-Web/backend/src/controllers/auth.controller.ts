@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 import { loginUser, registerUser, googleLogin } from "../services/auth.service";
 
 export const register = async (
@@ -12,6 +14,14 @@ export const register = async (
       res.status(400).json({
         success: false,
         message: "Name, email, nomor telepon, dan password wajib diisi",
+      });
+      return;
+    }
+
+    if (!EMAIL_REGEX.test(email)) {
+      res.status(400).json({
+        success: false,
+        message: "Format email tidak valid",
       });
       return;
     }
@@ -62,6 +72,14 @@ export const login = async (
       return;
     }
 
+    if (!EMAIL_REGEX.test(email)) {
+      res.status(400).json({
+        success: false,
+        message: "Format email tidak valid",
+      });
+      return;
+    }
+
     const result = await loginUser({
       email,
       password,
@@ -76,9 +94,14 @@ export const login = async (
     const message =
       error instanceof Error ? error.message : "Terjadi kesalahan";
 
-    res.status(401).json({
+    // Pisahkan error autentikasi (401) vs error server/DB (500)
+    const isAuthError =
+      message === "Email atau password salah" ||
+      message === "Format email tidak valid";
+
+    res.status(isAuthError ? 401 : 500).json({
       success: false,
-      message,
+      message: isAuthError ? message : "Terjadi kesalahan pada server",
     });
   }
 };
