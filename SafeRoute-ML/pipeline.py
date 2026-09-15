@@ -118,7 +118,32 @@ def normalize_location(location: str) -> str:
             text = text[len(prefix):].strip()
             break
 
-    return text
+    stop_phrases = [
+        " dibekuk",
+        " ditangkap",
+        " diamankan",
+        " nyaris",
+        " berujung",
+        " berakhir",
+        " terlibat",
+        " diduga",
+        " menjadi",
+        " membuat",
+        " korban",
+        " pelaku",
+        " diikat",
+    ]
+
+    lower = text.lower()
+
+    for phrase in stop_phrases:
+        index = lower.find(phrase)
+
+        if index != -1:
+            text = text[:index].strip()
+            lower = text.lower()
+
+    return text.strip(" ,.-")
 
 
 def analyze_article(url: str):

@@ -357,79 +357,141 @@ def is_in_depok(locations, text):
             return True
     return False
 
-def send_incident_to_backend(analysis: dict, url: str) -> bool:
+def send_incident_to_backend(analysis: dict, url: str) -> str:
+
     article = analysis["article"]
     ana = analysis["analysis"]
-    
+
     title = article["title"]
     content = article["content"]
+
     category = ana["category"]
     confidence = float(ana["confidence"])
-    
+
     incident_type = map_incident_type(category)
-    
     risk_level = calculate_risk(confidence)
-    
+
     locations = ana.get("locations", [])
+
     coords = None
     location_name = "Depok"
-    
+
     for loc in locations:
+
         if len(loc.strip()) < 3:
             continue
+
         coords = geocode_location(loc)
+
         if coords:
             location_name = loc
             break
-            
+
     if not coords:
+
         location_name = "Depok"
         coords = geocode_location("Depok")
-        
+
     if not coords:
-        print(f"       [SKIPPED] Geocoding gagal untuk lokasi fallback: {location_name}")
-        return False
-        
-    pub_date = parse_date_indonesia(article.get("published_at"))
-    published_at_iso = pub_date.isoformat() if pub_date else None
+
+        print(
+            f"       [SKIPPED] Geocoding gagal "
+            f"untuk lokasi fallback: {location_name}"
+        )
+
+        return "failed"
+
+    pub_date = parse_date_indonesia(
+        article.get("published_at")
+    )
+
+    published_at_iso = (
+        pub_date.isoformat()
+        if pub_date
+        else None
+    )
 
     payload = {
         "title": title,
         "url": url,
         "description": content,
-        "source": article.get("source", "Internet"),
+        "source": article.get(
+            "source",
+            "Internet"
+        ),
         "publishedAt": published_at_iso,
-        
-        "incidentTitle": f"[{incident_type}] {title[:50]}...",
-        "incidentDescription": content[:200] + "..." if content else None,
-        
+
+        "incidentTitle": (
+            f"[{incident_type}] "
+            f"{title[:50]}..."
+        ),
+
+        "incidentDescription": (
+            content[:200] + "..."
+            if content
+            else None
+        ),
+
         "location": location_name,
+
         "latitude": coords["latitude"],
         "longitude": coords["longitude"],
-        
+
         "incidentType": incident_type,
         "riskLevel": risk_level,
         "mlConfidence": confidence
     }
-    
+
     headers = {
         "x-ml-key": ML_API_KEY
     }
-    
+
     try:
-        response = requests.post(BACKEND_ML_URL, json=payload, headers=headers, timeout=20)
+
+        response = requests.post(
+            BACKEND_ML_URL,
+            json=payload,
+            headers=headers,
+            timeout=20
+        )
+
         if response.status_code == 201:
-            print(f"    -> [DATABASE SAVED] Berhasil disimpan di backend DB.")
-            return True
+
+            print(
+                "    -> [DATABASE SAVED] "
+                "Berhasil disimpan di backend DB."
+            )
+
+            return "saved"
+
         elif response.status_code == 409:
-            print(f"    -> [DATABASE SKIPPED] Data sudah ada di backend DB (duplikat).")
-            return True
+
+            print(
+                "    -> [DATABASE SKIPPED] "
+                "Data sudah ada di backend DB (duplikat)."
+            )
+
+            return "skipped"
+
         else:
-            print(f"    -> [DATABASE ERROR] Gagal menyimpan ke backend DB: {response.status_code} - {response.text}")
-            return False
+
+            print(
+                "    -> [DATABASE ERROR] "
+                f"Gagal menyimpan ke backend DB: "
+                f"{response.status_code} - "
+                f"{response.text}"
+            )
+
+            return "failed"
+
     except Exception as e:
-        print(f"    -> [DATABASE ERROR] Gagal menghubungi backend: {e}")
-        return False
+
+        print(
+            "    -> [DATABASE ERROR] "
+            f"Gagal menghubungi backend: {e}"
+        )
+
+        return "failed"
 
 def crawl_and_analyze():
     all_results = []
@@ -659,14 +721,15 @@ def crawl_batch(keyword: str, max_articles: int = 5):
 
             processed += 1
 
-            success = send_incident_to_backend(
+            result = send_incident_to_backend(
                 analysis,
                 link
             )
 
-            if success:
+            if result == "saved":
                 saved += 1
-            else:
+
+            elif result == "skipped":
                 skipped += 1
 
 

@@ -3,7 +3,7 @@ uvicorn[standard]
 requests
 beautifulsoup4
 pydantic
-scikit-learn
+scikit-learn==1.9.0
 pandas
 numpy
 spacy
