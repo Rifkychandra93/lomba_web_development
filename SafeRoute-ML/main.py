@@ -105,21 +105,25 @@ def health():
 @app.post("/analyze")
 def analyze(request: AnalyzeRequest):
 
-    text = request.text
+    print("[DEBUG] ANALYZE START")
 
+    text = request.text
+    print("[DEBUG] TEXT:", text)
 
     classification = predict(text)
+    print("[DEBUG] CLASSIFICATION:", classification)
 
     category = classification["category"]
     confidence = float(classification["confidence"])
 
-
     incident_type = map_incident_type(category)
+    print("[DEBUG] INCIDENT TYPE:", incident_type)
 
     risk_level = calculate_risk(confidence)
-
+    print("[DEBUG] RISK LEVEL:", risk_level)
 
     doc = ner_model(text)
+    print("[DEBUG] NER DONE")
 
     locations = []
     times = []
@@ -132,13 +136,21 @@ def analyze(request: AnalyzeRequest):
         elif entity.label_ == "TIME":
             times.append(entity.text)
 
+    print("[DEBUG] LOCATIONS:", locations)
+    print("[DEBUG] TIMES:", times)
+
     coordinates = None
 
     if locations:
+        print("[DEBUG] START GEOCODING:", locations[0])
+
         coordinates = geocode_location(
             locations[0]
         )
 
+        print("[DEBUG] COORDINATES:", coordinates)
+
+    print("[DEBUG] ANALYZE FINISHED")
 
     return {
         "success": True,
