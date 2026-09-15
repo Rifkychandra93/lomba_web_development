@@ -265,19 +265,75 @@ def cron_news(request: Request):
                 "message": "Unauthorized"
             }
 
+    keywords = [
+        "begal depok",
+        "tawuran depok",
+        "pembacokan depok",
+        "perampokan depok",
+        "pencurian depok"
+    ]
+
+    results = []
+
     try:
-        result = crawl_batch(
-            keyword="begal depok",
-            max_articles=2
+
+        for keyword in keywords:
+
+            print(
+                f"\n[CRON] Memproses keyword: {keyword}"
+            )
+
+            result = crawl_batch(
+                keyword=keyword,
+                max_articles=2
+            )
+
+            results.append(result)
+
+        total_found = sum(
+            result.get("found", 0)
+            for result in results
+        )
+
+        total_processed = sum(
+            result.get("processed", 0)
+            for result in results
+        )
+
+        total_saved = sum(
+            result.get("saved", 0)
+            for result in results
+        )
+
+        total_skipped = sum(
+            result.get("skipped", 0)
+            for result in results
+        )
+
+        total_failed = sum(
+            result.get("failed", 0)
+            for result in results
         )
 
         return {
             "success": True,
-            "message": "SafeRoute News Cron berhasil menjalankan crawler",
-            "data": result
+            "message": (
+                "SafeRoute News Cron berhasil "
+                "menjalankan semua crawler"
+            ),
+            "summary": {
+                "keywords": len(keywords),
+                "found": total_found,
+                "processed": total_processed,
+                "saved": total_saved,
+                "skipped": total_skipped,
+                "failed": total_failed
+            },
+            "results": results
         }
 
     except Exception as e:
+
         print(f"[CRON ERROR] {e}")
 
         return {
