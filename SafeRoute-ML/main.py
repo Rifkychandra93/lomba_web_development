@@ -109,32 +109,40 @@ def analyze(request: AnalyzeRequest):
 
     classification = predict(text)
 
+    category = classification["category"]
+    confidence = float(classification["confidence"])
+
+    incident_type = map_incident_type(category)
+
+    risk_level = calculate_risk(confidence)
+
     doc = ner_model(text)
 
     locations = []
     times = []
 
     for entity in doc.ents:
+
         if entity.label_ == "LOCATION":
             locations.append(entity.text)
+
         elif entity.label_ == "TIME":
             times.append(entity.text)
 
     coordinates = None
 
     if locations:
-        print("[DEBUG] sebelum geocoding:", locations[0])
-
         coordinates = geocode_location(
             locations[0]
         )
 
-        print("[DEBUG] setelah geocoding:", coordinates)
-
     return {
         "success": True,
         "data": {
-            "classification": classification,
+            "category": category,
+            "incidentType": incident_type,
+            "confidence": confidence,
+            "riskLevel": risk_level,
             "locations": locations,
             "times": times,
             "coordinates": coordinates
