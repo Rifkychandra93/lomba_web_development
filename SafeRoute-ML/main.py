@@ -111,11 +111,31 @@ def analyze(request: AnalyzeRequest):
 
     classification = predict(text)
 
-    print("[DEBUG] setelah predict:", classification)
+    print("[DEBUG] predict berhasil:", classification)
+
+    print("[DEBUG] sebelum NER")
+
+    doc = ner_model(text)
+
+    print("[DEBUG] NER berhasil")
+
+    locations = []
+    times = []
+
+    for entity in doc.ents:
+        if entity.label_ == "LOCATION":
+            locations.append(entity.text)
+        elif entity.label_ == "TIME":
+            times.append(entity.text)
+
+    print("[DEBUG] locations:", locations)
+    print("[DEBUG] times:", times)
 
     return {
         "success": True,
-        "classification": classification
+        "classification": classification,
+        "locations": locations,
+        "times": times
     }
 
 
