@@ -10,21 +10,12 @@ import {
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { getMapIncidents } from "@/src/services/incident.service";
-
-interface MapPoint {
-  id: string;
-  sourceType: "ML_CRAWLER" | "USER_REPORT";
-  title: string;
-  latitude: number;
-  longitude: number;
-  incidentType: string;
-  riskLevel: string;
-}
+import type { Incident } from "@/src/types/incident";
 
 const DEPOK_CENTER: [number, number] = [-6.390, 106.825];
 
 export default function AdminDashboardMapPreview() {
-  const [incidents, setIncidents] = useState<MapPoint[]>([]);
+  const [incidents, setIncidents] = useState<Incident[]>([]);
   const tileLayerUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
   useEffect(() => {
@@ -32,7 +23,7 @@ export default function AdminDashboardMapPreview() {
       try {
         const res = await getMapIncidents();
         if (res.success && res.data) {
-          setIncidents(res.data as MapPoint[]);
+          setIncidents(res.data);
         }
       } catch (e) {
         console.error("Gagal mengambil data peta:", e);
@@ -70,7 +61,7 @@ export default function AdminDashboardMapPreview() {
         {incidents.map((inc) => (
           <Marker 
             key={inc.id} 
-            position={[inc.latitude, inc.longitude]} 
+            position={[Number(inc.latitude), Number(inc.longitude)]} 
             icon={createCustomIcon(inc.incidentType, inc.riskLevel)}
           />
         ))}
