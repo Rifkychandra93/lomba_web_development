@@ -107,17 +107,9 @@ def analyze(request: AnalyzeRequest):
 
     text = request.text
 
-    print("[DEBUG] sebelum predict")
-
     classification = predict(text)
 
-    print("[DEBUG] predict berhasil:", classification)
-
-    print("[DEBUG] sebelum NER")
-
     doc = ner_model(text)
-
-    print("[DEBUG] NER berhasil")
 
     locations = []
     times = []
@@ -128,14 +120,25 @@ def analyze(request: AnalyzeRequest):
         elif entity.label_ == "TIME":
             times.append(entity.text)
 
-    print("[DEBUG] locations:", locations)
-    print("[DEBUG] times:", times)
+    coordinates = None
+
+    if locations:
+        print("[DEBUG] sebelum geocoding:", locations[0])
+
+        coordinates = geocode_location(
+            locations[0]
+        )
+
+        print("[DEBUG] setelah geocoding:", coordinates)
 
     return {
         "success": True,
-        "classification": classification,
-        "locations": locations,
-        "times": times
+        "data": {
+            "classification": classification,
+            "locations": locations,
+            "times": times,
+            "coordinates": coordinates
+        }
     }
 
 
