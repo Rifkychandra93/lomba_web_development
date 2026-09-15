@@ -212,28 +212,11 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
     }
   }
 
-  const handleGoogleSignIn = () => {
-    if (!googleReady) {
-      setError("Google Sign-In belum siap, tunggu sebentar lalu coba lagi.");
-      return;
-    }
-
-    const hiddenGoogleButton = googleButtonRef.current?.querySelector(
-      'div[role="button"]'
-    ) as HTMLElement | null;
-
-    hiddenGoogleButton?.click();
-  };
-
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-white flex">
       <div
         ref={googleButtonRef}
-        style={{
-          position: "absolute",
-          top: "-9999px",
-          left: "-9999px",
-        }}
+        className="mt-6 flex w-full justify-center"
       />
 
       <div
@@ -391,14 +374,10 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
               <div className="h-px flex-1 bg-neutral-400/50" />
             </div>
 
-            <button
-              type="button"
-              onClick={handleGoogleSignIn}
-              className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl border border-black/15 bg-transparent px-4 py-3 text-sm font-semibold text-neutral-800 transition hover:bg-black/5"
-            >
-              <GoogleIcon />
-              Sign in with Google
-            </button>
+            <div
+              ref={googleButtonRef}
+              className="mt-6 flex w-full justify-center"
+            />
 
             <p className="mt-6 text-center text-sm text-neutral-700">
               Don&apos;t have an account?{" "}
