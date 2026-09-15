@@ -9,3 +9,12 @@ export const getMapIncidents = async () => {
 
   return response.data;
 };
+
+export const getAllIncidents = async () => {
+  const response = await api.get<{
+    success: boolean;
+    data: Incident[];
+  }>("/incident");
+
+  return response.data;
+};

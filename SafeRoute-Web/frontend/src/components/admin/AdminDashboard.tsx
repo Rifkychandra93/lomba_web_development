@@ -4,7 +4,22 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { clearAuth, getUser } from "@/src/lib/tokenStorage";
+import dynamic from "next/dynamic";
 
+const AdminRiskMap = dynamic(
+  () => import("./AdminRiskMap"),
+  { ssr: false, loading: () => <div className="w-full h-full bg-[#091527] animate-pulse rounded-xl" /> }
+);
+
+const AdminDashboardMapPreview = dynamic(
+  () => import("./AdminDashboardMapPreview"),
+  { ssr: false, loading: () => <div className="w-full h-full bg-[#091527] animate-pulse rounded-xl" /> }
+);
+
+const AdminLaporanMasuk = dynamic(
+  () => import("./AdminLaporanMasuk"),
+  { ssr: false, loading: () => <div className="w-full h-full bg-slate-50 animate-pulse" /> }
+);
 interface ReportItem {
   id: string;
   title: string;
@@ -178,25 +193,47 @@ export default function AdminDashboard() {
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* TOP NAVBAR / HEADER */}
         <header className="h-20 bg-white border-b border-slate-200/80 px-8 py-4 flex items-center justify-between sticky top-0 z-30 shadow-xs">
-          {/* Left: Search bar */}
-          <div className="relative w-80">
-            <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:bg-white transition"
-            />
+          {/* Left: Title & Subtitle OR Search Bar */}
+          <div className="flex flex-col">
+            {activeTab === "Laporan Masuk" ? (
+              <>
+                <h1 className="text-xl font-extrabold text-slate-900 leading-tight">Laporan Masuk</h1>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">Kelola dan tinjau laporan yang perlu diverifikasi</p>
+              </>
+            ) : (
+              <div className="relative w-80">
+                <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:bg-white transition"
+                />
+              </div>
+            )}
           </div>
 
-          {/* Center: Title */}
-          <div className="absolute left-1/2 -translate-x-1/2">
-            <h1 className="text-xl font-extrabold text-slate-800 tracking-tight">
-              SafeRoute Admin
-            </h1>
-          </div>
+          {/* Center: Title (Only if not Laporan Masuk) */}
+          {activeTab !== "Laporan Masuk" && (
+            <div className="absolute left-1/2 -translate-x-1/2">
+              <h1 className="text-xl font-extrabold text-slate-800 tracking-tight">
+                SafeRoute Admin
+              </h1>
+            </div>
+          )}
 
           {/* Right: Action Icons & Profile Dropdown */}
           <div className="flex items-center gap-4" ref={profileMenuRef}>
+            {/* Search Bar on Right for Laporan Masuk */}
+            {activeTab === "Laporan Masuk" && (
+              <div className="relative w-64 mr-2 hidden md:block">
+                <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Cari laporan..."
+                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none focus:border-blue-500 focus:bg-white transition"
+                />
+              </div>
+            )}
             {/* Notification Button */}
             <div className="relative">
               <button
@@ -303,6 +340,13 @@ export default function AdminDashboard() {
         </header>
 
         {/* MAIN BODY CONTENT */}
+        {activeTab === "Laporan Masuk" ? (
+          <AdminLaporanMasuk />
+        ) : activeTab === "Peta Risiko" ? (
+          <main className="flex-1 flex flex-col p-4 overflow-hidden h-full">
+            <AdminRiskMap />
+          </main>
+        ) : (
         <main className="p-8 space-y-6">
           {/* --- TOP 4 STAT CARDS --- */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -405,52 +449,7 @@ export default function AdminDashboard() {
 
               {/* Map Preview Container */}
               <div className="relative w-full h-[310px] rounded-xl bg-[#091527] overflow-hidden border border-slate-800 shadow-inner flex items-center justify-center group">
-                {/* Visual Map Grid Graphic */}
-                <div
-                  className="absolute inset-0 opacity-40"
-                  style={{
-                    backgroundImage: `radial-gradient(#3B82F6 1px, transparent 1px), radial-gradient(#1E3A8A 1px, #091527 1px)`,
-                    backgroundSize: "20px 20px",
-                  }}
-                />
-
-                {/* Glowing Map Lines */}
-                <svg className="absolute inset-0 w-full h-full opacity-30" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M 50 100 Q 200 50 350 180 T 600 220" stroke="#3B82F6" strokeWidth="2" fill="none" />
-                  <path d="M 100 280 Q 300 200 500 120 T 700 80" stroke="#06B6D4" strokeWidth="2" fill="none" />
-                </svg>
-
-                {/* Interactive Map Pins */}
-                <div className="absolute top-1/3 left-1/4 animate-bounce">
-                  <div className="h-4 w-4 bg-emerald-500 rounded-full shadow-[0_0_12px_#10B981]" />
-                </div>
-                <div className="absolute top-1/2 left-2/5">
-                  <div className="h-5 w-5 bg-amber-400 rounded-full shadow-[0_0_15px_#F59E0B]" />
-                </div>
-                <div className="absolute bottom-1/3 right-1/3 animate-pulse">
-                  <div className="h-6 w-6 bg-red-500 rounded-full shadow-[0_0_20px_#EF4444] flex items-center justify-center text-white text-[10px] font-bold">
-                    !
-                  </div>
-                </div>
-
-                {/* Overlay Card UI (Matching Image) */}
-                <div className="absolute bottom-6 right-6 bg-slate-900/90 backdrop-blur-md border border-cyan-500/30 p-4 rounded-xl shadow-2xl max-w-xs text-white">
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-[10px] font-extrabold tracking-wider bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 px-2 py-0.5 rounded">
-                      VERIFIED INCIDENT REPORT
-                    </span>
-                    <span className="h-5 w-5 bg-cyan-500 rounded-full flex items-center justify-center text-slate-950 font-bold text-xs">
-                      ✓
-                    </span>
-                  </div>
-                  <p className="text-xs font-semibold text-slate-200 leading-snug">
-                    Fire Incident - 5th Ave & 34th St. FDNY on scene. Avoid area.
-                  </p>
-                  <div className="mt-3 flex items-center justify-between text-[10px] text-slate-400 border-t border-slate-800 pt-2">
-                    <span>Time: 10:35 PM</span>
-                    <span>Report ID: #98232</span>
-                  </div>
-                </div>
+                <AdminDashboardMapPreview />
               </div>
             </div>
 
@@ -630,6 +629,7 @@ export default function AdminDashboard() {
             </div>
           </div>
         </main>
+        )}
       </div>
 
       {/* --- DETAIL MODAL --- */}

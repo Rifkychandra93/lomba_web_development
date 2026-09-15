@@ -39,3 +39,12 @@ export const getVerifiedReports = async () => {
 
   return response.data;
 };
+
+export const getAllReports = async () => {
+  const response = await api.get<{
+    success: boolean;
+    data: Report[];
+  }>("/reports");
+
+  return response.data;
+};
