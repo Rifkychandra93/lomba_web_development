@@ -104,12 +104,18 @@ def health():
 
 @app.post("/analyze")
 def analyze(request: AnalyzeRequest):
-    print("[DEBUG] ANALYZE MASUK")
+
+    text = request.text
+
+    print("[DEBUG] sebelum predict")
+
+    classification = predict(text)
+
+    print("[DEBUG] setelah predict:", classification)
 
     return {
         "success": True,
-        "message": "Analyze endpoint works",
-        "text": request.text
+        "classification": classification
     }
 
 
