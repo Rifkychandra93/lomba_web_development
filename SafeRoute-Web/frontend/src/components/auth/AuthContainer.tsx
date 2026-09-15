@@ -74,6 +74,9 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
         theme: "outline",
         size: "large",
         width: 280,
+        click_listener: () => {
+          console.log("🔥 GOOGLE BUTTON DIKLIK");
+        },
       });
 
       setGoogleReady(true);
