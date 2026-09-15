@@ -57,6 +57,12 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
       // @ts-ignore -- window.google disuntik oleh script eksternal Google
       if (!window.google || !googleButtonRef.current) return;
 
+
+      console.log(
+        "GOOGLE CLIENT ID:",
+        process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+      );
+
       // @ts-ignore
       window.google.accounts.id.initialize({
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
