@@ -47,15 +47,6 @@ def geocode_location(location: str):
     if not location:
         return None
 
-    cache = load_cache()
-
-    cache_key = location.lower()
-
-
-    if cache_key in cache:
-        return cache[cache_key]
-
-
     params = {
         "q": f"{location}, Depok, Indonesia",
         "format": "jsonv2",
@@ -64,7 +55,7 @@ def geocode_location(location: str):
     }
 
     headers = {
-        "User-Agent": USER_AGENT
+        "User-Agent": "SafeRoute-ML/1.0"
     }
 
     try:
@@ -72,7 +63,7 @@ def geocode_location(location: str):
             NOMINATIM_URL,
             params=params,
             headers=headers,
-            timeout=15
+            timeout=5
         )
 
         response.raise_for_status()
@@ -80,9 +71,7 @@ def geocode_location(location: str):
         results = response.json()
 
         if not results:
-            cache[cache_key] = None
-            save_cache(cache)
-
+            print("[GEOCODER] lokasi tidak ditemukan:", location)
             return None
 
         result = results[0]
@@ -93,20 +82,14 @@ def geocode_location(location: str):
             "display_name": result.get("display_name")
         }
 
-        cache[cache_key] = data
-        save_cache(cache)
-
-        time.sleep(1)
+        print("[GEOCODER] berhasil:", data)
 
         return data
 
     except requests.RequestException as error:
         print(f"[GEOCODER ERROR] {error}")
-
         return None
 
-    result = geocode_location(
-        "Jalan Margonda Raya"
-    )
-
-    print(result)
+    except (KeyError, ValueError, TypeError) as error:
+        print(f"[GEOCODER PARSE ERROR] {error}")
+        return None
