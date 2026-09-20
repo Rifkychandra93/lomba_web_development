@@ -7,10 +7,8 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
   MapPin,
-  User,
   Search,
   Navigation,
-  Shield,
   ShieldCheck,
   Info,
   Camera,
@@ -428,47 +426,6 @@ export default function LaporPage() {
           </a>
         </div>
       </div>
-
-      {/* Header */}
-      <header className="border-b border-neutral-200 bg-[#0B2540]">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
-              <Shield className="h-5 w-5 text-white" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-white">
-                  SIAGA<span className="text-sky-400">KOTA</span>
-                </span>
-                <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium text-white/70">
-                  DEPOK PRESISI
-                </span>
-              </div>
-              <p className="text-[11px] text-white/50">
-                Portal Pelaporan Kriminal &amp; Tanggap Cepat Warga Terintegrasi
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-5">
-            <div className="hidden items-center gap-2 text-xs text-white/70 sm:flex">
-              {/* TODO(BE): ganti dot statis ini dengan status dari health-check endpoint */}
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
-              Server Command Center: <span className="font-semibold text-emerald-400">Siaga Online</span>
-            </div>
-            <div className="flex items-center gap-2 border-l border-white/10 pl-5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10">
-                <User className="h-4 w-4 text-white" />
-              </div>
-              <div className="hidden text-xs sm:block">
-                <p className="font-medium text-white">{user?.name || "Masyarakat / Pelapor"}</p>
-                <p className="text-white/50">Verifikasi NIK / Anonim</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Breadcrumb + stepper */}
       <div className="border-b border-neutral-200 bg-white">
