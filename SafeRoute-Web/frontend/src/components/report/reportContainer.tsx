@@ -21,7 +21,11 @@ import {
   AlertTriangle,
   Info,
   MousePointerClick,
-  ChevronDown,
+  Footprints,
+  Bike,
+  Wallet,
+  Siren,
+  MoreHorizontal,
 } from "lucide-react";
 import { createReport } from "@/src/services/report.service";
 import { getCurrentUser } from "@/src/services/auth.service";
@@ -51,6 +55,15 @@ const CATEGORIES = [
   { value: "LAINNYA", label: "Lainnya" },
 ] as const;
 
+const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  BEGAL: AlertTriangle,
+  JAMBRET: Footprints,
+  CURANMOR: Bike,
+  PENCURIAN: Wallet,
+  PEMBACOKAN: Siren,
+  LAINNYA: MoreHorizontal,
+};
+
 const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -77,8 +90,6 @@ export default function LaporPage() {
   const [isLocating, setIsLocating] = useState(false);
 
   const [category, setCategory] = useState("BEGAL");
-  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
-  const categoryRef = useRef<HTMLDivElement>(null);
   const [description, setDescription] = useState("");
   const [incidentDate, setIncidentDate] = useState("");
   const [incidentTime, setIncidentTime] = useState("");
@@ -110,18 +121,6 @@ export default function LaporPage() {
     };
     loadUser();
   }, [router]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (categoryRef.current && !categoryRef.current.contains(event.target as Node)) {
-        setShowCategoryDropdown(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const handleSearch = async () => {
     if (searchQuery.length < 3) return;
@@ -155,7 +154,7 @@ export default function LaporPage() {
   const handleMapClick = async (lat: number, lng: number) => {
     setSelectedLat(lat);
     setSelectedLng(lng);
-    
+
     try {
       const res = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`,
@@ -315,12 +314,8 @@ export default function LaporPage() {
     }
   };
 
-
-  const selectedCategoryLabel = CATEGORIES.find((c) => c.value === category)?.label || "Pilih Kategori";
-
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 font-sans">
-
       <main className="flex-1">
         <div className="mx-auto max-w-6xl px-6 py-8">
           <div className="mb-6">
@@ -444,41 +439,46 @@ export default function LaporPage() {
             <div className="flex flex-col gap-5">
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
-                  <h3 className="flex items-center gap-2 text-sm font-bold text-[#0B2540]">
+                  <h3 className="text-sm font-bold text-[#0B2540]">
                     Kategori Kejadian
                   </h3>
-                  
-                  <div className="relative mt-3" ref={categoryRef}>
-                    <button
-                      type="button"
-                      onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-                      className="flex w-full items-center justify-between rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700 outline-none transition-colors focus:bg-white focus:border-[#0B2540]/30 focus:ring-2 focus:ring-[#0B2540]/5"
-                    >
-                      <span className="font-medium">{selectedCategoryLabel}</span>
-                      <ChevronDown className={`h-4 w-4 text-neutral-400 transition-transform duration-200 ${showCategoryDropdown ? "rotate-180" : ""}`} />
-                    </button>
+                  <p className="mt-1 text-xs text-neutral-500">
+                    Pilih satu yang paling sesuai.
+                  </p>
 
-                    {showCategoryDropdown && (
-                      <div className="absolute left-0 right-0 top-full z-30 mt-1 max-h-60 overflow-y-auto rounded-xl border border-neutral-100 bg-white shadow-xl animate-fade-in">
-                        {CATEGORIES.map((cat) => (
-                          <button
-                            key={cat.value}
-                            type="button"
-                            onClick={() => {
-                              setCategory(cat.value);
-                              setShowCategoryDropdown(false);
-                            }}
-                            className={`block w-full px-4 py-3 text-left text-sm font-medium transition-colors ${
-                              category === cat.value
-                                ? "bg-[#0B2540]/5 text-[#0B2540]"
-                                : "text-neutral-700 hover:bg-neutral-50"
+                  <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                    {CATEGORIES.map((cat) => {
+                      const Icon = CATEGORY_ICONS[cat.value];
+                      const isSelected = category === cat.value;
+                      return (
+                        <button
+                          key={cat.value}
+                          type="button"
+                          onClick={() => setCategory(cat.value)}
+                          className={`relative flex flex-col items-center gap-1.5 rounded-xl border px-3 py-3 text-center transition-colors ${
+                            isSelected
+                              ? "border-[#0B2540] bg-[#0B2540]/5"
+                              : "border-neutral-200 bg-neutral-50 hover:border-neutral-300 hover:bg-neutral-100/60"
+                          }`}
+                        >
+                          {isSelected && (
+                            <CheckCircle2 className="absolute right-1.5 top-1.5 h-3.5 w-3.5 text-[#0B2540]" />
+                          )}
+                          <Icon
+                            className={`h-5 w-5 ${
+                              isSelected ? "text-[#0B2540]" : "text-neutral-400"
+                            }`}
+                          />
+                          <span
+                            className={`text-xs font-medium ${
+                              isSelected ? "text-[#0B2540]" : "text-neutral-600"
                             }`}
                           >
                             {cat.label}
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                          </span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -608,9 +608,7 @@ export default function LaporPage() {
                       Mengirim Laporan...
                     </>
                   ) : (
-                    <>
-                      Kirim Laporan
-                    </>
+                    <>Kirim Laporan</>
                   )}
                 </button>
               </form>
