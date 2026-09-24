@@ -44,4 +44,31 @@ router.get("/me", authenticate, async (req: AuthRequest, res) => {
   }
 });
 
+router.get("/users", authenticate, async (req: AuthRequest, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    res.json({
+      success: true,
+      data: users,
+    });
+  } catch {
+    res.status(500).json({
+      success: false,
+      message: "Terjadi kesalahan server saat mengambil data pengguna",
+    });
+  }
+});
+
 export default router;
