@@ -37,14 +37,14 @@ export function ChatSidebar({
       case "Polres":
         return <Building2 className="h-5 w-5 text-blue-600" />;
       case "Polsek":
-        return;
+        return <Building2 className="h-5 w-5 text-indigo-600" />;
       default:
         return <Radio className="h-5 w-5 text-cyan-600" />;
     }
   };
 
   return (
-    <aside className="w-80 md:w-96 flex-shrink-0 border-r border-gray-200 flex flex-col bg-white h-full">
+    <aside className="w-full md:w-80 lg:w-96 flex-shrink-0 border-r border-gray-200 flex flex-col bg-white h-full">
       {/* Sidebar Header & User Location Banner */}
       <div className="px-5 py-4 border-b border-gray-100 bg-slate-50/50">
         <div className="flex items-center justify-between">

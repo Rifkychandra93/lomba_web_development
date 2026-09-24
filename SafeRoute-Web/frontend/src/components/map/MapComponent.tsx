@@ -168,6 +168,8 @@ export default function MapComponent() {
   const [clickMode, setClickMode] = useState<"none" | "start" | "dest" | "report">("none");
   const [incidents, setIncidents] = useState<MapPoint[]>([]);
 
+  const [isMobilePanelOpen, setIsMobilePanelOpen] = useState(true);
+
   const [startInput, setStartInput] = useState("");
   const [startSuggestions, setStartSuggestions] = useState<any[]>([]);
   const [destInput, setDestInput] = useState("");
@@ -637,15 +639,27 @@ export default function MapComponent() {
           </div>
         )}
 
-        <div className="absolute left-6 top-6 bottom-6 z-10 w-80 max-w-sm shrink-0 flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white/95 backdrop-blur-md shadow-2xl transition-all duration-300">
+        <div className={`absolute left-3 right-3 top-3 md:left-6 md:right-auto md:top-6 md:bottom-6 z-10 w-auto md:w-80 max-w-sm shrink-0 flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white/95 backdrop-blur-md shadow-2xl transition-all duration-300 ${
+          isMobilePanelOpen ? "max-h-[85vh] md:max-h-none" : "max-h-14"
+        }`}>
           
-          <div className="flex flex-col overflow-y-auto p-5">
-            <h2 className="text-sm font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-              Navigasi Aman
-            </h2>
-            <p className="mt-1 text-[11px] text-slate-400 leading-normal font-medium">
-              Pilih titik awal dan tujuan Anda untuk menganalisis tingkat keamanan rute perjalanan di Depok.
-            </p>
+          <div className="flex flex-col overflow-y-auto p-4 sm:p-5">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs sm:text-sm font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                Navigasi Aman
+              </h2>
+              <button
+                onClick={() => setIsMobilePanelOpen(!isMobilePanelOpen)}
+                className="md:hidden rounded-lg bg-slate-100 px-2.5 py-1 text-[10px] font-bold text-blue-600 hover:bg-slate-200 transition"
+              >
+                {isMobilePanelOpen ? "Tutup Panel" : "Buka Panel"}
+              </button>
+            </div>
+            {isMobilePanelOpen && (
+              <p className="mt-1 text-[11px] text-slate-400 leading-normal font-medium">
+                Pilih titik awal dan tujuan Anda untuk menganalisis tingkat keamanan rute perjalanan di Depok.
+              </p>
+            )}
 
             <div className="relative mt-5">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Titik Awal (Lokasi Anda)</label>

@@ -28,11 +28,11 @@ export default function ChatPage() {
   const [stations, setStations] = useState<PoliceStation[]>([]);
   const [selectedStation, setSelectedStation] = useState<PoliceStation | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [mobileView, setMobileView] = useState<"sidebar" | "chat">("sidebar");
 
   const loadNearbyStations = async (lat: number, lng: number) => {
     setLoading(true);
     try {
-      // Get exact place name via Nominatim reverse geocoding for user's live coordinates
       let placeName = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
       try {
         const revRes = await fetch(
@@ -52,7 +52,6 @@ export default function ChatPage() {
 
       setUserLocation({ lat, lng, name: placeName });
 
-      // Fetch 100% real police stations from OSM around the user's actual GPS location
       const data = await fetchNearbyPoliceFromOSM(lat, lng);
       setStations(data);
 
@@ -81,9 +80,9 @@ export default function ChatPage() {
           loadNearbyStations(DEFAULT_LAT, DEFAULT_LNG);
         },
         {
-          enableHighAccuracy: true, // Force live hardware GPS
+          enableHighAccuracy: true,
           timeout: 10000,
-          maximumAge: 0, // Never use stale cached position
+          maximumAge: 0,
         }
       );
     } else {
@@ -95,24 +94,46 @@ export default function ChatPage() {
     getUserLocationAndFetch();
   }, []);
 
+  const handleSelectStation = (station: PoliceStation) => {
+    setSelectedStation(station);
+    setMobileView("chat");
+  };
+
   return (
     <div className="flex h-screen flex-col bg-white overflow-hidden text-slate-900 font-sans">
       <Navbar activePage="chat" />
-      <main className="flex flex-1 overflow-hidden">
-        <ChatSidebar
-          stations={stations}
-          selectedStationId={selectedStation?.id || null}
-          onSelectStation={(station) => setSelectedStation(station)}
-          userLocationName={userLocation.name}
-          loading={loading}
-          onRefreshLocation={getUserLocationAndFetch}
-        />
-        <ChatArea
-          selectedStation={selectedStation}
-          userLocation={userLocation}
-        />
+      <main className="flex flex-1 overflow-hidden relative">
+        {/* Sidebar: visible on desktop, toggled on mobile */}
+        <div
+          className={`w-full md:w-80 lg:w-96 h-full flex-shrink-0 ${
+            mobileView === "chat" ? "hidden md:flex" : "flex"
+          }`}
+        >
+          <ChatSidebar
+            stations={stations}
+            selectedStationId={selectedStation?.id || null}
+            onSelectStation={handleSelectStation}
+            userLocationName={userLocation.name}
+            loading={loading}
+            onRefreshLocation={getUserLocationAndFetch}
+          />
+        </div>
+
+        {/* Chat Area: visible on desktop, toggled on mobile */}
+        <div
+          className={`flex-1 h-full w-full ${
+            mobileView === "sidebar" ? "hidden md:flex" : "flex"
+          }`}
+        >
+          <ChatArea
+            selectedStation={selectedStation}
+            userLocation={userLocation}
+            onBack={() => setMobileView("sidebar")}
+          />
+        </div>
       </main>
       <Footer />
     </div>
   );
 }
+

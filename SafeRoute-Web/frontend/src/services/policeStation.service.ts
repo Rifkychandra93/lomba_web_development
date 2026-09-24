@@ -31,7 +31,6 @@ export function getDistanceFromLatLonInKm(
   return Math.round(R * c * 10) / 10;
 }
 
-// Complete & Verified Database of Police Stations in Kota Depok (Every Kecamatan)
 const DEPOK_POLICE_REGISTRY: Omit<PoliceStation, "distanceKm">[] = [
   {
     id: "depok-polsek-sukmajaya",

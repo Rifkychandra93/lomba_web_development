@@ -432,7 +432,7 @@ function StepIndicator({
 }) {
   return (
     <div className="border-b border-neutral-200 bg-white">
-      <div className="mx-auto flex max-w-3xl items-center justify-center gap-2 px-6 py-3 text-xs">
+      <div className="mx-auto flex max-w-3xl items-center justify-start sm:justify-center gap-2 px-4 sm:px-6 py-3 text-xs overflow-x-auto no-scrollbar">
         {WIZARD_STEPS.map((step, idx) => {
           const isActive = currentStep === step.n;
           const done = isStepDone(step.n);
@@ -457,14 +457,14 @@ function StepIndicator({
                   {done ? <CheckCircle2 className="h-3.5 w-3.5" /> : step.n}
                 </span>
                 <span
-                  className={
+                  className={`whitespace-nowrap ${
                     isActive ? "font-medium text-[#0B2540]" : reachable ? "text-neutral-600" : "text-neutral-400"
-                  }
+                  }`}
                 >
                   {step.label}
                 </span>
               </button>
-              {idx < WIZARD_STEPS.length - 1 && <span className="h-px w-6 bg-neutral-200" />}
+              {idx < WIZARD_STEPS.length - 1 && <span className="h-px w-4 sm:w-6 bg-neutral-200 shrink-0" />}
             </div>
           );
         })}
@@ -475,7 +475,7 @@ function StepIndicator({
 
 function CategoryGrid({ value, onChange }: { value: IncidentType; onChange: (v: IncidentType) => void }) {
   return (
-    <div className="mt-3 grid grid-cols-3 gap-2">
+    <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
       {CATEGORIES.map((cat) => {
         const Icon = CATEGORY_ICONS[cat.value];
         const isSelected = value === cat.value;

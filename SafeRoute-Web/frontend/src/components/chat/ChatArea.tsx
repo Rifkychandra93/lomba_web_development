@@ -13,6 +13,7 @@ import {
   CheckCheck,
   Building2,
   Navigation,
+  ChevronLeft,
 } from "lucide-react";
 import { PoliceStation } from "@/src/services/policeStation.service";
 
@@ -31,9 +32,10 @@ interface ChatMessage {
 interface ChatAreaProps {
   selectedStation: PoliceStation | null;
   userLocation: { lat: number; lng: number; name: string } | null;
+  onBack?: () => void;
 }
 
-export function ChatArea({ selectedStation, userLocation }: ChatAreaProps) {
+export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -123,14 +125,14 @@ export function ChatArea({ selectedStation, userLocation }: ChatAreaProps) {
 
   if (!selectedStation) {
     return (
-      <section className="flex flex-1 items-center justify-center bg-white p-8 text-center">
+      <section className="flex flex-1 items-center justify-center bg-white p-8 text-center h-full">
         <div className="max-w-sm space-y-3">
           <Shield className="mx-auto h-12 w-12 text-slate-300" />
           <h3 className="text-base font-bold text-slate-800">
             Pilih Kantor Polisi Terdekat
           </h3>
           <p className="text-xs text-slate-500">
-            Silakan pilih pos polisi atau polsek dari sidebar untuk memulai kontak darurat berbasis lokasi OpenStreetMap.
+            Silakan pilih pos polisi atau polsek dari daftar untuk memulai kontak darurat berbasis lokasi OpenStreetMap.
           </p>
         </div>
       </section>
@@ -138,12 +140,23 @@ export function ChatArea({ selectedStation, userLocation }: ChatAreaProps) {
   }
 
   return (
-    <section className="flex flex-1 flex-col bg-white h-full overflow-hidden">
+    <section className="flex flex-1 flex-col bg-white h-full overflow-hidden w-full">
       {/* Header */}
-      <header className="flex shrink-0 items-center justify-between border-b border-slate-200 px-6 py-3.5 bg-white shadow-2xs">
-        <div className="flex items-center gap-3 min-w-0">
+      <header className="flex shrink-0 items-center justify-between border-b border-slate-200 px-4 sm:px-6 py-3 bg-white shadow-2xs">
+        <div className="flex items-center gap-2.5 min-w-0">
+          {/* Mobile Back Button */}
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="md:hidden flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 transition"
+              title="Kembali ke Daftar Pos Polisi"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+          )}
+
           <div className="relative shrink-0">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md shadow-blue-500/20">
+            <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md shadow-blue-500/20">
               {selectedStation.type === "Polres" ? (
                 <Building2 className="h-5 w-5" />
               ) : selectedStation.type === "Polsek" ? (
@@ -152,22 +165,22 @@ export function ChatArea({ selectedStation, userLocation }: ChatAreaProps) {
                 <Radio className="h-5 w-5" />
               )}
             </div>
-            <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-white bg-emerald-500" />
+            <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 sm:h-3.5 sm:w-3.5 rounded-full border-2 border-white bg-emerald-500" />
           </div>
 
           <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <h2 className="text-sm font-extrabold text-slate-900 truncate">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <h2 className="text-xs sm:text-sm font-extrabold text-slate-900 truncate">
                 {selectedStation.name}
               </h2>
-              <span className="rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-bold text-blue-700 border border-blue-200">
+              <span className="rounded bg-blue-50 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-bold text-blue-700 border border-blue-200 shrink-0">
                 {selectedStation.type}
               </span>
             </div>
-            <p className="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1.5 font-medium">
-              <span className="flex items-center gap-0.5 text-emerald-600 font-bold">
+            <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 flex items-center gap-1.5 font-medium truncate">
+              <span className="flex items-center gap-0.5 text-emerald-600 font-bold shrink-0">
                 <MapPin className="h-3 w-3" />
-                {selectedStation.distanceKm} km dari Anda
+                {selectedStation.distanceKm} km
               </span>
               <span>•</span>
               <span className="text-slate-600 truncate">{selectedStation.address}</span>
@@ -176,23 +189,24 @@ export function ChatArea({ selectedStation, userLocation }: ChatAreaProps) {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <a
             href={`tel:${selectedStation.phone.replace(/[^0-9]/g, "") || "110"}`}
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 px-3.5 py-2 text-xs font-bold text-white shadow-sm transition"
+            className="flex items-center gap-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 px-3 py-2 text-xs font-bold text-white shadow-sm transition"
           >
             <PhoneCall className="h-3.5 w-3.5" />
-            Telepon 110
+            <span className="hidden sm:inline">Telepon 110</span>
           </a>
           <button
             onClick={handleShareLocation}
-            className="flex items-center gap-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 px-3.5 py-2 text-xs font-bold text-blue-700 transition"
+            className="flex items-center gap-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 px-3 py-2 text-xs font-bold text-blue-700 transition"
           >
             <Navigation className="h-3.5 w-3.5 text-blue-600" />
-            Kirim GPS
+            <span className="hidden sm:inline">Kirim GPS</span>
           </button>
         </div>
       </header>
+
 
       {/* Messages Feed */}
       <div className="flex-1 overflow-y-auto p-6 bg-slate-50/40">
