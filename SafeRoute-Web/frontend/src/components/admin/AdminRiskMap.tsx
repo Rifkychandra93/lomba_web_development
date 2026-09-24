@@ -105,10 +105,7 @@ export default function AdminRiskMap() {
   };
 
   const handleResolve = (id: string) => {
-    setIncidents(prev => prev.map(inc => inc.id === id ? { ...inc, riskLevel: "LOW", status: "RESOLVED" } : inc));
-    if (selectedIncident?.id === id) {
-      setSelectedIncident(prev => prev ? { ...prev, riskLevel: "LOW", status: "RESOLVED" } : null);
-    }
+    setIncidents(prev => prev.filter(inc => inc.id !== id));
     setSelectedIncident(null);
   };
 
