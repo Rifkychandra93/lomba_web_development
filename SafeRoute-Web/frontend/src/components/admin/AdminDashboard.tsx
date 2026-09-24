@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { clearAuth, getUser } from "@/src/lib/tokenStorage";
+import { getAllReports, updateReportStatus } from "@/src/services/report.service";
+import { getAllIncidents } from "@/src/services/incident.service";
 import dynamic from "next/dynamic";
 
 const AdminRiskMap = dynamic(
@@ -20,6 +22,17 @@ const AdminLaporanMasuk = dynamic(
   () => import("./AdminLaporanMasuk"),
   { ssr: false, loading: () => <div className="w-full h-full bg-slate-50 animate-pulse" /> }
 );
+
+const AdminDataBerita = dynamic(
+  () => import("./AdminDataBerita"),
+  { ssr: false, loading: () => <div className="w-full h-full bg-slate-50 animate-pulse" /> }
+);
+
+const AdminPengguna = dynamic(
+  () => import("./AdminPengguna"),
+  { ssr: false, loading: () => <div className="w-full h-full bg-slate-50 animate-pulse" /> }
+);
+
 interface ReportItem {
   id: string;
   title: string;
@@ -40,35 +53,75 @@ export default function AdminDashboard() {
   const [showNotifMenu, setShowNotifMenu] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
 
-  const [reports, setReports] = useState<ReportItem[]>([
-    {
-      id: "REP-001",
-      title: "Tindak Pembegalan Motor",
-      category: "KRIMINAL",
-      location: "Jl. Kaliurang KM 14",
-      source: "Warga",
-      status: "PENDING",
-    },
-    {
-      id: "REP-002",
-      title: "Kecelakaan Lalu Lintas Beruntun",
-      category: "KECELAKAAN",
-      location: "Tol Dalam Kota KM 12",
-      source: "Berita",
-      status: "PENDING",
-    },
-    {
-      id: "REP-003",
-      title: "Jalan Berlubang Dalam",
-      category: "INFRASTRUKTUR",
-      location: "Jl. Raya Bogor",
-      source: "Warga",
-      status: "PENDING",
-    },
-  ]);
+  const [reports, setReports] = useState<ReportItem[]>([]);
+  const [stats, setStats] = useState({
+    total: 0,
+    pending: 0,
+    verified: 0,
+    activeRisks: 0,
+  });
+  const [isLoading, setIsLoading] = useState(true);
 
   const [filterCategory, setFilterCategory] = useState("Semua");
   const [selectedReport, setSelectedReport] = useState<ReportItem | null>(null);
+
+  // Fetch real data for pending verification reports and dashboard stats
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const [resReports, resIncidents] = await Promise.all([
+          getAllReports(),
+          getAllIncidents()
+        ]);
+
+        let totalReps = 0;
+        let pendingReps = 0;
+        let verifiedReps = 0;
+        let activeRisks = 0;
+        
+        if (resReports.success && resReports.data) {
+          totalReps += resReports.data.length;
+          
+          resReports.data.forEach((r: any) => {
+             if (r.status === "PENDING") pendingReps++;
+             if (r.status === "TERVERIFIKASI" || r.status === "VERIFIED") verifiedReps++;
+          });
+
+          // Set reports for bottom table
+          const mapped: ReportItem[] = resReports.data
+            .filter((rep: any) => rep.status === "PENDING") // Hanya yang belum terverifikasi (Pending)
+            .map((rep: any) => ({
+              id: rep.id,
+              title: rep.title,
+              category: rep.incidentType,
+              location: rep.address || rep.location || "Lokasi tidak diketahui",
+              source: "Warga", // Biasanya yang pending dari warga
+              status: rep.status,
+            }));
+          setReports(mapped);
+        }
+
+        if (resIncidents.success && resIncidents.data) {
+          totalReps += resIncidents.data.length;
+          verifiedReps += resIncidents.data.length; // Anggap crawler sudah terverifikasi/diproses
+          activeRisks = resIncidents.data.filter((i: any) => i.status !== "RESOLVED").length;
+        }
+
+        setStats({
+          total: totalReps,
+          pending: pendingReps,
+          verified: verifiedReps,
+          activeRisks: activeRisks
+        });
+
+      } catch (error) {
+        console.error("Failed to fetch dashboard data", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchDashboardData();
+  }, []);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -90,16 +143,32 @@ export default function AdminDashboard() {
     router.push("/login");
   };
 
-  const handleApprove = (id: string) => {
-    setReports((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, status: "VERIFIED" } : r))
-    );
+  const handleApprove = async (id: string) => {
+    try {
+      await updateReportStatus(id, "VERIFIED");
+      setReports((prev) => prev.filter((r) => r.id !== id));
+      // Refresh stats automatically by removing 1 pending and adding 1 verified
+      setStats((prev) => ({
+        ...prev,
+        pending: Math.max(0, prev.pending - 1),
+        verified: prev.verified + 1
+      }));
+    } catch (err) {
+      console.error("Failed to approve report", err);
+    }
   };
 
-  const handleReject = (id: string) => {
-    setReports((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, status: "REJECTED" } : r))
-    );
+  const handleReject = async (id: string) => {
+    try {
+      await updateReportStatus(id, "REJECTED");
+      setReports((prev) => prev.filter((r) => r.id !== id));
+      setStats((prev) => ({
+        ...prev,
+        pending: Math.max(0, prev.pending - 1)
+      }));
+    } catch (err) {
+      console.error("Failed to reject report", err);
+    }
   };
 
   const filteredReports = reports.filter((report) => {
@@ -134,7 +203,6 @@ export default function AdminDashboard() {
               { name: "Dashboard", icon: DashboardIcon },
               { name: "Peta Risiko", icon: MapIcon },
               { name: "Laporan Masuk", icon: InboxIcon },
-              { name: "Verifikasi", icon: ShieldIcon },
               { name: "Data Berita", icon: NewsIcon },
               { name: "Pengguna", icon: UsersIcon },
               { name: "Pengaturan", icon: SettingsIcon },
@@ -146,8 +214,8 @@ export default function AdminDashboard() {
                   key={item.name}
                   onClick={() => setActiveTab(item.name)}
                   className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 ${isActive
-                      ? "bg-[#2563EB] text-white shadow-lg shadow-blue-600/30 font-semibold"
-                      : "text-slate-400 hover:bg-slate-800/60 hover:text-white"
+                    ? "bg-[#2563EB] text-white shadow-lg shadow-blue-600/30 font-semibold"
+                    : "text-slate-400 hover:bg-slate-800/60 hover:text-white"
                     }`}
                 >
                   <Icon className="w-5 h-5 shrink-0" />
@@ -342,293 +410,287 @@ export default function AdminDashboard() {
         {/* MAIN BODY CONTENT */}
         {activeTab === "Laporan Masuk" ? (
           <AdminLaporanMasuk />
+        ) : activeTab === "Data Berita" ? (
+          <AdminDataBerita />
+        ) : activeTab === "Pengguna" ? (
+          <AdminPengguna />
         ) : activeTab === "Peta Risiko" ? (
           <main className="flex-1 flex flex-col p-4 overflow-hidden h-full">
             <AdminRiskMap />
           </main>
         ) : (
-        <main className="p-8 space-y-6">
-          {/* --- TOP 4 STAT CARDS --- */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {/* Stat Card 1 */}
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex items-center justify-between hover:shadow-md transition">
-              <div>
-                <p className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
-                  TOTAL LAPORAN
-                </p>
-                <div className="flex items-baseline gap-2 mt-2">
-                  <span className="text-2xl font-extrabold text-slate-900">1,284</span>
-                  <span className="text-xs font-semibold text-emerald-600 flex items-center gap-0.5">
-                    <TrendingUpIcon className="w-3.5 h-3.5" />
-                    +12%
-                  </span>
+          <main className="p-8 space-y-6">
+            {/* --- TOP 4 STAT CARDS --- */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              {/* Stat Card 1 */}
+              <div className="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex items-center justify-between hover:shadow-md transition">
+                <div>
+                  <p className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+                    TOTAL LAPORAN
+                  </p>
+                  <div className="flex items-baseline gap-2 mt-2">
+                    <span className="text-2xl font-extrabold text-slate-900">{isLoading ? "..." : stats.total.toLocaleString()}</span>
+                  </div>
+                </div>
+                <div className="h-11 w-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                  <DocumentClipboardIcon className="w-6 h-6" />
                 </div>
               </div>
-              <div className="h-11 w-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                <DocumentClipboardIcon className="w-6 h-6" />
+
+              {/* Stat Card 2 */}
+              <div className="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex items-center justify-between hover:shadow-md transition">
+                <div>
+                  <p className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+                    MENUNGGU VERIFIKASI
+                  </p>
+                  <div className="flex items-baseline gap-2 mt-2">
+                    <span className="text-2xl font-extrabold text-slate-900">{isLoading ? "..." : stats.pending.toLocaleString()}</span>
+                    {stats.pending > 0 && (
+                      <span className="px-2 py-0.5 text-[10px] font-bold bg-amber-100 text-amber-700 rounded-md">
+                        URGENT
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="h-11 w-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                  <ClockAlertIcon className="w-6 h-6" />
+                </div>
+              </div>
+
+              {/* Stat Card 3 */}
+              <div className="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex items-center justify-between hover:shadow-md transition">
+                <div>
+                  <p className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+                    LAPORAN TERVERIFIKASI
+                  </p>
+                  <div className="flex items-baseline gap-2 mt-2">
+                    <span className="text-2xl font-extrabold text-slate-900">{isLoading ? "..." : stats.verified.toLocaleString()}</span>
+                  </div>
+                </div>
+                <div className="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                  <ShieldCheckIcon className="w-6 h-6" />
+                </div>
+              </div>
+
+              {/* Stat Card 4 */}
+              <div className="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex items-center justify-between hover:shadow-md transition">
+                <div>
+                  <p className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+                    TITIK RISIKO AKTIF
+                  </p>
+                  <div className="flex items-baseline gap-2 mt-2">
+                    <span className="text-2xl font-extrabold text-slate-900">{isLoading ? "..." : stats.activeRisks.toLocaleString()}</span>
+                  </div>
+                </div>
+                <div className="h-11 w-11 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
+                  <WarningTriangleIcon className="w-6 h-6" />
+                </div>
               </div>
             </div>
 
-            {/* Stat Card 2 */}
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex items-center justify-between hover:shadow-md transition">
-              <div>
-                <p className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
-                  MENUNGGU VERIFIKASI
-                </p>
-                <div className="flex items-baseline gap-2 mt-2">
-                  <span className="text-2xl font-extrabold text-slate-900">42</span>
-                  <span className="px-2 py-0.5 text-[10px] font-bold bg-amber-100 text-amber-700 rounded-md">
-                    URGENT
-                  </span>
+            {/* --- MIDDLE ROW: MAP DISTRIBUTION & RECENT ACTIVITY --- */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* PETA SEBARAN RISIKO (2 COLUMNS) */}
+              <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm flex flex-col justify-between">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-base font-bold text-slate-900">Peta Sebaran Risiko</h3>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-slate-500">Filter:</span>
+                    <select
+                      value={filterCategory}
+                      onChange={(e) => setFilterCategory(e.target.value)}
+                      className="text-xs font-semibold text-blue-600 bg-blue-50/60 border border-blue-100 rounded-lg px-2.5 py-1 outline-none cursor-pointer"
+                    >
+                      <option value="Semua">Semua Kategori</option>
+                      <option value="KRIMINAL">Kriminal</option>
+                      <option value="KECELAKAAN">Kecelakaan</option>
+                      <option value="INFRASTRUKTUR">Infrastruktur</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Map Preview Container */}
+                <div className="relative w-full h-[310px] rounded-xl bg-[#091527] overflow-hidden border border-slate-800 shadow-inner flex items-center justify-center group">
+                  <AdminDashboardMapPreview />
                 </div>
               </div>
-              <div className="h-11 w-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-                <ClockAlertIcon className="w-6 h-6" />
+
+              {/* AKTIVITAS TERBARU (1 COLUMN) */}
+              <div className="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm flex flex-col">
+                <h3 className="text-base font-bold text-slate-900 mb-5">Aktivitas Terbaru</h3>
+
+                <div className="space-y-4 flex-1">
+                  {[
+                    {
+                      icon: WarningTriangleIcon,
+                      iconBg: "bg-red-50 text-red-500",
+                      title: "Laporan baru: Pencurian di Jl. Margonda",
+                      time: "2 menit lalu",
+                    },
+                    {
+                      icon: ShieldCheckIcon,
+                      iconBg: "bg-blue-50 text-blue-600",
+                      title: "Moderator Andi memverifikasi laporan #882",
+                      time: "15 menit lalu",
+                    },
+                    {
+                      icon: MapIcon,
+                      iconBg: "bg-emerald-50 text-emerald-600",
+                      title: "Sistem menandai rute aman baru di Area Sudirman",
+                      time: "1 jam lalu",
+                    },
+                    {
+                      icon: WarningTriangleIcon,
+                      iconBg: "bg-red-50 text-red-500",
+                      title: "Laporan baru: Pohon tumbang di Jl. Thamrin",
+                      time: "2 jam lalu",
+                    },
+                  ].map((act, idx) => {
+                    const Icon = act.icon;
+                    return (
+                      <div key={idx} className="flex items-start gap-3.5 p-2 rounded-xl hover:bg-slate-50 transition">
+                        <div className={`h-9 w-9 rounded-full ${act.iconBg} flex items-center justify-center shrink-0 mt-0.5`}>
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-semibold text-slate-800 leading-snug">
+                            {act.title}
+                          </p>
+                          <p className="text-[10px] font-medium text-slate-400 mt-1">{act.time}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
-            {/* Stat Card 3 */}
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex items-center justify-between hover:shadow-md transition">
-              <div>
-                <p className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
-                  LAPORAN TERVERIFIKASI
-                </p>
-                <div className="flex items-baseline gap-2 mt-2">
-                  <span className="text-2xl font-extrabold text-slate-900">1,156</span>
-                  <span className="text-xs font-semibold text-emerald-600 flex items-center gap-0.5">
-                    <TrendingUpIcon className="w-3.5 h-3.5" />
-                    +5%
-                  </span>
-                </div>
-              </div>
-              <div className="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                <ShieldCheckIcon className="w-6 h-6" />
-              </div>
-            </div>
+            {/* --- BOTTOM DATA TABLE: LAPORAN MENUNGGU VERIFIKASI --- */}
+            <div className="bg-white rounded-2xl border border-slate-200/70 shadow-sm overflow-hidden p-6">
+              {/* Table Header Controls */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <h3 className="text-base font-bold text-slate-900">
+                  Laporan Menunggu Verifikasi
+                </h3>
 
-            {/* Stat Card 4 */}
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex items-center justify-between hover:shadow-md transition">
-              <div>
-                <p className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
-                  TITIK RISIKO AKTIF
-                </p>
-                <div className="flex items-baseline gap-2 mt-2">
-                  <span className="text-2xl font-extrabold text-slate-900">18</span>
-                  <span className="text-xs font-semibold text-red-500 flex items-center gap-0.5">
-                    <TrendingDownIcon className="w-3.5 h-3.5" />
-                    -2%
-                  </span>
-                </div>
-              </div>
-              <div className="h-11 w-11 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
-                <WarningTriangleIcon className="w-6 h-6" />
-              </div>
-            </div>
-          </div>
+                <div className="flex items-center gap-3">
+                  {/* Search Bar */}
+                  <div className="relative w-64">
+                    <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <input
+                      type="text"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      placeholder="Cari laporan..."
+                      className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500 transition"
+                    />
+                  </div>
 
-          {/* --- MIDDLE ROW: MAP DISTRIBUTION & RECENT ACTIVITY --- */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* PETA SEBARAN RISIKO (2 COLUMNS) */}
-            <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm flex flex-col justify-between">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-bold text-slate-900">Peta Sebaran Risiko</h3>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-slate-500">Filter:</span>
-                  <select
-                    value={filterCategory}
-                    onChange={(e) => setFilterCategory(e.target.value)}
-                    className="text-xs font-semibold text-blue-600 bg-blue-50/60 border border-blue-100 rounded-lg px-2.5 py-1 outline-none cursor-pointer"
+                  {/* Filter Button */}
+                  <button
+                    onClick={() =>
+                      setFilterCategory((prev) =>
+                        prev === "Semua" ? "KRIMINAL" : prev === "KRIMINAL" ? "KECELAKAAN" : "Semua"
+                      )
+                    }
+                    className="flex items-center gap-1.5 px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 transition"
                   >
-                    <option value="Semua">Semua Kategori</option>
-                    <option value="KRIMINAL">Kriminal</option>
-                    <option value="KECELAKAAN">Kecelakaan</option>
-                    <option value="INFRASTRUKTUR">Infrastruktur</option>
-                  </select>
+                    <FilterIcon className="w-3.5 h-3.5 text-slate-500" />
+                    Filter
+                  </button>
+
+                  {/* Export Button */}
+                  <button className="flex items-center gap-1.5 px-4 py-2 bg-[#2563EB] text-white rounded-xl text-xs font-semibold hover:bg-blue-700 transition shadow-sm">
+                    <DownloadIcon className="w-3.5 h-3.5" />
+                    Export
+                  </button>
                 </div>
               </div>
 
-              {/* Map Preview Container */}
-              <div className="relative w-full h-[310px] rounded-xl bg-[#091527] overflow-hidden border border-slate-800 shadow-inner flex items-center justify-center group">
-                <AdminDashboardMapPreview />
-              </div>
-            </div>
-
-            {/* AKTIVITAS TERBARU (1 COLUMN) */}
-            <div className="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm flex flex-col">
-              <h3 className="text-base font-bold text-slate-900 mb-5">Aktivitas Terbaru</h3>
-
-              <div className="space-y-4 flex-1">
-                {[
-                  {
-                    icon: WarningTriangleIcon,
-                    iconBg: "bg-red-50 text-red-500",
-                    title: "Laporan baru: Pencurian di Jl. Margonda",
-                    time: "2 menit lalu",
-                  },
-                  {
-                    icon: ShieldCheckIcon,
-                    iconBg: "bg-blue-50 text-blue-600",
-                    title: "Moderator Andi memverifikasi laporan #882",
-                    time: "15 menit lalu",
-                  },
-                  {
-                    icon: MapIcon,
-                    iconBg: "bg-emerald-50 text-emerald-600",
-                    title: "Sistem menandai rute aman baru di Area Sudirman",
-                    time: "1 jam lalu",
-                  },
-                  {
-                    icon: WarningTriangleIcon,
-                    iconBg: "bg-red-50 text-red-500",
-                    title: "Laporan baru: Pohon tumbang di Jl. Thamrin",
-                    time: "2 jam lalu",
-                  },
-                ].map((act, idx) => {
-                  const Icon = act.icon;
-                  return (
-                    <div key={idx} className="flex items-start gap-3.5 p-2 rounded-xl hover:bg-slate-50 transition">
-                      <div className={`h-9 w-9 rounded-full ${act.iconBg} flex items-center justify-center shrink-0 mt-0.5`}>
-                        <Icon className="w-4 h-4" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-semibold text-slate-800 leading-snug">
-                          {act.title}
-                        </p>
-                        <p className="text-[10px] font-medium text-slate-400 mt-1">{act.time}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          {/* --- BOTTOM DATA TABLE: LAPORAN MENUNGGU VERIFIKASI --- */}
-          <div className="bg-white rounded-2xl border border-slate-200/70 shadow-sm overflow-hidden p-6">
-            {/* Table Header Controls */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <h3 className="text-base font-bold text-slate-900">
-                Laporan Menunggu Verifikasi
-              </h3>
-
-              <div className="flex items-center gap-3">
-                {/* Search Bar */}
-                <div className="relative w-64">
-                  <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Cari laporan..."
-                    className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500 transition"
-                  />
-                </div>
-
-                {/* Filter Button */}
-                <button
-                  onClick={() =>
-                    setFilterCategory((prev) =>
-                      prev === "Semua" ? "KRIMINAL" : prev === "KRIMINAL" ? "KECELAKAAN" : "Semua"
-                    )
-                  }
-                  className="flex items-center gap-1.5 px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 transition"
-                >
-                  <FilterIcon className="w-3.5 h-3.5 text-slate-500" />
-                  Filter
-                </button>
-
-                {/* Export Button */}
-                <button className="flex items-center gap-1.5 px-4 py-2 bg-[#2563EB] text-white rounded-xl text-xs font-semibold hover:bg-blue-700 transition shadow-sm">
-                  <DownloadIcon className="w-3.5 h-3.5" />
-                  Export
-                </button>
-              </div>
-            </div>
-
-            {/* Table */}
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="border-b border-slate-100 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                    <th className="pb-3 px-3">JUDUL LAPORAN</th>
-                    <th className="pb-3 px-3">KATEGORI</th>
-                    <th className="pb-3 px-3">LOKASI</th>
-                    <th className="pb-3 px-3">SUMBER</th>
-                    <th className="pb-3 px-3">STATUS</th>
-                    <th className="pb-3 px-3 text-right">AKSI</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 text-xs">
-                  {filteredReports.map((row) => (
-                    <tr key={row.id} className="hover:bg-slate-50/80 transition">
-                      <td className="py-4 px-3 font-bold text-slate-800">{row.title}</td>
-                      <td className="py-4 px-3">
-                        <span
-                          className={`inline-block px-2.5 py-1 rounded-md text-[10px] font-extrabold ${row.category === "KRIMINAL"
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-slate-100 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                      <th className="pb-3 px-3">JUDUL LAPORAN</th>
+                      <th className="pb-3 px-3">KATEGORI</th>
+                      <th className="pb-3 px-3">LOKASI</th>
+                      <th className="pb-3 px-3">SUMBER</th>
+                      <th className="pb-3 px-3">STATUS</th>
+                      <th className="pb-3 px-3 text-right">AKSI</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 text-xs">
+                    {filteredReports.map((row) => (
+                      <tr key={row.id} className="hover:bg-slate-50/80 transition">
+                        <td className="py-4 px-3 font-bold text-slate-800">{row.title}</td>
+                        <td className="py-4 px-3">
+                          <span
+                            className={`inline-block px-2.5 py-1 rounded-md text-[10px] font-extrabold ${row.category === "KRIMINAL"
                               ? "bg-rose-100 text-rose-700"
                               : row.category === "KECELAKAAN"
                                 ? "bg-amber-100 text-amber-700"
                                 : "bg-slate-100 text-slate-700"
-                            }`}
-                        >
-                          {row.category}
-                        </span>
-                      </td>
-                      <td className="py-4 px-3 text-slate-600 font-medium">{row.location}</td>
-                      <td className="py-4 px-3">
-                        <span
-                          className={`inline-block px-2.5 py-1 rounded-md text-[10px] font-semibold ${row.source === "Warga"
+                              }`}
+                          >
+                            {row.category}
+                          </span>
+                        </td>
+                        <td className="py-4 px-3 text-slate-600 font-medium">{row.location}</td>
+                        <td className="py-4 px-3">
+                          <span
+                            className={`inline-block px-2.5 py-1 rounded-md text-[10px] font-semibold ${row.source === "Warga"
                               ? "bg-slate-100 text-slate-600"
                               : "bg-blue-100 text-blue-700"
-                            }`}
-                        >
-                          {row.source}
-                        </span>
-                      </td>
-                      <td className="py-4 px-3">
-                        <span
-                          className={`inline-block px-2.5 py-1 rounded-md text-[10px] font-bold ${row.status === "PENDING"
+                              }`}
+                          >
+                            {row.source}
+                          </span>
+                        </td>
+                        <td className="py-4 px-3">
+                          <span
+                            className={`inline-block px-2.5 py-1 rounded-md text-[10px] font-bold ${row.status === "PENDING"
                               ? "bg-amber-50 text-amber-600 border border-amber-200"
                               : row.status === "VERIFIED"
                                 ? "bg-emerald-50 text-emerald-600 border border-emerald-200"
                                 : "bg-rose-50 text-rose-600 border border-rose-200"
-                            }`}
-                        >
-                          {row.status}
-                        </span>
-                      </td>
-                      <td className="py-4 px-3 text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <button
-                            onClick={() => setSelectedReport(row)}
-                            title="Lihat Detail"
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition"
+                              }`}
                           >
-                            <EyeIcon className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => handleApprove(row.id)}
-                            title="Setujui"
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 transition"
-                          >
-                            <CheckCircleIcon className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => handleReject(row.id)}
-                            title="Tolak"
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
-                          >
-                            <XCircleIcon className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                            {row.status}
+                          </span>
+                        </td>
+                        <td className="py-4 px-3 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <button
+                              onClick={() => setSelectedReport(row)}
+                              title="Lihat Detail"
+                              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition"
+                            >
+                              <EyeIcon className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleApprove(row.id)}
+                              title="Setujui"
+                              className="p-1.5 rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 transition"
+                            >
+                              <CheckCircleIcon className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleReject(row.id)}
+                              title="Tolak"
+                              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
+                            >
+                              <XCircleIcon className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        </main>
+          </main>
         )}
       </div>
 
