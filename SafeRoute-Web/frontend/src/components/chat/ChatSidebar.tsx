@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, MapPin, Locate, Shield, Radio, Building2, RefreshCw, AlertCircle } from "lucide-react";
+import { Search, MapPin, Radio, Building2, RefreshCw, AlertCircle } from "lucide-react";
 import { PoliceStation } from "@/src/services/policeStation.service";
 
 interface ChatSidebarProps {
@@ -37,7 +37,7 @@ export function ChatSidebar({
       case "Polres":
         return <Building2 className="h-5 w-5 text-blue-600" />;
       case "Polsek":
-        return <Shield className="h-5 w-5 text-indigo-600" />;
+        return;
       default:
         return <Radio className="h-5 w-5 text-cyan-600" />;
     }
@@ -50,21 +50,12 @@ export function ChatSidebar({
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-              <Shield className="h-5 w-5 text-blue-600" />
-              Kontak Darurat
+              SafeRoute 
             </h2>
             <p className="text-[11px] font-medium text-slate-500 mt-0.5">
-              Pos Polisi & Polsek Terdekat (OSM Data)
+              Pos Polisi & Polsek Terdekat
             </p>
           </div>
-          <button
-            onClick={onRefreshLocation}
-            disabled={loading}
-            className="flex h-8 w-8 items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition shadow-xs disabled:opacity-50"
-            title="Perbarui Lokasi GPS Saya"
-          >
-            <Locate className={`h-4 w-4 ${loading ? "animate-spin text-blue-600" : ""}`} />
-          </button>
         </div>
 
         {/* Location badge */}
@@ -136,7 +127,7 @@ export function ChatSidebar({
             ))}
             <p className="text-center text-xs text-slate-400 pt-2 flex items-center justify-center gap-2">
               <RefreshCw className="h-3.5 w-3.5 animate-spin text-blue-500" />
-              Mendeteksi pos polisi terdekat via OSM...
+              Mencari pos polisi terdekat
             </p>
           </div>
         ) : filteredStations.length === 0 ? (
