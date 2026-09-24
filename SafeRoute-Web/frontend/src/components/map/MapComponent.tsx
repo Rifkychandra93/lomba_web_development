@@ -606,32 +606,6 @@ export default function MapComponent() {
           </MapContainer>
         </div>
 
-        <div className="absolute right-6 top-6 z-10 flex flex-col gap-3">
-          <div className="relative">
-            <button onClick={() => setShowTileSelector(!showTileSelector)} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg hover:bg-slate-50 transition-colors" title="Pilih Tipe Peta">
-              <Layers className="h-5 w-5" />
-            </button>
-            {showTileSelector && (
-              <div className="absolute right-12 top-0 w-36 rounded-2xl border border-slate-100 bg-white p-2 shadow-xl animate-fade-in z-20">
-                <p className="px-2 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tipe Peta</p>
-                <button onClick={() => { setTileLayerUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"); setShowTileSelector(false); }} className="w-full text-left rounded-xl px-2.5 py-1.5 text-xs font-semibold hover:bg-slate-100 transition-colors mt-1 text-slate-700">Standard Map</button>
-                <button onClick={() => { setTileLayerUrl("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"); setShowTileSelector(false); }} className="w-full text-left rounded-xl px-2.5 py-1.5 text-xs font-semibold hover:bg-slate-100 transition-colors text-slate-700">Sleek Voyager</button>
-                <button onClick={() => { setTileLayerUrl("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"); setShowTileSelector(false); }} className="w-full text-left rounded-xl px-2.5 py-1.5 text-xs font-semibold hover:bg-slate-100 transition-colors text-slate-700">Dark Mode</button>
-              </div>
-            )}
-          </div>
-
-          <button onClick={handleLocateUser} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg hover:bg-slate-50 transition-colors" title="Lokasi Saya">
-            <Locate className="h-5 w-5" />
-          </button>
-          <button onClick={() => setMapZoom((prev) => Math.min(prev + 1, DEPOK_MAX_ZOOM))} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg hover:bg-slate-50 transition-colors" title="Perbesar">
-            <Plus className="h-5 w-5" />
-          </button>
-          <button onClick={() => setMapZoom((prev) => Math.max(prev - 1, 12))} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg hover:bg-slate-50 transition-colors" title="Perkecil">
-            <Minus className="h-5 w-5" />
-          </button>
-        </div>
-
         {clickMode !== "none" && (
           <div className="absolute left-1/2 top-6 z-10 -translate-x-1/2 rounded-full bg-slate-900/90 border border-slate-800 px-6 py-2.5 text-xs font-semibold text-white shadow-xl backdrop-blur-sm animate-bounce flex items-center gap-2">
             <Compass className="h-4 w-4 text-blue-400 animate-spin" />
@@ -642,15 +616,14 @@ export default function MapComponent() {
 
         {/* Mobile Compact Floating Search Pill */}
         {!isMobilePanelOpen && (
-          <div className="md:hidden absolute left-3 right-16 top-3 z-10 flex items-center gap-2 rounded-2xl bg-white/95 backdrop-blur-md p-2.5 px-3.5 shadow-xl border border-slate-200/80 animate-fade-in">
-            <Navigation className="h-4 w-4 text-blue-600 shrink-0" />
+          <div className="md:hidden absolute left-3 right-16 top-3 z-10 flex items-center gap-2 rounded-2xl bg-white/95 backdrop-blur-md p-2.5 px-3.5 shadow-xl border border-slate-200/80 animate-fade-in">x 
             <button
               onClick={() => setIsMobilePanelOpen(true)}
               className="flex-1 text-left text-xs font-bold text-slate-800 truncate"
             >
               {destInput || startInput
                 ? `${startInput ? startInput.split(",")[0] : "Awal"} → ${destInput ? destInput.split(",")[0] : "Tujuan"}`
-                : "Cari Rute Navigasi Aman..."}
+                : "Cari Tujuan Anda"}
             </button>
             <button
               onClick={() => setIsMobilePanelOpen(true)}
