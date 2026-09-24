@@ -8,12 +8,11 @@ import { ChatArea } from "@/src/components/chat/ChatArea";
 import {
   PoliceStation,
   fetchNearbyPoliceFromOSM,
-  isInsideDepok,
-  DEPOK_CENTER_LAT,
-  DEPOK_CENTER_LNG,
 } from "@/src/services/policeStation.service";
 
-const DEFAULT_LOCATION_NAME = "Margonda, Depok, Jawa Barat";
+// Fallback coordinate only if device GPS is completely disabled or blocked by browser permission
+const DEFAULT_LAT = -6.390;
+const DEFAULT_LNG = 106.825;
 
 export default function ChatPage() {
   const [userLocation, setUserLocation] = useState<{
@@ -21,9 +20,9 @@ export default function ChatPage() {
     lng: number;
     name: string;
   }>({
-    lat: DEPOK_CENTER_LAT,
-    lng: DEPOK_CENTER_LNG,
-    name: DEFAULT_LOCATION_NAME,
+    lat: DEFAULT_LAT,
+    lng: DEFAULT_LNG,
+    name: "Mendeteksi Lokasi GPS...",
   });
 
   const [stations, setStations] = useState<PoliceStation[]>([]);
@@ -32,40 +31,35 @@ export default function ChatPage() {
 
   const loadNearbyStations = async (lat: number, lng: number) => {
     setLoading(true);
-
-    // Validate location coordinates; if outside Depok, anchor strictly to Depok Center
-    let targetLat = lat;
-    let targetLng = lng;
-    if (!isInsideDepok(targetLat, targetLng)) {
-      targetLat = DEPOK_CENTER_LAT;
-      targetLng = DEPOK_CENTER_LNG;
-    }
-
     try {
-      let placeName = DEFAULT_LOCATION_NAME;
+      // Get exact place name via Nominatim reverse geocoding for user's live coordinates
+      let placeName = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
       try {
         const revRes = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${targetLat}&lon=${targetLng}`,
-          { headers: { "User-Agent": "SafeRoute-Depok/1.0" } }
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`,
+          { headers: { "User-Agent": "SafeRoute-LiveGPS/1.0" } }
         );
         if (revRes.ok) {
           const revData = await revRes.json();
           if (revData && revData.display_name) {
             const parts = revData.display_name.split(",");
-            placeName = parts.slice(0, 2).join(",").trim();
+            placeName = parts.slice(0, 3).join(",").trim();
           }
         }
       } catch (e) {
         console.warn("Reverse geocode failed:", e);
       }
 
-      setUserLocation({ lat: targetLat, lng: targetLng, name: placeName });
+      setUserLocation({ lat, lng, name: placeName });
 
-      const data = await fetchNearbyPoliceFromOSM(targetLat, targetLng);
+      // Fetch 100% real police stations from OSM around the user's actual GPS location
+      const data = await fetchNearbyPoliceFromOSM(lat, lng);
       setStations(data);
 
       if (data.length > 0) {
         setSelectedStation(data[0]);
+      } else {
+        setSelectedStation(null);
       }
     } catch (err) {
       console.error("Gagal memuat pos polisi terdekat:", err);
@@ -79,22 +73,21 @@ export default function ChatPage() {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          // Check if GPS is inside Depok bounds
-          if (isInsideDepok(latitude, longitude)) {
-            loadNearbyStations(latitude, longitude);
-          } else {
-            // Outside Depok, clamp to Depok Center for SafeRoute project scale
-            loadNearbyStations(DEPOK_CENTER_LAT, DEPOK_CENTER_LNG);
-          }
+          console.log("Real GPS position acquired:", latitude, longitude);
+          loadNearbyStations(latitude, longitude);
         },
         (error) => {
-          console.warn("Geolocation error/denied, using Depok center location:", error.message);
-          loadNearbyStations(DEPOK_CENTER_LAT, DEPOK_CENTER_LNG);
+          console.warn("Geolocation permission error or unavailable:", error.message);
+          loadNearbyStations(DEFAULT_LAT, DEFAULT_LNG);
         },
-        { timeout: 8000, maximumAge: 60000 }
+        {
+          enableHighAccuracy: true, // Force live hardware GPS
+          timeout: 10000,
+          maximumAge: 0, // Never use stale cached position
+        }
       );
     } else {
-      loadNearbyStations(DEPOK_CENTER_LAT, DEPOK_CENTER_LNG);
+      loadNearbyStations(DEFAULT_LAT, DEFAULT_LNG);
     }
   };
 
@@ -123,5 +116,3 @@ export default function ChatPage() {
     </div>
   );
 }
-
-
