@@ -48,3 +48,10 @@ export const getAllReports = async () => {
 
   return response.data;
 };
+
+export const updateReportStatus = async (id: string, status: "PENDING" | "VERIFIED" | "REJECTED" | "TERVERIFIKASI") => {
+  // If the frontend uses "TERVERIFIKASI", map it to "VERIFIED" for the backend
+  const backendStatus = status === "TERVERIFIKASI" ? "VERIFIED" : status;
+  const response = await api.put<{ success: boolean; data: Report }>(`/reports/${id}/status`, { status: backendStatus });
+  return response.data;
+};
