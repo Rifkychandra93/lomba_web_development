@@ -12,13 +12,32 @@ export interface PoliceStation {
   osmId?: number | string;
 }
 
+export const DEPOK_BOUNDS = {
+  minLat: -6.45,
+  maxLat: -6.30,
+  minLng: 106.70,
+  maxLng: 106.92,
+};
+
+export const DEPOK_CENTER_LAT = -6.390;
+export const DEPOK_CENTER_LNG = 106.825;
+
+export function isInsideDepok(lat: number, lng: number): boolean {
+  return (
+    lat >= DEPOK_BOUNDS.minLat &&
+    lat <= DEPOK_BOUNDS.maxLat &&
+    lng >= DEPOK_BOUNDS.minLng &&
+    lng <= DEPOK_BOUNDS.maxLng
+  );
+}
+
 export function getDistanceFromLatLonInKm(
   lat1: number,
   lon1: number,
   lat2: number,
   lon2: number
 ): number {
-  const R = 6371; // Radius of the earth in km
+  const R = 6371;
   const dLat = (lat2 - lat1) * (Math.PI / 180);
   const dLon = (lon2 - lon1) * (Math.PI / 180);
   const a =
@@ -28,15 +47,15 @@ export function getDistanceFromLatLonInKm(
       Math.sin(dLon / 2) *
       Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return Math.round(R * c * 10) / 10; // 1 decimal place
+  return Math.round(R * c * 10) / 10;
 }
 
-const FALLBACK_STATIONS: Omit<PoliceStation, "distanceKm">[] = [
+const DEPOK_FALLBACK_STATIONS: Omit<PoliceStation, "distanceKm">[] = [
   {
-    id: "fb-polres-depok",
+    id: "depok-polres-metro",
     name: "Polres Metro Depok",
     type: "Polres",
-    address: "Jl. Margonda Raya No. 14, Depok",
+    address: "Jl. Margonda Raya No. 14, Pancoran Mas, Depok",
     latitude: -6.3975,
     longitude: 106.8211,
     status: "Siaga 24 Jam",
@@ -44,7 +63,7 @@ const FALLBACK_STATIONS: Omit<PoliceStation, "distanceKm">[] = [
     lastActive: "Online",
   },
   {
-    id: "fb-polsek-pancoranmas",
+    id: "depok-polsek-pancoranmas",
     name: "Polsek Pancoran Mas",
     type: "Polsek",
     address: "Jl. Raya Sawangan No. 3, Pancoran Mas, Depok",
@@ -55,7 +74,7 @@ const FALLBACK_STATIONS: Omit<PoliceStation, "distanceKm">[] = [
     lastActive: "Online",
   },
   {
-    id: "fb-polsek-beji",
+    id: "depok-polsek-beji",
     name: "Polsek Beji",
     type: "Polsek",
     address: "Jl. Margonda Raya No. 56, Beji, Depok",
@@ -66,7 +85,7 @@ const FALLBACK_STATIONS: Omit<PoliceStation, "distanceKm">[] = [
     lastActive: "Online",
   },
   {
-    id: "fb-polsek-sukmajaya",
+    id: "depok-polsek-sukmajaya",
     name: "Polsek Sukmajaya",
     type: "Polsek",
     address: "Jl. Raya Siliwangi No. 1, Sukmajaya, Depok",
@@ -77,7 +96,7 @@ const FALLBACK_STATIONS: Omit<PoliceStation, "distanceKm">[] = [
     lastActive: "Online",
   },
   {
-    id: "fb-polsek-cimanggis",
+    id: "depok-polsek-cimanggis",
     name: "Polsek Cimanggis",
     type: "Polsek",
     address: "Jl. Raya Bogor KM 31, Cimanggis, Depok",
@@ -88,7 +107,18 @@ const FALLBACK_STATIONS: Omit<PoliceStation, "distanceKm">[] = [
     lastActive: "Online",
   },
   {
-    id: "fb-pos-margonda",
+    id: "depok-polsek-sawangan",
+    name: "Polsek Sawangan",
+    type: "Polsek",
+    address: "Jl. Raya Mochtar, Sawangan, Depok",
+    latitude: -6.3965,
+    longitude: 106.7750,
+    status: "Siaga 24 Jam",
+    phone: "(021) 77882200",
+    lastActive: "Online",
+  },
+  {
+    id: "depok-pos-margonda",
     name: "Pos Polisi Lalu Lintas Margonda",
     type: "Pos Polisi",
     address: "Jl. Margonda Raya (Simpang Juanda), Depok",
@@ -102,11 +132,23 @@ const FALLBACK_STATIONS: Omit<PoliceStation, "distanceKm">[] = [
 
 export async function fetchNearbyPoliceFromOSM(
   userLat: number,
-  userLng: number,
-  radiusMeters: number = 8000
+  userLng: number
 ): Promise<PoliceStation[]> {
+  // Ensure location coordinates are within Depok area; if outside Depok, anchor to Depok Center
+  let validLat = userLat;
+  let validLng = userLng;
+
+  if (!isInsideDepok(validLat, validLng)) {
+    validLat = DEPOK_CENTER_LAT;
+    validLng = DEPOK_CENTER_LNG;
+  }
+
+  let foundStations: PoliceStation[] = [];
+
+  // 1. Overpass API query restricted strictly to Depok Bounding Box
   try {
-    const overpassQuery = `[out:json][timeout:8];(node["amenity"="police"](around:${radiusMeters},${userLat},${userLng});way["amenity"="police"](around:${radiusMeters},${userLat},${userLng}););out center 15;`;
+    const bbox = `${DEPOK_BOUNDS.minLat},${DEPOK_BOUNDS.minLng},${DEPOK_BOUNDS.maxLat},${DEPOK_BOUNDS.maxLng}`;
+    const overpassQuery = `[out:json][timeout:8];(node["amenity"="police"](${bbox});way["amenity"="police"](${bbox}););out center 20;`;
     const overpassUrl = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(
       overpassQuery
     )}`;
@@ -116,9 +158,7 @@ export async function fetchNearbyPoliceFromOSM(
 
     const response = await fetch(overpassUrl, {
       signal: controller.signal,
-      headers: {
-        "User-Agent": "SafeRoute-App/1.0",
-      },
+      headers: { "User-Agent": "SafeRoute-Depok/1.0" },
     });
     clearTimeout(timeoutId);
 
@@ -131,25 +171,27 @@ export async function fetchNearbyPoliceFromOSM(
             const lon = el.lon || (el.center && el.center.lon);
             if (!lat || !lon) return null;
 
+            // Reject if outside Depok bounds
+            if (!isInsideDepok(lat, lon)) return null;
+
             const nameTag =
               el.tags?.name ||
               el.tags?.["name:id"] ||
               el.tags?.operator ||
-              "Kantor Polisi";
+              "Pos Polisi Depok";
             let type: "Polres" | "Polsek" | "Pos Polisi" = "Pos Polisi";
             if (/polres/i.test(nameTag)) type = "Polres";
             else if (/polsek/i.test(nameTag)) type = "Polsek";
 
             const street =
               el.tags?.["addr:street"] ||
-              el.tags?.["addr:full"] ||
               el.tags?.["addr:subdistrict"] ||
-              "Wilayah Sekitar User";
+              "Depok, Jawa Barat";
 
             const phone =
-              el.tags?.phone || el.tags?.["contact:phone"] || "110 (Call Center)";
+              el.tags?.phone || el.tags?.["contact:phone"] || "110";
 
-            const dist = getDistanceFromLatLonInKm(userLat, userLng, lat, lon);
+            const dist = getDistanceFromLatLonInKm(validLat, validLng, lat, lon);
 
             return {
               id: `osm-${el.id}`,
@@ -169,64 +211,91 @@ export async function fetchNearbyPoliceFromOSM(
             (st: PoliceStation | null): st is PoliceStation => st !== null
           );
 
-        if (osmStations.length > 0) {
-          osmStations.sort((a, b) => a.distanceKm - b.distanceKm);
-          return osmStations;
-        }
+        foundStations.push(...osmStations);
       }
     }
   } catch (err) {
-    console.warn("Overpass API error or timeout, falling back to Nominatim/Fallback:", err);
+    console.warn("Overpass Depok query timeout or error:", err);
   }
 
-  try {
-    const nominatimUrl = `https://nominatim.openstreetmap.org/search?format=json&q=polisi+polsek&lat=${userLat}&lon=${userLng}&bounded=0&limit=8`;
-    const res = await fetch(nominatimUrl, {
-      headers: { "User-Agent": "SafeRoute-App/1.0" },
-    });
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        const nomStations: PoliceStation[] = data.map((item: any) => {
-          const lat = parseFloat(item.lat);
-          const lon = parseFloat(item.lon);
-          const dist = getDistanceFromLatLonInKm(userLat, userLng, lat, lon);
-          let type: "Polres" | "Polsek" | "Pos Polisi" = "Pos Polisi";
-          if (/polres/i.test(item.display_name)) type = "Polres";
-          else if (/polsek/i.test(item.display_name)) type = "Polsek";
+  // 2. Nominatim search strictly bounded to Depok viewbox
+  if (foundStations.length < 3) {
+    try {
+      const nominatimUrl = `https://nominatim.openstreetmap.org/search?format=json&q=polisi+depok&viewbox=106.70,-6.45,106.92,-6.30&bounded=1&countrycodes=id&limit=10`;
+      const res = await fetch(nominatimUrl, {
+        headers: { "User-Agent": "SafeRoute-Depok/1.0" },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          const nomStations: PoliceStation[] = data
+            .map((item: any) => {
+              const lat = parseFloat(item.lat);
+              const lon = parseFloat(item.lon);
+              if (!isInsideDepok(lat, lon)) return null;
 
-          return {
-            id: `nom-${item.place_id}`,
-            name: item.display_name.split(",")[0] || "Kantor Polisi",
-            type,
-            address: item.display_name.split(",").slice(1, 3).join(",").trim(),
-            latitude: lat,
-            longitude: lon,
-            distanceKm: dist,
-            status: "Siaga 24 Jam",
-            phone: "110",
-            lastActive: "Online",
-          };
-        });
+              const dist = getDistanceFromLatLonInKm(validLat, validLng, lat, lon);
+              let type: "Polres" | "Polsek" | "Pos Polisi" = "Pos Polisi";
+              if (/polres/i.test(item.display_name)) type = "Polres";
+              else if (/polsek/i.test(item.display_name)) type = "Polsek";
 
-        nomStations.sort((a, b) => a.distanceKm - b.distanceKm);
-        return nomStations;
+              return {
+                id: `nom-${item.place_id}`,
+                name: item.display_name.split(",")[0] || "Pos Polisi Depok",
+                type,
+                address: item.display_name.split(",").slice(1, 3).join(",").trim(),
+                latitude: lat,
+                longitude: lon,
+                distanceKm: dist,
+                status: "Siaga 24 Jam",
+                phone: "110",
+                lastActive: "Online",
+              };
+            })
+            .filter((st: PoliceStation | null): st is PoliceStation => st !== null);
+
+          foundStations.push(...nomStations);
+        }
       }
+    } catch (e) {
+      console.warn("Nominatim Depok search failed:", e);
     }
-  } catch (e) {
-    console.warn("Nominatim search failed:", e);
   }
 
-  const calculatedFallbacks: PoliceStation[] = FALLBACK_STATIONS.map((st) => ({
+  // 3. Always include/merge curated Depok fallback stations to ensure 100% complete Depok coverage
+  const fallbacks: PoliceStation[] = DEPOK_FALLBACK_STATIONS.map((st) => ({
     ...st,
     distanceKm: getDistanceFromLatLonInKm(
-      userLat,
-      userLng,
+      validLat,
+      validLng,
       st.latitude,
       st.longitude
     ),
   }));
 
-  calculatedFallbacks.sort((a, b) => a.distanceKm - b.distanceKm);
-  return calculatedFallbacks;
+  // Merge and deduplicate by name similarity
+  const mergedMap = new Map<string, PoliceStation>();
+  
+  // Add fallback stations first
+  for (const fb of fallbacks) {
+    mergedMap.set(fb.name.toLowerCase().trim(), fb);
+  }
+  
+  // Add OSM stations (override or add new)
+  for (const st of foundStations) {
+    const key = st.name.toLowerCase().trim();
+    if (!mergedMap.has(key)) {
+      mergedMap.set(key, st);
+    }
+  }
+
+  const result = Array.from(mergedMap.values());
+  
+  // Filter out any entries exceeding 15 km distance (must be strictly local to Depok)
+  const depokOnlyResults = result.filter((st) => st.distanceKm <= 15.0);
+
+  // Sort by nearest distance ascending
+  depokOnlyResults.sort((a, b) => a.distanceKm - b.distanceKm);
+
+  return depokOnlyResults;
 }

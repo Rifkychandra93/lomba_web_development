@@ -8,11 +8,12 @@ import { ChatArea } from "@/src/components/chat/ChatArea";
 import {
   PoliceStation,
   fetchNearbyPoliceFromOSM,
+  isInsideDepok,
+  DEPOK_CENTER_LAT,
+  DEPOK_CENTER_LNG,
 } from "@/src/services/policeStation.service";
 
-const DEFAULT_LAT = -6.390;
-const DEFAULT_LNG = 106.825;
-const DEFAULT_LOCATION_NAME = "Depok, Jawa Barat";
+const DEFAULT_LOCATION_NAME = "Margonda, Depok, Jawa Barat";
 
 export default function ChatPage() {
   const [userLocation, setUserLocation] = useState<{
@@ -20,8 +21,8 @@ export default function ChatPage() {
     lng: number;
     name: string;
   }>({
-    lat: DEFAULT_LAT,
-    lng: DEFAULT_LNG,
+    lat: DEPOK_CENTER_LAT,
+    lng: DEPOK_CENTER_LNG,
     name: DEFAULT_LOCATION_NAME,
   });
 
@@ -31,12 +32,21 @@ export default function ChatPage() {
 
   const loadNearbyStations = async (lat: number, lng: number) => {
     setLoading(true);
+
+    // Validate location coordinates; if outside Depok, anchor strictly to Depok Center
+    let targetLat = lat;
+    let targetLng = lng;
+    if (!isInsideDepok(targetLat, targetLng)) {
+      targetLat = DEPOK_CENTER_LAT;
+      targetLng = DEPOK_CENTER_LNG;
+    }
+
     try {
       let placeName = DEFAULT_LOCATION_NAME;
       try {
         const revRes = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`,
-          { headers: { "User-Agent": "SafeRoute-App/1.0" } }
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${targetLat}&lon=${targetLng}`,
+          { headers: { "User-Agent": "SafeRoute-Depok/1.0" } }
         );
         if (revRes.ok) {
           const revData = await revRes.json();
@@ -49,9 +59,9 @@ export default function ChatPage() {
         console.warn("Reverse geocode failed:", e);
       }
 
-      setUserLocation({ lat, lng, name: placeName });
+      setUserLocation({ lat: targetLat, lng: targetLng, name: placeName });
 
-      const data = await fetchNearbyPoliceFromOSM(lat, lng);
+      const data = await fetchNearbyPoliceFromOSM(targetLat, targetLng);
       setStations(data);
 
       if (data.length > 0) {
@@ -69,16 +79,22 @@ export default function ChatPage() {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          loadNearbyStations(latitude, longitude);
+          // Check if GPS is inside Depok bounds
+          if (isInsideDepok(latitude, longitude)) {
+            loadNearbyStations(latitude, longitude);
+          } else {
+            // Outside Depok, clamp to Depok Center for SafeRoute project scale
+            loadNearbyStations(DEPOK_CENTER_LAT, DEPOK_CENTER_LNG);
+          }
         },
         (error) => {
-          console.warn("Geolocation error/denied, using default location:", error.message);
-          loadNearbyStations(DEFAULT_LAT, DEFAULT_LNG);
+          console.warn("Geolocation error/denied, using Depok center location:", error.message);
+          loadNearbyStations(DEPOK_CENTER_LAT, DEPOK_CENTER_LNG);
         },
         { timeout: 8000, maximumAge: 60000 }
       );
     } else {
-      loadNearbyStations(DEFAULT_LAT, DEFAULT_LNG);
+      loadNearbyStations(DEPOK_CENTER_LAT, DEPOK_CENTER_LNG);
     }
   };
 
@@ -107,4 +123,5 @@ export default function ChatPage() {
     </div>
   );
 }
+
 
