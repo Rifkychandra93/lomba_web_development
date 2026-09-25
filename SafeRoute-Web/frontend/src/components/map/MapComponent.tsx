@@ -31,6 +31,11 @@ import {
   Clock,
   Compass,
   X,
+  ArrowLeft,
+  ArrowUpDown,
+  Pencil,
+  ChevronDown,
+  Check,
 } from "lucide-react";
 import { getMapIncidents } from "@/src/services/incident.service";
 import { getCurrentUser } from "@/src/services/auth.service";
@@ -169,6 +174,8 @@ export default function MapComponent() {
   const [incidents, setIncidents] = useState<MapPoint[]>([]);
 
   const [isMobilePanelOpen, setIsMobilePanelOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [activeInputFocus, setActiveInputFocus] = useState<"start" | "dest">("dest");
 
   const [startInput, setStartInput] = useState("");
   const [startSuggestions, setStartSuggestions] = useState<any[]>([]);
@@ -323,15 +330,18 @@ export default function MapComponent() {
     return overlapRatio > 0.78;
   };
 
-  const handleStartNavigation = async () => {
-    if (!startPoint || !destPoint) return;
+  const handleStartNavigation = async (overrideStart = startPoint, overrideDest = destPoint) => {
+    const sPoint = overrideStart || startPoint;
+    const dPoint = overrideDest || destPoint;
+    if (!sPoint || !dPoint) return;
     
     setRouteLoading(true);
     setIsNavigating(true);
+    setIsMobileSearchOpen(false);
 
     try {
       const res = await fetch(
-        `https://router.project-osrm.org/route/v1/driving/${startPoint.lng},${startPoint.lat};${destPoint.lng},${destPoint.lat}?overview=full&geometries=geojson&alternatives=3`
+        `https://router.project-osrm.org/route/v1/driving/${sPoint.lng},${sPoint.lat};${dPoint.lng},${dPoint.lat}?overview=full&geometries=geojson&alternatives=3`
       );
       const data = await res.json();
 
@@ -349,10 +359,10 @@ export default function MapComponent() {
         }
 
         if (routeOptions.length < 2 && routeOptions[0].riskScore > 0) {
-          const midLat = (startPoint.lat + destPoint.lat) / 2;
-          const midLng = (startPoint.lng + destPoint.lng) / 2;
-          const dLat = destPoint.lat - startPoint.lat;
-          const dLng = destPoint.lng - startPoint.lng;
+          const midLat = (sPoint.lat + dPoint.lat) / 2;
+          const midLng = (sPoint.lng + dPoint.lng) / 2;
+          const dLat = dPoint.lat - sPoint.lat;
+          const dLng = dPoint.lng - sPoint.lng;
           const len = Math.sqrt(dLat * dLat + dLng * dLng);
 
           if (len > 0.001) {
@@ -366,7 +376,7 @@ export default function MapComponent() {
 
               try {
                 const altRes = await fetch(
-                  `https://router.project-osrm.org/route/v1/driving/${startPoint.lng},${startPoint.lat};${wpLng},${wpLat};${destPoint.lng},${destPoint.lat}?overview=full&geometries=geojson`
+                  `https://router.project-osrm.org/route/v1/driving/${sPoint.lng},${sPoint.lat};${wpLng},${wpLat};${dPoint.lng},${dPoint.lat}?overview=full&geometries=geojson`
                 );
                 const altData = await altRes.json();
                 if (altData.routes && altData.routes.length > 0) {
@@ -431,6 +441,27 @@ export default function MapComponent() {
     } finally {
       setRouteLoading(false);
     }
+  };
+
+  const handleSwapPoints = () => {
+    const tempPoint = startPoint;
+    const tempInput = startInput;
+    setStartPoint(destPoint);
+    setStartInput(destInput);
+    setDestPoint(tempPoint);
+    setDestInput(tempInput);
+
+    if (destPoint && tempPoint) {
+      handleStartNavigation(destPoint, tempPoint);
+    }
+  };
+
+  const handleResetRoute = () => {
+    setIsNavigating(false);
+    setRoutes([]);
+    setSelectedRouteId(null);
+    setRoutePolyline([]);
+    setMapBounds(null);
   };
 
   const handleMapClick = async (lat: number, lng: number) => {
@@ -614,32 +645,352 @@ export default function MapComponent() {
           </div>
         )}
 
-        {/* Mobile Compact Floating Search Pill */}
-        {!isMobilePanelOpen && (
-          <div className="md:hidden absolute left-3 right-16 top-3 z-10 flex items-center gap-2 rounded-2xl bg-white/95 backdrop-blur-md p-2.5 px-3.5 shadow-xl border border-slate-200/80 animate-fade-in">x 
-            <button
-              onClick={() => setIsMobilePanelOpen(true)}
-              className="flex-1 text-left text-xs font-bold text-slate-800 truncate"
+        {/* Mobile Top Floating Origin & Destination Card (Image 1 top UI style) */}
+        {!isMobileSearchOpen && (
+          <div className="md:hidden absolute left-3 right-3 top-3 z-20 rounded-2xl bg-white/95 backdrop-blur-md p-3 shadow-xl border border-slate-200/80 animate-fade-in flex items-center justify-between gap-2">
+            <div
+              onClick={() => {
+                setIsMobileSearchOpen(true);
+                setActiveInputFocus("dest");
+              }}
+              className="flex-1 cursor-pointer flex flex-col gap-1 min-w-0"
             >
-              {destInput || startInput
-                ? `${startInput ? startInput.split(",")[0] : "Awal"} → ${destInput ? destInput.split(",")[0] : "Tujuan"}`
-                : "Cari Tujuan Anda"}
-            </button>
-            <button
-              onClick={() => setIsMobilePanelOpen(true)}
-              className="rounded-xl bg-blue-600 px-3 py-1 text-[11px] font-bold text-white shadow-2xs shrink-0"
-            >
-              Cari
-            </button>
+              {/* Origin row */}
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-emerald-500 border-2 border-emerald-200 shrink-0" />
+                <span className="text-xs font-bold text-slate-800 truncate">
+                  {startPoint ? startPoint.name.split(",")[0] : startInput ? startInput.split(",")[0] : "Lokasi Anda (Titik Awal)"}
+                </span>
+              </div>
+              <div className="ml-1.5 h-2 w-0 border-l border-dashed border-slate-300" />
+              {/* Destination row */}
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-amber-500 border-2 border-amber-200 shrink-0" />
+                <span className="text-xs font-extrabold text-slate-900 truncate">
+                  {destPoint ? destPoint.name.split(",")[0] : destInput ? destInput.split(",")[0] : "Cari Tujuan Anda..."}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1.5 shrink-0 border-l border-slate-100 pl-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSwapPoints();
+                }}
+                className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition"
+                title="Tukar Awal & Tujuan"
+              >
+                <ArrowUpDown className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => {
+                  setIsMobileSearchOpen(true);
+                  setActiveInputFocus("dest");
+                }}
+                className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm hover:bg-blue-700 transition"
+                title="Cari / Ubah Rute"
+              >
+                <Pencil className="h-3.5 w-3.5" />
+              </button>
+            </div>
           </div>
         )}
 
-        {/* Navigation Sidebar Panel (Full on Desktop, Expandable on Mobile) */}
-        <div
-          className={`absolute left-3 right-3 top-3 md:left-6 md:right-auto md:top-6 md:bottom-6 z-20 w-auto md:w-80 max-w-sm shrink-0 flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white/95 backdrop-blur-md shadow-2xl transition-all duration-300 ${
-            isMobilePanelOpen ? "flex max-h-[85vh] md:max-h-none" : "hidden md:flex"
-          }`}
-        >
+        {/* Mobile Floating Back Button (Image 1 UI style) */}
+        {isNavigating && !isMobileSearchOpen && (
+          <button
+            onClick={handleResetRoute}
+            className="md:hidden absolute left-4 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-white shadow-xl border border-slate-700 hover:bg-slate-800 active:scale-95 transition"
+            title="Kembali ke Pencarian"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+        )}
+
+        {/* Mobile Search Overlay Modal (Image 2 UI style) */}
+        {isMobileSearchOpen && (
+          <div className="md:hidden fixed inset-0 z-[100] flex flex-col bg-slate-950/95 backdrop-blur-xl p-4 text-white animate-fade-in overflow-y-auto">
+            {/* Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <button
+                onClick={() => setIsMobileSearchOpen(false)}
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition"
+              >
+                <X className="h-5 w-5" />
+              </button>
+              <h2 className="text-sm font-extrabold text-white tracking-wide">Mau ke mana hari ini?</h2>
+              <div className="w-9" />
+            </div>
+
+            {/* Input Container (Image 2 style) */}
+            <div className="mt-4 rounded-2xl bg-slate-900 border border-slate-800 p-3.5 shadow-2xl flex items-center gap-3">
+              {/* Left dots connector */}
+              <div className="flex flex-col items-center justify-between py-1 self-stretch">
+                <span className="h-4 w-4 rounded-full bg-emerald-500 border-2 border-emerald-300 shrink-0 flex items-center justify-center text-[9px] font-black text-white">
+                  A
+                </span>
+                <span className="w-0.5 flex-1 border-l-2 border-dotted border-slate-600 my-1" />
+                <span className="h-4 w-4 rounded-full bg-amber-500 border-2 border-amber-300 shrink-0 flex items-center justify-center text-[9px] font-black text-white">
+                  B
+                </span>
+              </div>
+
+              {/* Input Fields */}
+              <div className="flex-1 flex flex-col gap-2 min-w-0">
+                {/* Start input */}
+                <div className="relative flex items-center">
+                  <input
+                    type="text"
+                    placeholder="Pilih lokasi awal..."
+                    value={startInput}
+                    onFocus={() => setActiveInputFocus("start")}
+                    onChange={(e) => {
+                      setStartInput(e.target.value);
+                      fetchSuggestions(e.target.value, setStartSuggestions);
+                    }}
+                    className={`w-full rounded-xl bg-slate-800/90 border py-2 pl-3 pr-7 text-xs font-semibold text-white outline-none transition ${
+                      activeInputFocus === "start" ? "border-emerald-500 ring-1 ring-emerald-500" : "border-slate-700/80"
+                    }`}
+                  />
+                  {startInput && (
+                    <button
+                      onClick={() => {
+                        setStartInput("");
+                        setStartPoint(null);
+                        setStartSuggestions([]);
+                      }}
+                      className="absolute right-2 text-slate-400 hover:text-white text-xs font-bold"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+
+                <div className="h-px bg-slate-800" />
+
+                {/* Dest input */}
+                <div className="relative flex items-center">
+                  <input
+                    type="text"
+                    placeholder="Cari lokasi tujuan..."
+                    value={destInput}
+                    autoFocus
+                    onFocus={() => setActiveInputFocus("dest")}
+                    onChange={(e) => {
+                      setDestInput(e.target.value);
+                      fetchSuggestions(e.target.value, setDestSuggestions);
+                    }}
+                    className={`w-full rounded-xl bg-slate-800/90 border py-2 pl-3 pr-7 text-xs font-semibold text-white outline-none transition ${
+                      activeInputFocus === "dest" ? "border-amber-500 ring-1 ring-amber-500" : "border-slate-700/80"
+                    }`}
+                  />
+                  {destInput && (
+                    <button
+                      onClick={() => {
+                        setDestInput("");
+                        setDestPoint(null);
+                        setDestSuggestions([]);
+                      }}
+                      className="absolute right-2 text-slate-400 hover:text-white text-xs font-bold"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Action Buttons (Image 2 style) */}
+            <div className="mt-3 flex items-center gap-2">
+              <button
+                onClick={() => {
+                  setIsMobileSearchOpen(false);
+                  setClickMode(activeInputFocus);
+                }}
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-slate-900 border border-slate-800 py-2.5 px-3 text-xs font-bold text-slate-200 hover:bg-slate-800 transition"
+              >
+                <MapPin className="h-3.5 w-3.5 text-emerald-400" />
+                <span>Pilih lewat peta</span>
+              </button>
+              <button
+                onClick={() => {
+                  handleLocateUser();
+                }}
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-slate-900 border border-slate-800 py-2.5 px-3 text-xs font-bold text-slate-200 hover:bg-slate-800 transition"
+              >
+                <Locate className="h-3.5 w-3.5 text-blue-400" />
+                <span>Lokasi Saya</span>
+              </button>
+            </div>
+
+            {/* Suggestions List (Image 2 style) */}
+            <div className="mt-4 flex-1 overflow-y-auto space-y-2">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                {activeInputFocus === "start" ? "Saran Titik Awal" : "Saran Lokasi Tujuan"}
+              </p>
+
+              {(activeInputFocus === "start" ? startSuggestions : destSuggestions).length > 0 ? (
+                (activeInputFocus === "start" ? startSuggestions : destSuggestions).map((item, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      const selectedPt = {
+                        name: item.display_name,
+                        lat: parseFloat(item.lat),
+                        lng: parseFloat(item.lon),
+                      };
+                      if (activeInputFocus === "start") {
+                        setStartPoint(selectedPt);
+                        setStartInput(item.display_name);
+                        setStartSuggestions([]);
+                        if (destPoint) {
+                          handleStartNavigation(selectedPt, destPoint);
+                        }
+                      } else {
+                        setDestPoint(selectedPt);
+                        setDestInput(item.display_name);
+                        setDestSuggestions([]);
+                        if (startPoint) {
+                          handleStartNavigation(startPoint, selectedPt);
+                        }
+                      }
+                    }}
+                    className="w-full text-left rounded-2xl bg-slate-900/80 border border-slate-800/80 p-3 flex items-start gap-3 hover:bg-slate-800 transition"
+                  >
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-800 text-slate-300 border border-slate-700 shrink-0 mt-0.5">
+                      <MapPin className="h-4 w-4 text-emerald-400" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-xs font-bold text-white truncate">{item.display_name.split(",")[0]}</h4>
+                      <p className="text-[11px] text-slate-400 truncate mt-0.5">{item.display_name}</p>
+                    </div>
+                  </button>
+                ))
+              ) : (
+                <div className="py-8 text-center text-slate-500 text-xs">
+                  <Search className="h-6 w-6 mx-auto text-slate-600 mb-2 opacity-50" />
+                  Ketik nama jalan atau lokasi di Depok...
+                </div>
+              )}
+            </div>
+
+            {/* Calculate Button if both points set */}
+            {startPoint && destPoint && (
+              <button
+                onClick={() => handleStartNavigation()}
+                className="mt-3 w-full rounded-2xl bg-blue-600 hover:bg-blue-700 py-3 text-sm font-extrabold text-white shadow-lg transition"
+              >
+                Tampilkan Rute Aman
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Mobile Bottom Sheet Drawer for Route Selection (Image 1 bottom UI style) */}
+        {isNavigating && !isMobileSearchOpen && routes.length > 0 && (
+          <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200/80 rounded-t-3xl shadow-[0_-10px_35px_rgba(0,0,0,0.15)] p-4 flex flex-col max-h-[60vh] animate-slide-up">
+            {/* Grab handle bar */}
+            <div className="w-12 h-1.5 rounded-full bg-slate-300 mx-auto mb-3 shrink-0" />
+
+            {/* Drawer Header */}
+            <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 shrink-0">
+              <div>
+                <h3 className="text-xs font-extrabold uppercase text-slate-900 tracking-wider">Pilih Rute Perjalanan</h3>
+                <p className="text-[10px] text-slate-400">Analisis tingkat keamanan jalur Depok</p>
+              </div>
+              <span className="text-[10px] font-bold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
+                {routes.length} Pilihan Rute
+              </span>
+            </div>
+
+            {/* Route list */}
+            <div className="flex-1 overflow-y-auto space-y-2.5 pr-1">
+              {routes.map((r) => {
+                const isSelected = r.id === selectedRouteId;
+                const isSafest = r.name.includes("Teraman");
+                const isFastest = r.name.includes("Tercepat");
+
+                let safetyText = "Terverifikasi Aman";
+                let safetyColor = "text-emerald-600";
+                if (r.incidents.length > 0) {
+                  safetyText = r.incidents.length <= 2 ? "Perlu Waspada" : "Rawan Tinggi";
+                  safetyColor = r.incidents.length <= 2 ? "text-amber-600" : "text-rose-600";
+                }
+
+                return (
+                  <div
+                    key={r.id}
+                    onClick={() => setSelectedRouteId(r.id)}
+                    className={`rounded-2xl border p-3 flex justify-between items-center cursor-pointer transition-all duration-200 ${
+                      isSelected
+                        ? "border-blue-600 bg-blue-50/60 ring-2 ring-blue-500/20 shadow-md"
+                        : "border-slate-200/80 bg-slate-50/50 hover:bg-slate-100/50"
+                    }`}
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                        <span
+                          className={`text-[9px] font-black px-1.5 py-0.5 rounded text-white ${
+                            isSafest ? "bg-emerald-500" : isFastest ? "bg-blue-600" : "bg-slate-600"
+                          }`}
+                        >
+                          {r.name}
+                        </span>
+                        {r.incidents.length > 0 && (
+                          <span className="text-[9px] font-bold text-amber-600 flex items-center gap-0.5">
+                            <AlertTriangle className="h-2.5 w-2.5" /> {r.incidents.length} titik rawan
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-lg font-black text-slate-900">{Math.round(r.duration / 60)} mnt</span>
+                        <span className="text-xs font-bold text-slate-500">({(r.distance / 1000).toFixed(1)} km)</span>
+                      </div>
+
+                      <div className={`mt-1 flex items-center gap-1 text-[10px] font-bold ${safetyColor}`}>
+                        <Shield className="h-3 w-3" />
+                        <span>{safetyText}</span>
+                      </div>
+                    </div>
+
+                    {/* Radio indicator */}
+                    <div className="ml-3 shrink-0">
+                      <div
+                        className={`h-5 w-5 rounded-full border-2 flex items-center justify-center transition ${
+                          isSelected ? "border-blue-600 bg-blue-600 text-white" : "border-slate-300 bg-white"
+                        }`}
+                      >
+                        {isSelected && <Check className="h-3 w-3" />}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Bottom Sticky Action Button */}
+            <div className="mt-3 pt-2 border-t border-slate-100 shrink-0">
+              <button
+                onClick={() => {
+                  alert("Navigasi SafeRoute dimulai! Tetap waspada dan ikuti rute di peta.");
+                }}
+                className="w-full rounded-2xl bg-[#0B2540] hover:bg-[#13315c] py-3.5 px-4 text-xs font-extrabold text-white shadow-xl flex items-center justify-between transition"
+              >
+                <span>Mulai Navigasi</span>
+                <span className="rounded-xl bg-white/20 px-2.5 py-1 text-[11px] font-black">
+                  {selectedRouteId && routes.find((r) => r.id === selectedRouteId)
+                    ? `${Math.round((routes.find((r) => r.id === selectedRouteId)?.duration || 0) / 60)} mnt`
+                    : ""}
+                </span>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Navigation Sidebar Panel (Desktop view) */}
+        <div className="hidden md:flex absolute left-6 top-6 bottom-6 z-20 w-80 max-w-sm shrink-0 flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white/95 backdrop-blur-md shadow-2xl">
           <div className="flex flex-col overflow-y-auto p-4 sm:p-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100 mb-2">
               <div>
@@ -703,7 +1054,7 @@ export default function MapComponent() {
             </div>
 
             <button
-              onClick={handleStartNavigation}
+              onClick={() => handleStartNavigation()}
               disabled={routeLoading || !startPoint || !destPoint}
               className="mt-6 w-full flex items-center justify-center gap-2 rounded-xl bg-[#0B2540] py-3 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-[#13315c] disabled:opacity-50 disabled:cursor-not-allowed"
             >
