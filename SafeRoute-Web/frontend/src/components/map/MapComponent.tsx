@@ -187,33 +187,43 @@ async function searchNominatim(query: string): Promise<NominatimSuggestion[]> {
 }
 
 async function reverseGeocode(lat: number, lng: number): Promise<string> {
-  try {
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
-    );
-    if (!res.ok) {
-      console.error("Reverse geocode gagal, HTTP status:", res.status);
-      return `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+  // Coba beberapa level zoom, dari paling detail (jalan) ke paling umum
+  // (kecamatan/kota). Titik yang nggak punya alamat presisi (gang kecil,
+  // tanah kosong, tengah lapangan) tetap dapat nama area terdekat, bukan
+  // jatuh ke koordinat mentah.
+  const zoomLevels = [18, 16, 12];
+
+  for (const zoom of zoomLevels) {
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=${zoom}&addressdetails=1`
+      );
+      if (!res.ok) {
+        console.error(`Reverse geocode (zoom ${zoom}) gagal, HTTP status:`, res.status);
+        continue;
+      }
+
+      const data = await res.json();
+      if (data?.display_name) return data.display_name;
+
+      const addr = data?.address;
+      if (addr) {
+        const parts = [
+          addr.road,
+          addr.suburb || addr.village || addr.hamlet,
+          addr.city || addr.town || addr.county,
+        ].filter(Boolean);
+        if (parts.length > 0) return parts.join(", ");
+      }
+    } catch (e) {
+      console.error(`Reverse geocode (zoom ${zoom}) error:`, e);
     }
-
-    const data = await res.json();
-    if (data?.display_name) return data.display_name;
-
-    // Nominatim kadang nggak punya alamat persis untuk titik itu (mis. di
-    // tengah gang kecil / lapangan). Coba susun dari komponen alamat yang
-    // tersedia dulu sebelum jatuh ke koordinat mentah.
-    const addr = data?.address;
-    if (addr) {
-      const parts = [addr.road, addr.suburb || addr.village, addr.city || addr.town || addr.county].filter(Boolean);
-      if (parts.length > 0) return parts.join(", ");
-    }
-
-    console.warn("Reverse geocode tidak menemukan alamat untuk titik ini:", lat, lng, data);
-    return `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-  } catch (e) {
-    console.error("Reverse geocode error:", e);
-    return `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
   }
+
+  // Semua level zoom gagal nemu nama — daripada nampilin koordinat mentah,
+  // kasih label umum karena area yang dicakup aplikasi ini memang dibatasi Depok.
+  console.warn("Reverse geocode tidak menemukan nama lokasi untuk titik ini:", lat, lng);
+  return "Lokasi Terpilih di Kota Depok";
 }
 
 function buildRouteOption(route: any, index: number, incidents: MapPoint[]): RouteOption {
