@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getToken } from "@/src/lib/tokenStorage";
 import {
@@ -99,6 +99,8 @@ type TravelMode = "MOTOR" | "MOBIL" | "JALAN_KAKI";
  * CONSTANTS
  * ==========================================================================*/
 
+const NOMINATIM_HEADERS = { "User-Agent": "SafeRoute-NextJS" };
+
 const DEPOK_CENTER: [number, number] = [-6.39, 106.825];
 const DEPOK_LAT_MIN = -6.45;
 const DEPOK_LAT_MAX = -6.33;
@@ -173,26 +175,13 @@ function getSafetyLevel(score: number): { label: string; dotClass: string; textC
 
 async function searchNominatim(query: string): Promise<NominatimSuggestion[]> {
   try {
-    const viewbox = `${DEPOK_LNG_MIN},${DEPOK_LAT_MAX},${DEPOK_LNG_MAX},${DEPOK_LAT_MIN}`;
     const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=jsonv2&q=${encodeURIComponent(
-        query
-      )}&limit=6&countrycodes=id&viewbox=${viewbox}`
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=id`,
+      { headers: NOMINATIM_HEADERS }
     );
-
-    if (!res.ok) {
-      console.error("Pencarian lokasi gagal, HTTP status:", res.status);
-      return [];
-    }
-
-    const data = await res.json();
-    if (!Array.isArray(data)) {
-      console.error("Pencarian lokasi: respons tidak sesuai format yang diharapkan:", data);
-      return [];
-    }
-    return data;
+    return (await res.json()) || [];
   } catch (e) {
-    console.error("Pencarian lokasi error:", e);
+    console.error(e);
     return [];
   }
 }
@@ -360,29 +349,17 @@ function useMapIncidentsData() {
 function useAddressField() {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState<NominatimSuggestion[]>([]);
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleChange = (text: string) => {
     setValue(text);
-
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-
     if (text.length < 3) {
       setSuggestions([]);
       return;
     }
-
-    // Nominatim ketat soal rate limit (~1 request/detik). Tanpa jeda, tiap
-    // huruf yang diketik langsung nembak request baru dan gampang kena
-    // block sementara (403/429) — akibatnya daftar saran nggak pernah
-    // muncul sama sekali. Debounce 400ms nunggu user berhenti ngetik dulu.
-    debounceRef.current = setTimeout(() => {
-      void searchNominatim(text).then(setSuggestions);
-    }, 400);
+    void searchNominatim(text).then(setSuggestions);
   };
 
   const clear = () => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
     setValue("");
     setSuggestions([]);
   };
