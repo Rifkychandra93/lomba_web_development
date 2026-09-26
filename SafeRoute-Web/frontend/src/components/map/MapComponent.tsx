@@ -137,10 +137,7 @@ const RISK_LEGEND: Array<{ level: string; label: string; dotClass: string }> = [
   { level: "LOW", label: "Rendah", dotClass: "bg-emerald-500" },
 ];
 
-/* ============================================================================
- * PURE HELPERS — semua rumus & threshold di bawah ini nilainya sama persis
- * dengan versi sebelumnya (punyamu & punya teman), cuma dipindah & didedup.
- * ==========================================================================*/
+
 
 function isWithinDepokBounds(lat: number, lng: number): boolean {
   return lat >= DEPOK_LAT_MIN && lat <= DEPOK_LAT_MAX && lng >= DEPOK_LNG_MIN && lng <= DEPOK_LNG_MAX;
@@ -931,41 +928,45 @@ function SafetyAnalysisCard({
   incidentsAvoided: number;
   extraMinutes: number;
 }) {
+  // Skor & ikon butuh warna yang lebih pekat (600) supaya kontras cukup di atas
+  // latar putih — dotClass/badge tetap dipakai apa adanya karena itu pil berwarna.
+  const scoreColor = safetyLevel.textClass.replace("400", "600");
+
   return (
-    <div className="rounded-2xl bg-[#0B2540] p-4 text-white shadow-lg shadow-[#0B2540]/20">
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
       <div className="flex items-center justify-between">
-        <p className="text-[10px] font-bold uppercase tracking-wider text-white/50">Hasil Analisis Jalur</p>
-        <span className={`rounded-full px-2 py-0.5 text-[9px] font-bold ${safetyLevel.dotClass}`}>{safetyLevel.label}</span>
+        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Hasil Analisis Jalur</p>
+        <span className={`rounded-full px-2 py-0.5 text-[9px] font-bold text-white ${safetyLevel.dotClass}`}>{safetyLevel.label}</span>
       </div>
       <div className="mt-1 flex items-center justify-between gap-2">
-        <p className="text-sm font-bold truncate">{route.name || "Rute Terpilih"}</p>
-        <p className="shrink-0 text-[10px] font-semibold text-white/50">
+        <p className="text-sm font-bold text-slate-800 truncate">{route.name || "Rute Terpilih"}</p>
+        <p className="shrink-0 text-[10px] font-semibold text-slate-400">
           {(route.distance / 1000).toFixed(1)} km &middot; {Math.round(route.duration / 60)} mnt
         </p>
       </div>
 
-      <div className="mt-3 flex items-end justify-between">
+      <div className="mt-3 flex items-end justify-between border-t border-slate-100 pt-3">
         <div>
-          <span className={`text-3xl font-black ${safetyLevel.textClass}`}>{safetyScore}</span>
-          <span className="text-sm font-bold text-white/40">/100</span>
-          <p className="text-[10px] font-semibold text-white/50">Skor Keselamatan</p>
+          <span className={`text-3xl font-black ${scoreColor}`}>{safetyScore}</span>
+          <span className="text-sm font-bold text-slate-300">/100</span>
+          <p className="text-[10px] font-semibold text-slate-400">Skor Keselamatan</p>
         </div>
-        <ShieldCheck className={`h-9 w-9 ${safetyLevel.textClass}`} />
+        <ShieldCheck className={`h-9 w-9 ${scoreColor}`} />
       </div>
 
       {incidentsAvoided > 0 && (
-        <div className="mt-3 flex items-start gap-2 rounded-xl bg-white/10 p-2.5">
-          <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-emerald-400 mt-0.5" />
-          <p className="text-[10px] leading-relaxed text-white/80">
-            Rute ini menghindari <span className="font-bold text-white">{incidentsAvoided} titik rawan</span> lebih sedikit
+        <div className="mt-3 flex items-start gap-2 rounded-xl border border-slate-100 bg-slate-50 p-2.5">
+          <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-emerald-500 mt-0.5" />
+          <p className="text-[10px] leading-relaxed text-slate-600">
+            Rute ini menghindari <span className="font-bold text-slate-800">{incidentsAvoided} titik rawan</span> lebih sedikit
             dibanding rute tercepat{extraMinutes > 0 ? `, dengan tambahan waktu ±${extraMinutes} menit` : ""}.
           </p>
         </div>
       )}
       {incidentsAvoided <= 0 && route.incidents.length === 0 && (
-        <div className="mt-3 flex items-start gap-2 rounded-xl bg-white/10 p-2.5">
-          <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-emerald-400 mt-0.5" />
-          <p className="text-[10px] leading-relaxed text-white/80">
+        <div className="mt-3 flex items-start gap-2 rounded-xl border border-slate-100 bg-slate-50 p-2.5">
+          <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-emerald-500 mt-0.5" />
+          <p className="text-[10px] leading-relaxed text-slate-600">
             Rute ini sudah menjadi jalur tercepat sekaligus teraman yang tersedia saat ini.
           </p>
         </div>
