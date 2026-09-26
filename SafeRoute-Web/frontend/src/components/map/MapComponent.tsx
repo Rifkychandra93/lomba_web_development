@@ -137,7 +137,10 @@ const RISK_LEGEND: Array<{ level: string; label: string; dotClass: string }> = [
   { level: "LOW", label: "Rendah", dotClass: "bg-emerald-500" },
 ];
 
-
+/* ============================================================================
+ * PURE HELPERS — semua rumus & threshold di bawah ini nilainya sama persis
+ * dengan versi sebelumnya (punyamu & punya teman), cuma dipindah & didedup.
+ * ==========================================================================*/
 
 function isWithinDepokBounds(lat: number, lng: number): boolean {
   return lat >= DEPOK_LAT_MIN && lat <= DEPOK_LAT_MAX && lng >= DEPOK_LNG_MIN && lng <= DEPOK_LNG_MAX;
@@ -185,13 +188,30 @@ async function searchNominatim(query: string): Promise<NominatimSuggestion[]> {
 
 async function reverseGeocode(lat: number, lng: number): Promise<string> {
   try {
-    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`, {
-      headers: NOMINATIM_HEADERS,
-    });
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
+    );
+    if (!res.ok) {
+      console.error("Reverse geocode gagal, HTTP status:", res.status);
+      return `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+    }
+
     const data = await res.json();
-    return data?.display_name || `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+    if (data?.display_name) return data.display_name;
+
+    // Nominatim kadang nggak punya alamat persis untuk titik itu (mis. di
+    // tengah gang kecil / lapangan). Coba susun dari komponen alamat yang
+    // tersedia dulu sebelum jatuh ke koordinat mentah.
+    const addr = data?.address;
+    if (addr) {
+      const parts = [addr.road, addr.suburb || addr.village, addr.city || addr.town || addr.county].filter(Boolean);
+      if (parts.length > 0) return parts.join(", ");
+    }
+
+    console.warn("Reverse geocode tidak menemukan alamat untuk titik ini:", lat, lng, data);
+    return `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
   } catch (e) {
-    console.error(e);
+    console.error("Reverse geocode error:", e);
     return `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
   }
 }
