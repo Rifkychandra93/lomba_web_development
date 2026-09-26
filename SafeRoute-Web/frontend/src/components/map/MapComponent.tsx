@@ -15,7 +15,6 @@ import {
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {
-  Search,
   Plus,
   Minus,
   Layers,
@@ -30,11 +29,12 @@ import {
   ArrowLeft,
   ArrowUpDown,
   Pencil,
-  Check,
   Bike,
   Car,
   Footprints,
   Info,
+  ChevronDown,
+  Clock,
 } from "lucide-react";
 import { getMapIncidents } from "@/src/services/incident.service";
 import { getCurrentUser } from "@/src/services/auth.service";
@@ -94,7 +94,6 @@ interface SelectedPoint {
 type ClickMode = "none" | "start" | "dest" | "report";
 type InputFocus = "start" | "dest";
 type TravelMode = "MOTOR" | "MOBIL" | "JALAN_KAKI";
-type RoutePreference = "TERAMAN" | "TERCEPAT";
 
 /* ============================================================================
  * CONSTANTS
@@ -130,10 +129,6 @@ const TRAVEL_MODES: Array<{ id: TravelMode; label: string; icon: React.Component
 // "driving". Motor & Mobil masih aman dipakai bareng (jaringan jalannya sama),
 // tapi buat rute Jalan Kaki yang akurat (gang, jalan setapak, dst) perlu
 // routing engine dengan profil "foot" terpisah — belum terintegrasi.
-const ROUTE_PREFERENCES: Array<{ id: RoutePreference; label: string }> = [
-  { id: "TERAMAN", label: "Rute Teraman" },
-  { id: "TERCEPAT", label: "Tercepat" },
-];
 
 const RISK_LEGEND: Array<{ level: string; label: string; dotClass: string }> = [
   { level: "CRITICAL", label: "Kritis", dotClass: "bg-rose-600" },
@@ -456,7 +451,6 @@ function useLocationPlanner(setRouteLoading: (v: boolean) => void, onReportPinDr
 function useSafeRouting(incidents: MapPoint[]) {
   const [routes, setRoutes] = useState<RouteOption[]>([]);
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
-  const [routePreference, setRoutePreference] = useState<RoutePreference>("TERAMAN");
   const [routeLoading, setRouteLoading] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
   const [mapBounds, setMapBounds] = useState<L.LatLngBoundsExpression | null>(null);
@@ -550,7 +544,6 @@ function useSafeRouting(incidents: MapPoint[]) {
         if (routeOptions[i].riskScore < routeOptions[safestIndex].riskScore) safestIndex = i;
       }
       setSelectedRouteId(routeOptions[safestIndex].id);
-      setRoutePreference("TERAMAN");
 
       const allCoords = routeOptions.flatMap((r) => r.polyline);
       setMapBounds(L.latLngBounds(allCoords.map((c) => L.latLng(c[0], c[1]))));
@@ -559,14 +552,6 @@ function useSafeRouting(incidents: MapPoint[]) {
     } finally {
       setRouteLoading(false);
     }
-  };
-
-  const selectPreference = (pref: RoutePreference) => {
-    setRoutePreference(pref);
-    if (routes.length === 0) return;
-    const keyword = pref === "TERAMAN" ? "Teraman" : "Tercepat";
-    const match = routes.find((r) => r.name.includes(keyword)) ?? routes[0];
-    setSelectedRouteId(match.id);
   };
 
   /** Balikin ke kondisi "belum ada rute", dipakai tombol kembali di mobile. */
@@ -593,14 +578,12 @@ function useSafeRouting(incidents: MapPoint[]) {
     routes,
     selectedRouteId,
     setSelectedRouteId,
-    routePreference,
     routeLoading,
     setRouteLoading,
     isNavigating,
     mapBounds,
     incidentsNearRoute,
     startNavigation,
-    selectPreference,
     resetRoutes,
     selectedRoute,
     fastestRoute,
@@ -749,27 +732,63 @@ function IncidentPopupContent({ incident }: { incident: MapPoint }) {
   );
 }
 
+/** Panel "Titik Waspada Terpantau" — daftar ringkas dengan expand/collapse, bukan kotak scroll kecil. */
 function NearbyIncidentsPanel({ incidents }: { incidents: MapPoint[] }) {
+  const [expanded, setExpanded] = useState(false);
+  const visibleCount = 3;
+  const visibleIncidents = expanded ? incidents : incidents.slice(0, visibleCount);
+
+  const riskStyles: Record<string, { border: string; badge: string }> = {
+    CRITICAL: { border: "border-l-rose-600", badge: "bg-rose-600" },
+    HIGH: { border: "border-l-orange-500", badge: "bg-orange-500" },
+    MEDIUM: { border: "border-l-amber-500", badge: "bg-amber-500" },
+    LOW: { border: "border-l-emerald-500", badge: "bg-emerald-500" },
+  };
+
   return (
-    <div className="rounded-xl border border-slate-100 bg-slate-50/50 p-4">
-      <h4 className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-        <AlertTriangle className="h-4 w-4 text-amber-500" /> Titik Waspada Terpantau ({incidents.length})
-      </h4>
+    <div className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm">
+      <div className="flex items-center justify-between">
+        <h4 className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+          <AlertTriangle className="h-4 w-4 text-amber-500" /> Titik Waspada Terpantau
+        </h4>
+        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-extrabold text-slate-600">{incidents.length}</span>
+      </div>
+
       {incidents.length > 0 ? (
-        <div className="mt-3 max-h-40 overflow-y-auto flex flex-col gap-2 pr-1">
-          {incidents.map((inc) => (
-            <div key={inc.id} className="rounded-xl border border-slate-100 bg-white p-2.5 flex flex-col gap-1 shadow-sm">
-              <div className="flex justify-between items-center">
-                <span className="text-[10px] font-extrabold text-slate-800 truncate max-w-[140px]">{inc.title}</span>
-                <span className={`rounded px-1 text-[8px] font-extrabold text-white ${inc.riskLevel === "CRITICAL" ? "bg-rose-600" : inc.riskLevel === "HIGH" ? "bg-orange-500" : "bg-amber-500"}`}>
-                  {inc.riskLevel}
-                </span>
+        <div className="mt-3 flex flex-col gap-2">
+          {visibleIncidents.map((inc) => {
+            const style = riskStyles[inc.riskLevel] ?? riskStyles.LOW;
+            return (
+              <div key={inc.id} className={`rounded-lg border border-slate-100 border-l-4 ${style.border} bg-slate-50/60 p-2.5`}>
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-[11px] font-extrabold text-slate-800 leading-snug">{inc.title}</p>
+                  <span className={`shrink-0 rounded px-1.5 py-0.5 text-[8px] font-extrabold text-white ${style.badge}`}>
+                    {inc.riskLevel}
+                  </span>
+                </div>
+                <div className="mt-1.5 flex items-center justify-between gap-2 text-[9px] text-slate-400">
+                  <span className="flex items-center gap-1 truncate">
+                    <MapPin className="h-3 w-3 shrink-0" />
+                    <span className="truncate">{inc.address || "Lokasi tidak diketahui"}</span>
+                  </span>
+                  <span className="flex shrink-0 items-center gap-1">
+                    <Clock className="h-3 w-3" />
+                    {new Date(inc.news?.publishedAt || inc.detectedAt).toLocaleDateString("id-ID", { day: "2-digit", month: "short" })}
+                  </span>
+                </div>
               </div>
-              <span className="text-[9px] text-slate-400 truncate flex items-center gap-0.5">
-                <MapPin className="h-3 w-3 shrink-0" /> {inc.address}
-              </span>
-            </div>
-          ))}
+            );
+          })}
+
+          {incidents.length > visibleCount && (
+            <button
+              onClick={() => setExpanded((v) => !v)}
+              className="mt-1 flex w-full items-center justify-center gap-1 rounded-lg py-1.5 text-[10px] font-bold text-[#0B2540] hover:bg-slate-50 transition-colors"
+            >
+              {expanded ? "Tampilkan lebih sedikit" : `Lihat semua (${incidents.length})`}
+              <ChevronDown className={`h-3 w-3 transition-transform ${expanded ? "rotate-180" : ""}`} />
+            </button>
+          )}
         </div>
       ) : (
         <p className="mt-4 text-xs font-semibold text-slate-500 text-center flex flex-col items-center justify-center py-2">
@@ -791,22 +810,26 @@ function LocationInputField({
   placeholder,
   value,
   onChange,
+  onFocus,
   onClear,
   suggestions,
   onSelectSuggestion,
   isPicking,
   onTogglePick,
+  autoFocus,
 }: {
   markerNode: React.ReactNode;
   label: string;
   placeholder: string;
   value: string;
   onChange: (text: string) => void;
+  onFocus?: () => void;
   onClear: () => void;
   suggestions: NominatimSuggestion[];
   onSelectSuggestion: (item: NominatimSuggestion) => void;
   isPicking: boolean;
   onTogglePick: () => void;
+  autoFocus?: boolean;
 }) {
   return (
     <div className="relative flex gap-2.5">
@@ -820,6 +843,8 @@ function LocationInputField({
               placeholder={placeholder}
               value={value}
               onChange={(e) => onChange(e.target.value)}
+              onFocus={onFocus}
+              autoFocus={autoFocus}
               className="w-full rounded-xl bg-slate-50 border border-slate-200/60 py-2.5 pl-3 pr-8 text-xs font-semibold text-slate-700 outline-none focus:bg-white focus:border-[#0B2540]/40 transition-colors"
             />
             {value && (
@@ -893,38 +918,6 @@ function TravelModeSelector({ value, onChange }: { value: TravelMode; onChange: 
   );
 }
 
-function RoutePreferenceChips({ value, onChange }: { value: RoutePreference; onChange: (v: RoutePreference) => void }) {
-  return (
-    <div>
-      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Prioritas Rute</label>
-      <div className="flex flex-wrap gap-1.5">
-        {ROUTE_PREFERENCES.map((pref) => {
-          const isSelected = value === pref.id;
-          return (
-            <button
-              key={pref.id}
-              onClick={() => onChange(pref.id)}
-              className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors ${
-                isSelected ? "border-[#0B2540] bg-[#0B2540] text-white" : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-              }`}
-            >
-              <span className={`h-1.5 w-1.5 rounded-full ${isSelected ? "bg-white" : "bg-slate-300"}`} />
-              {pref.label}
-            </button>
-          );
-        })}
-        <button
-          disabled
-          title="Segera hadir — perlu data penerangan & keramaian jalan"
-          className="flex items-center gap-1.5 rounded-full border border-dashed border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-300 cursor-not-allowed"
-        >
-          Terang &amp; Ramai
-        </button>
-      </div>
-    </div>
-  );
-}
-
 function SafetyAnalysisCard({
   route,
   safetyScore,
@@ -944,7 +937,12 @@ function SafetyAnalysisCard({
         <p className="text-[10px] font-bold uppercase tracking-wider text-white/50">Hasil Analisis Jalur</p>
         <span className={`rounded-full px-2 py-0.5 text-[9px] font-bold ${safetyLevel.dotClass}`}>{safetyLevel.label}</span>
       </div>
-      <p className="mt-1 text-sm font-bold truncate">{route.name || "Rute Terpilih"}</p>
+      <div className="mt-1 flex items-center justify-between gap-2">
+        <p className="text-sm font-bold truncate">{route.name || "Rute Terpilih"}</p>
+        <p className="shrink-0 text-[10px] font-semibold text-white/50">
+          {(route.distance / 1000).toFixed(1)} km &middot; {Math.round(route.duration / 60)} mnt
+        </p>
+      </div>
 
       <div className="mt-3 flex items-end justify-between">
         <div>
@@ -953,21 +951,6 @@ function SafetyAnalysisCard({
           <p className="text-[10px] font-semibold text-white/50">Skor Keselamatan</p>
         </div>
         <ShieldCheck className={`h-9 w-9 ${safetyLevel.textClass}`} />
-      </div>
-
-      <div className="mt-4 grid grid-cols-3 gap-2 border-t border-white/10 pt-3 text-center">
-        <div>
-          <p className="text-xs font-extrabold">{(route.distance / 1000).toFixed(1)} km</p>
-          <p className="text-[9px] font-semibold text-white/40">Jarak</p>
-        </div>
-        <div>
-          <p className="text-xs font-extrabold">{Math.round(route.duration / 60)} mnt</p>
-          <p className="text-[9px] font-semibold text-white/40">Estimasi</p>
-        </div>
-        <div>
-          <p className="text-xs font-extrabold">{route.incidents.length}</p>
-          <p className="text-[9px] font-semibold text-white/40">Insiden Terdeteksi</p>
-        </div>
       </div>
 
       {incidentsAvoided > 0 && (
@@ -1153,10 +1136,6 @@ function DesktopSidebar({
             <TravelModeSelector value={travelMode} onChange={onTravelModeChange} />
           </div>
 
-          <div className="mt-3">
-            <RoutePreferenceChips value={routing.routePreference} onChange={routing.selectPreference} />
-          </div>
-
           <button
             onClick={onStart}
             disabled={routing.routeLoading || !location.startPoint || !location.destPoint}
@@ -1215,7 +1194,9 @@ function DesktopSidebar({
 }
 
 /* ============================================================================
- * MOBILE UI COMPONENTS (perilaku sama persis dengan versi teman — cuma dipindah)
+ * MOBILE UI COMPONENTS — sekarang pakai komponen & palet yang sama persis
+ * dengan sidebar desktop (LocationInputField, SafetyAnalysisCard,
+ * RouteOptionCard) supaya tampilannya konsisten di semua ukuran layar.
  * ==========================================================================*/
 
 function MobileRouteSummaryBar({
@@ -1238,7 +1219,7 @@ function MobileRouteSummaryBar({
         </div>
         <div className="ml-1.5 h-2 w-0 border-l border-dashed border-slate-300" />
         <div className="flex items-center gap-2">
-          <span className="h-3 w-3 rounded-full bg-amber-500 border-2 border-amber-200 shrink-0" />
+          <span className="h-3 w-3 rounded-full bg-slate-900 border-2 border-slate-300 shrink-0" />
           <span className="text-xs font-extrabold text-slate-900 truncate">{destLabel}</span>
         </div>
       </div>
@@ -1256,7 +1237,7 @@ function MobileRouteSummaryBar({
         </button>
         <button
           onClick={onOpenSearch}
-          className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm hover:bg-blue-700 transition"
+          className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#0B2540] text-white shadow-sm hover:bg-[#13315c] transition"
           title="Cari / Ubah Rute"
         >
           <Pencil className="h-3.5 w-3.5" />
@@ -1269,130 +1250,80 @@ function MobileRouteSummaryBar({
 function MobileSearchOverlay({
   location,
   mobile,
-  onSelectSuggestion,
+  onSelectStart,
+  onSelectDest,
   onPickOnMap,
   onLocateMe,
   onStart,
 }: {
   location: ReturnType<typeof useLocationPlanner>;
   mobile: ReturnType<typeof useMobileNav>;
-  onSelectSuggestion: (item: NominatimSuggestion) => void;
-  onPickOnMap: () => void;
+  onSelectStart: (item: NominatimSuggestion) => void;
+  onSelectDest: (item: NominatimSuggestion) => void;
+  onPickOnMap: (field: InputFocus) => void;
   onLocateMe: () => void;
   onStart: () => void;
 }) {
-  const activeField = mobile.activeFocus === "start" ? location.start : location.dest;
-
   return (
-    <div className="md:hidden fixed inset-0 z-[100] flex flex-col bg-slate-950/95 backdrop-blur-xl p-4 text-white animate-fade-in overflow-y-auto">
-      <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+    <div className="md:hidden fixed inset-0 z-[100] flex flex-col bg-white p-4 animate-fade-in overflow-y-auto">
+      <div className="flex items-center justify-between pb-3 border-b border-slate-100">
         <button
           onClick={() => mobile.setIsSearchOpen(false)}
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition"
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:text-slate-700 hover:bg-slate-200 transition"
         >
           <X className="h-5 w-5" />
         </button>
-        <h2 className="text-sm font-extrabold text-white tracking-wide">Mau ke mana hari ini?</h2>
+        <h2 className="text-sm font-extrabold text-[#0B2540] tracking-wide">Mau ke mana hari ini?</h2>
         <div className="w-9" />
       </div>
 
-      <div className="mt-4 rounded-2xl bg-slate-900 border border-slate-800 p-3.5 shadow-2xl flex items-center gap-3">
-        <div className="flex flex-col items-center justify-between py-1 self-stretch">
-          <span className="h-4 w-4 rounded-full bg-emerald-500 border-2 border-emerald-300 shrink-0 flex items-center justify-center text-[9px] font-black text-white">A</span>
-          <span className="w-0.5 flex-1 border-l-2 border-dotted border-slate-600 my-1" />
-          <span className="h-4 w-4 rounded-full bg-amber-500 border-2 border-amber-300 shrink-0 flex items-center justify-center text-[9px] font-black text-white">B</span>
-        </div>
-
-        <div className="flex-1 flex flex-col gap-2 min-w-0">
-          <div className="relative flex items-center">
-            <input
-              type="text"
-              placeholder="Pilih lokasi awal..."
-              value={location.start.value}
-              onFocus={() => mobile.setActiveFocus("start")}
-              onChange={(e) => location.start.handleChange(e.target.value)}
-              className={`w-full rounded-xl bg-slate-800/90 border py-2 pl-3 pr-7 text-xs font-semibold text-white outline-none transition ${
-                mobile.activeFocus === "start" ? "border-emerald-500 ring-1 ring-emerald-500" : "border-slate-700/80"
-              }`}
-            />
-            {location.start.value && (
-              <button onClick={location.clearStart} className="absolute right-2 text-slate-400 hover:text-white text-xs font-bold">
-                ✕
-              </button>
-            )}
-          </div>
-
-          <div className="h-px bg-slate-800" />
-
-          <div className="relative flex items-center">
-            <input
-              type="text"
-              placeholder="Cari lokasi tujuan..."
-              value={location.dest.value}
-              autoFocus
-              onFocus={() => mobile.setActiveFocus("dest")}
-              onChange={(e) => location.dest.handleChange(e.target.value)}
-              className={`w-full rounded-xl bg-slate-800/90 border py-2 pl-3 pr-7 text-xs font-semibold text-white outline-none transition ${
-                mobile.activeFocus === "dest" ? "border-amber-500 ring-1 ring-amber-500" : "border-slate-700/80"
-              }`}
-            />
-            {location.dest.value && (
-              <button onClick={location.clearDest} className="absolute right-2 text-slate-400 hover:text-white text-xs font-bold">
-                ✕
-              </button>
-            )}
-          </div>
-        </div>
+      <div className="mt-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm space-y-4">
+        <LocationInputField
+          markerNode={<span className="h-2.5 w-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-100" />}
+          label="Titik Awal"
+          placeholder="Cari lokasi awal..."
+          value={location.start.value}
+          onChange={location.start.handleChange}
+          onFocus={() => mobile.setActiveFocus("start")}
+          onClear={location.clearStart}
+          suggestions={location.start.suggestions}
+          onSelectSuggestion={onSelectStart}
+          isPicking={location.clickMode === "start"}
+          onTogglePick={() => onPickOnMap("start")}
+        />
+        <LocationInputField
+          markerNode={
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-white">
+              <MapPin className="h-3.5 w-3.5" />
+            </span>
+          }
+          label="Tujuan Perjalanan"
+          placeholder="Cari lokasi tujuan..."
+          value={location.dest.value}
+          onChange={location.dest.handleChange}
+          onFocus={() => mobile.setActiveFocus("dest")}
+          onClear={location.clearDest}
+          suggestions={location.dest.suggestions}
+          onSelectSuggestion={onSelectDest}
+          isPicking={location.clickMode === "dest"}
+          onTogglePick={() => onPickOnMap("dest")}
+          autoFocus={mobile.activeFocus === "dest"}
+        />
       </div>
 
-      <div className="mt-3 flex items-center gap-2">
-        <button
-          onClick={onPickOnMap}
-          className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-slate-900 border border-slate-800 py-2.5 px-3 text-xs font-bold text-slate-200 hover:bg-slate-800 transition"
-        >
-          <MapPin className="h-3.5 w-3.5 text-emerald-400" />
-          <span>Pilih lewat peta</span>
-        </button>
-        <button
-          onClick={onLocateMe}
-          className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-slate-900 border border-slate-800 py-2.5 px-3 text-xs font-bold text-slate-200 hover:bg-slate-800 transition"
-        >
-          <Locate className="h-3.5 w-3.5 text-blue-400" />
-          <span>Lokasi Saya</span>
-        </button>
-      </div>
-
-      <div className="mt-4 flex-1 overflow-y-auto space-y-2">
-        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-          {mobile.activeFocus === "start" ? "Saran Titik Awal" : "Saran Lokasi Tujuan"}
-        </p>
-
-        {activeField.suggestions.length > 0 ? (
-          activeField.suggestions.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => onSelectSuggestion(item)}
-              className="w-full text-left rounded-2xl bg-slate-900/80 border border-slate-800/80 p-3 flex items-start gap-3 hover:bg-slate-800 transition"
-            >
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-800 text-slate-300 border border-slate-700 shrink-0 mt-0.5">
-                <MapPin className="h-4 w-4 text-emerald-400" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h4 className="text-xs font-bold text-white truncate">{item.display_name.split(",")[0]}</h4>
-                <p className="text-[11px] text-slate-400 truncate mt-0.5">{item.display_name}</p>
-              </div>
-            </button>
-          ))
-        ) : (
-          <div className="py-8 text-center text-slate-500 text-xs">
-            <Search className="h-6 w-6 mx-auto text-slate-600 mb-2 opacity-50" />
-            Ketik nama jalan atau lokasi di Depok...
-          </div>
-        )}
-      </div>
+      <button
+        onClick={onLocateMe}
+        className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#0B2540]/5 hover:bg-[#0B2540]/10 py-2.5 text-xs font-bold text-[#0B2540] transition-colors"
+      >
+        <Locate className="h-3.5 w-3.5" />
+        Gunakan Lokasi GPS Saya
+      </button>
 
       {location.startPoint && location.destPoint && (
-        <button onClick={onStart} className="mt-3 w-full rounded-2xl bg-blue-600 hover:bg-blue-700 py-3 text-sm font-extrabold text-white shadow-lg transition">
+        <button
+          onClick={onStart}
+          className="mt-4 w-full rounded-2xl bg-[#0B2540] hover:bg-[#13315c] py-3.5 text-sm font-extrabold text-white shadow-lg shadow-[#0B2540]/20 transition"
+        >
           Tampilkan Rute Aman
         </button>
       )}
@@ -1404,89 +1335,57 @@ function MobileRouteDrawer({
   routes,
   selectedRouteId,
   onSelect,
+  startPointName,
+  safetyScore,
+  safetyLevel,
+  incidentsAvoided,
+  extraMinutes,
 }: {
   routes: RouteOption[];
   selectedRouteId: string | null;
   onSelect: (id: string) => void;
+  startPointName?: string;
+  safetyScore: number;
+  safetyLevel: { label: string; dotClass: string; textClass: string };
+  incidentsAvoided: number;
+  extraMinutes: number;
 }) {
-  const selected = routes.find((r) => r.id === selectedRouteId);
+  const selectedRoute = routes.find((r) => r.id === selectedRouteId) ?? null;
 
   return (
-    <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200/80 rounded-t-3xl shadow-[0_-10px_35px_rgba(0,0,0,0.15)] p-4 flex flex-col max-h-[60vh] animate-slide-up">
+    <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-slate-200 rounded-t-3xl shadow-[0_-10px_35px_rgba(0,0,0,0.15)] p-4 flex flex-col max-h-[75vh] animate-slide-up">
       <div className="w-12 h-1.5 rounded-full bg-slate-300 mx-auto mb-3 shrink-0" />
 
-      <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 shrink-0">
+      <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-100 shrink-0">
         <div>
-          <h3 className="text-xs font-extrabold uppercase text-slate-900 tracking-wider">Pilih Rute Perjalanan</h3>
+          <h3 className="text-xs font-extrabold uppercase text-slate-900 tracking-wider">Rute Perjalanan</h3>
           <p className="text-[10px] text-slate-400">Analisis tingkat keamanan jalur Depok</p>
         </div>
-        <span className="text-[10px] font-bold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">{routes.length} Pilihan Rute</span>
+        <span className="text-[10px] font-bold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">{routes.length} Pilihan</span>
       </div>
 
-      <div className="flex-1 overflow-y-auto space-y-2.5 pr-1">
-        {routes.map((r) => {
-          const isSelected = r.id === selectedRouteId;
-          const isSafest = r.name.includes("Teraman");
-          const isFastest = r.name.includes("Tercepat");
+      <div className="flex-1 overflow-y-auto space-y-3 pr-0.5">
+        {selectedRoute && (
+          <SafetyAnalysisCard
+            route={selectedRoute}
+            safetyScore={safetyScore}
+            safetyLevel={safetyLevel}
+            incidentsAvoided={incidentsAvoided}
+            extraMinutes={extraMinutes}
+          />
+        )}
 
-          let safetyText = "Terverifikasi Aman";
-          let safetyColor = "text-emerald-600";
-          if (r.incidents.length > 0) {
-            safetyText = r.incidents.length <= 2 ? "Perlu Waspada" : "Rawan Tinggi";
-            safetyColor = r.incidents.length <= 2 ? "text-amber-600" : "text-rose-600";
-          }
-
-          return (
-            <div
+        <div className="space-y-2">
+          {routes.map((r) => (
+            <RouteOptionCard
               key={r.id}
-              onClick={() => onSelect(r.id)}
-              className={`rounded-2xl border p-3 flex justify-between items-center cursor-pointer transition-all duration-200 ${
-                isSelected ? "border-blue-600 bg-blue-50/60 ring-2 ring-blue-500/20 shadow-md" : "border-slate-200/80 bg-slate-50/50 hover:bg-slate-100/50"
-              }`}
-            >
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 mb-1 flex-wrap">
-                  <span className={`text-[9px] font-black px-1.5 py-0.5 rounded text-white ${isSafest ? "bg-emerald-500" : isFastest ? "bg-blue-600" : "bg-slate-600"}`}>
-                    {r.name}
-                  </span>
-                  {r.incidents.length > 0 && (
-                    <span className="text-[9px] font-bold text-amber-600 flex items-center gap-0.5">
-                      <AlertTriangle className="h-2.5 w-2.5" /> {r.incidents.length} titik rawan
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex items-baseline gap-2">
-                  <span className="text-lg font-black text-slate-900">{Math.round(r.duration / 60)} mnt</span>
-                  <span className="text-xs font-bold text-slate-500">({(r.distance / 1000).toFixed(1)} km)</span>
-                </div>
-
-                <div className={`mt-1 flex items-center gap-1 text-[10px] font-bold ${safetyColor}`}>
-                  <Shield className="h-3 w-3" />
-                  <span>{safetyText}</span>
-                </div>
-              </div>
-
-              <div className="ml-3 shrink-0">
-                <div className={`h-5 w-5 rounded-full border-2 flex items-center justify-center transition ${isSelected ? "border-blue-600 bg-blue-600 text-white" : "border-slate-300 bg-white"}`}>
-                  {isSelected && <Check className="h-3 w-3" />}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="mt-3 pt-2 border-t border-slate-100 shrink-0">
-        <button
-          onClick={() => alert("Navigasi SafeRoute dimulai! Tetap waspada dan ikuti rute di peta.")}
-          className="w-full rounded-2xl bg-[#0B2540] hover:bg-[#13315c] py-3.5 px-4 text-xs font-extrabold text-white shadow-xl flex items-center justify-between transition"
-        >
-          <span>Mulai Navigasi</span>
-          <span className="rounded-xl bg-white/20 px-2.5 py-1 text-[11px] font-black">
-            {selected ? `${Math.round(selected.duration / 60)} mnt` : ""}
-          </span>
-        </button>
+              route={r}
+              isSelected={r.id === selectedRouteId}
+              startPointName={startPointName}
+              onSelect={() => onSelect(r.id)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -1527,15 +1426,16 @@ export default function MapComponent() {
     routing.resetRoutes();
   };
 
-  const handleSelectSuggestion = (item: NominatimSuggestion) => {
+  const handleSelectStart = (item: NominatimSuggestion) => {
+    location.selectStartSuggestion(item);
     const point: SelectedPoint = { name: item.display_name, lat: parseFloat(item.lat), lng: parseFloat(item.lon) };
-    if (mobile.activeFocus === "start") {
-      location.selectStartSuggestion(item);
-      if (location.destPoint) void runNavigation(point, location.destPoint);
-    } else {
-      location.selectDestSuggestion(item);
-      if (location.startPoint) void runNavigation(location.startPoint, point);
-    }
+    if (location.destPoint) void runNavigation(point, location.destPoint);
+  };
+
+  const handleSelectDest = (item: NominatimSuggestion) => {
+    location.selectDestSuggestion(item);
+    const point: SelectedPoint = { name: item.display_name, lat: parseFloat(item.lat), lng: parseFloat(item.lon) };
+    if (location.startPoint) void runNavigation(location.startPoint, point);
   };
 
   const handleSwap = () => {
@@ -1543,9 +1443,10 @@ export default function MapComponent() {
     if (newStart && newDest) void runNavigation(newStart, newDest);
   };
 
-  const handlePickOnMapFromMobile = () => {
+  const handlePickOnMapFromMobile = (field: InputFocus) => {
     mobile.setIsSearchOpen(false);
-    location.setClickMode(mobile.activeFocus);
+    mobile.setActiveFocus(field);
+    location.setClickMode(field);
   };
 
   return (
@@ -1696,7 +1597,8 @@ export default function MapComponent() {
           <MobileSearchOverlay
             location={location}
             mobile={mobile}
-            onSelectSuggestion={handleSelectSuggestion}
+            onSelectStart={handleSelectStart}
+            onSelectDest={handleSelectDest}
             onPickOnMap={handlePickOnMapFromMobile}
             onLocateMe={location.locateMe}
             onStart={() => {
@@ -1706,7 +1608,16 @@ export default function MapComponent() {
         )}
 
         {routing.isNavigating && !mobile.isSearchOpen && routing.routes.length > 0 && (
-          <MobileRouteDrawer routes={routing.routes} selectedRouteId={routing.selectedRouteId} onSelect={routing.setSelectedRouteId} />
+          <MobileRouteDrawer
+            routes={routing.routes}
+            selectedRouteId={routing.selectedRouteId}
+            onSelect={routing.setSelectedRouteId}
+            startPointName={location.startPoint?.name}
+            safetyScore={routing.safetyScore}
+            safetyLevel={routing.safetyLevel}
+            incidentsAvoided={routing.incidentsAvoided}
+            extraMinutes={routing.extraMinutes}
+          />
         )}
 
         {/* ===================== DESKTOP ===================== */}
