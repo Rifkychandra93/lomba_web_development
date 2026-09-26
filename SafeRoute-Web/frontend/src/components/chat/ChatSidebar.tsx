@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, MapPin, Radio, Building2, RefreshCw, AlertCircle } from "lucide-react";
+import { Search, MapPin, Radio, Building2, RefreshCw, AlertCircle, Zap } from "lucide-react";
 import { PoliceStation } from "@/src/services/policeStation.service";
 
 interface ChatSidebarProps {
@@ -35,11 +35,11 @@ export function ChatSidebar({
   const getStationIcon = (type: string) => {
     switch (type) {
       case "Polres":
-        return <Building2 className="h-5 w-5 text-blue-600" />;
+        return <Building2 className="h-5 w-5 text-blue-900" />;
       case "Polsek":
-        return <Building2 className="h-5 w-5 text-indigo-600" />;
+        return <Building2 className="h-5 w-5 text-indigo-700" />;
       default:
-        return <Radio className="h-5 w-5 text-cyan-600" />;
+        return <Radio className="h-5 w-5 text-cyan-700" />;
     }
   };
 
@@ -47,19 +47,26 @@ export function ChatSidebar({
     <aside className="w-full md:w-80 lg:w-96 flex-shrink-0 border-r border-gray-200 flex flex-col bg-white h-full">
       {/* Sidebar Header & User Location Banner */}
       <div className="px-5 py-4 border-b border-gray-100 bg-slate-50/50">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-              SafeRoute 
+        <div className="flex items-center justify-between gap-2">
+          <div className="min-w-0">
+            <h2 className="text-base font-extrabold text-slate-900 tracking-tight truncate">
+              Pos Polisi & Polsek Terdekat
             </h2>
             <p className="text-[11px] font-medium text-slate-500 mt-0.5">
-              Pos Polisi & Polsek Terdekat
+              Sistem Integrasi Respon Cepat 24 Jam
             </p>
           </div>
+          <button
+            onClick={onRefreshLocation}
+            title="Perbarui Lokasi & Daftar Pos Terdekat"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-900 text-white hover:bg-blue-950 transition shadow-sm shadow-blue-900/20"
+          >
+            <Zap className="h-4 w-4" />
+          </button>
         </div>
 
         {/* Location badge */}
-        <div className="mt-3 flex items-center justify-between rounded-xl bg-blue-50/80 border border-blue-100 px-3 py-2 text-xs">
+        <div className="mt-3 flex items-center justify-between rounded-xl bg-blue-50 border border-blue-100 px-3 py-2 text-xs">
           <div className="flex items-center gap-2 min-w-0">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -69,13 +76,13 @@ export function ChatSidebar({
               Lokasi: <strong className="text-slate-900">{userLocationName}</strong>
             </span>
           </div>
-          <span className="text-[10px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded-full shrink-0">
+          <span className="text-[10px] font-bold text-blue-900 bg-blue-100 px-2 py-0.5 rounded-full shrink-0">
             GPS Aktif
           </span>
         </div>
 
         {/* Search Input */}
-        <div className="mt-3 flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-3 py-2 shadow-2xs focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition">
+        <div className="mt-3 flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-3 py-2 shadow-2xs focus-within:border-blue-900 focus-within:ring-1 focus-within:ring-blue-900 transition">
           <Search className="h-4 w-4 text-slate-400 shrink-0" />
           <input
             type="text"
@@ -102,7 +109,7 @@ export function ChatSidebar({
               onClick={() => setActiveFilter(filter)}
               className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap transition-all ${
                 activeFilter === filter
-                  ? "bg-blue-600 text-white shadow-2xs"
+                  ? "bg-blue-900 text-white shadow-2xs"
                   : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-100"
               }`}
             >
@@ -126,7 +133,7 @@ export function ChatSidebar({
               </div>
             ))}
             <p className="text-center text-xs text-slate-400 pt-2 flex items-center justify-center gap-2">
-              <RefreshCw className="h-3.5 w-3.5 animate-spin text-blue-500" />
+              <RefreshCw className="h-3.5 w-3.5 animate-spin text-blue-900" />
               Mencari pos polisi terdekat
             </p>
           </div>
@@ -147,7 +154,7 @@ export function ChatSidebar({
                 onClick={() => onSelectStation(station)}
                 className={`group relative flex cursor-pointer items-start gap-3 px-5 py-4 transition-all border-l-4 ${
                   isSelected
-                    ? "bg-blue-50/70 border-blue-600"
+                    ? "bg-blue-50/70 border-blue-900"
                     : "bg-white border-transparent hover:bg-slate-50"
                 }`}
               >
@@ -156,7 +163,7 @@ export function ChatSidebar({
                   <div
                     className={`flex h-11 w-11 items-center justify-center rounded-2xl border ${
                       isSelected
-                        ? "bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/20"
+                        ? "bg-blue-900 text-white border-blue-900 shadow-md shadow-blue-900/20"
                         : "bg-slate-100 border-slate-200 text-slate-700 group-hover:border-blue-300 group-hover:bg-blue-50"
                     }`}
                   >
@@ -170,7 +177,7 @@ export function ChatSidebar({
                   <div className="flex items-center justify-between gap-1">
                     <h3
                       className={`truncate text-xs font-extrabold ${
-                        isSelected ? "text-blue-950" : "text-slate-900 group-hover:text-blue-700"
+                        isSelected ? "text-blue-950" : "text-slate-900 group-hover:text-blue-900"
                       }`}
                     >
                       {station.name}
@@ -189,7 +196,7 @@ export function ChatSidebar({
                     <span
                       className={`font-bold px-1.5 py-0.5 rounded ${
                         station.type === "Polres"
-                          ? "bg-blue-100 text-blue-800"
+                          ? "bg-blue-100 text-blue-900"
                           : station.type === "Polsek"
                           ? "bg-indigo-100 text-indigo-800"
                           : "bg-slate-100 text-slate-700"
@@ -210,4 +217,3 @@ export function ChatSidebar({
     </aside>
   );
 }
-

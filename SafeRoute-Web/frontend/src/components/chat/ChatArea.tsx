@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import {
-  MoreVertical,
   Paperclip,
+  Mic,
   Send,
   Shield,
   PhoneCall,
@@ -57,7 +57,7 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
     const initialGreeting: ChatMessage = {
       id: `init-${selectedStation.id}`,
       sender: "station",
-      text: `Selamat datang di Pusat Layanan Siaga Darurat SafeRoute — ${selectedStation.name}.\n\nKami mendeteksi lokasi Anda berjarak sekitar ${selectedStation.distanceKm} km dari pos/markas kami (${selectedStation.address}). Apakah ada kejadian darurat atau bantuan keamanan yang Anda perlukan saat ini?`,
+      text: `Selamat datang di Pusat Layanan Siaga Darurat SafeRoute — ${selectedStation.name}.\n\nKami mendeteksi lokasi Anda berjarak sekitar ${selectedStation.distanceKm} km dari pos/markas kami (${selectedStation.address}). Apakah ada kejadian darurat, gangguan kamtibmas, atau bantuan pengawalan/keamanan yang Anda perlukan saat ini? Petugas piket kami siap menindaklanjuti secara langsung.`,
       timestamp: new Date().toLocaleTimeString("id-ID", {
         hour: "2-digit",
         minute: "2-digit",
@@ -93,7 +93,7 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
       setIsTyping(false);
 
       let responseText = `Laporan Anda telah diterima oleh Petugas Piket ${selectedStation?.name || "Polres/Polsek"}. Tim siaga sedang memverifikasi koordinat dan siap diterjunkan jika diperlukan.`;
-      
+
       if (locationAttach) {
         responseText = `📌 Koordinat presisi GPS Anda [${locationAttach.lat.toFixed(5)}, ${locationAttach.lng.toFixed(5)}] (${locationAttach.address}) berhasil dipancarkan ke Sistem Komando ${selectedStation?.name}. Tetap di posisi aman!`;
       } else if (textToSend.toLowerCase().includes("darurat") || textToSend.toLowerCase().includes("lapor")) {
@@ -156,7 +156,7 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
           )}
 
           <div className="relative shrink-0">
-            <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md shadow-blue-500/20">
+            <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-2xl bg-blue-900 text-white shadow-md shadow-blue-900/20">
               {selectedStation.type === "Polres" ? (
                 <Building2 className="h-5 w-5" />
               ) : selectedStation.type === "Polsek" ? (
@@ -173,7 +173,7 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
               <h2 className="text-xs sm:text-sm font-extrabold text-slate-900 truncate">
                 {selectedStation.name}
               </h2>
-              <span className="rounded bg-blue-50 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-bold text-blue-700 border border-blue-200 shrink-0">
+              <span className="rounded bg-blue-50 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-bold text-blue-900 border border-blue-200 shrink-0">
                 {selectedStation.type}
               </span>
             </div>
@@ -199,14 +199,13 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
           </a>
           <button
             onClick={handleShareLocation}
-            className="flex items-center gap-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 px-3 py-2 text-xs font-bold text-blue-700 transition"
+            className="flex items-center gap-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 px-3 py-2 text-xs font-bold text-blue-900 transition"
           >
-            <Navigation className="h-3.5 w-3.5 text-blue-600" />
+            <Navigation className="h-3.5 w-3.5 text-blue-900" />
             <span className="hidden sm:inline">Kirim GPS</span>
           </button>
         </div>
       </header>
-
 
       {/* Messages Feed */}
       <div className="flex-1 overflow-y-auto p-6 bg-slate-50/40">
@@ -214,8 +213,8 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
           {/* Top Location Info Box */}
           <div className="text-center my-2">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 border border-slate-200 px-3 py-1 text-[10px] font-semibold text-slate-500">
-              <Shield className="h-3 w-3 text-blue-600" />
-              Terkoneksi langsung ke pos siaga {selectedStation.name} via OSM
+              <Shield className="h-3 w-3 text-blue-900" />
+              Terkoneksi langsung ke pos siaga {selectedStation.name} via OSM • Respon &lt; 2 menit
             </span>
           </div>
 
@@ -223,8 +222,11 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
             <div key={msg.id} className="space-y-1">
               {msg.sender === "station" ? (
                 <div className="flex flex-col items-start max-w-[85%] sm:max-w-[75%]">
-                  <span className="text-[10px] font-bold text-slate-400 ml-1 mb-1">
+                  <span className="text-[10px] font-bold text-slate-400 ml-1 mb-1 flex items-center gap-1.5">
                     {selectedStation.name} • {msg.timestamp}
+                    <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[9px] font-bold text-slate-500">
+                      Respon Otomatis Siaga
+                    </span>
                   </span>
                   <div className="rounded-2xl rounded-tl-xs bg-white border border-slate-200 p-4 text-xs leading-relaxed text-slate-800 shadow-2xs whitespace-pre-line font-medium">
                     {msg.text}
@@ -235,20 +237,21 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
                   <span className="text-[10px] font-bold text-slate-400 mr-1 mb-1">
                     Anda • {msg.timestamp}
                   </span>
-                  <div className="max-w-[85%] sm:max-w-[75%] rounded-2xl rounded-tr-xs bg-blue-600 p-4 text-xs leading-relaxed text-white shadow-sm font-medium">
-                    <p>{msg.text}</p>
+                  <div className="max-w-[85%] sm:max-w-[75%] rounded-2xl rounded-tr-xs bg-blue-900 p-4 text-xs leading-relaxed text-white shadow-sm font-medium">
                     {msg.locationAttachment && (
-                      <div className="mt-2 rounded-xl bg-blue-700/80 border border-blue-500 p-2.5 text-[11px]">
-                        <div className="flex items-center gap-1.5 font-bold text-emerald-300">
-                          <MapPin className="h-3.5 w-3.5" />
-                          Koordinat GPS Berhasil Dikirim
-                        </div>
-                        <p className="mt-1 text-blue-100 text-[10px]">
-                          {msg.locationAttachment.address}
-                        </p>
+                      <div className="flex items-center gap-1.5 font-bold text-emerald-300 text-[11px] mb-2 pb-2 border-b border-white/15">
+                        <MapPin className="h-3.5 w-3.5" />
+                        Koordinat Lokasi Real-Time Terkirim
                       </div>
                     )}
+                    <p>{msg.text}</p>
                   </div>
+                  {msg.locationAttachment && (
+                    <span className="mt-1 mr-1 flex items-center gap-1 text-[10px] font-semibold text-emerald-600">
+                      <CheckCheck className="h-3 w-3" />
+                      Tersampaikan ke Operator
+                    </span>
+                  )}
                 </div>
               )}
             </div>
@@ -256,7 +259,7 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
 
           {isTyping && (
             <div className="flex items-center gap-2 text-xs text-slate-400 font-medium pt-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-blue-600 font-bold text-[10px]">
+              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-blue-900 font-bold text-[10px]">
                 OSM
               </div>
               <span className="animate-pulse">{selectedStation.name} sedang mengetik balasan...</span>
@@ -280,7 +283,7 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
           </button>
           <button
             onClick={handleShareLocation}
-            className="rounded-full bg-blue-50 border border-blue-200 px-4 py-1.5 text-xs font-bold text-blue-700 hover:bg-blue-100 transition whitespace-nowrap flex items-center gap-1.5 shrink-0"
+            className="rounded-full bg-blue-50 border border-blue-200 px-4 py-1.5 text-xs font-bold text-blue-900 hover:bg-blue-100 transition whitespace-nowrap flex items-center gap-1.5 shrink-0"
           >
             <MapPin className="h-3.5 w-3.5" />
             Kirim Koordinat GPS Live
@@ -299,12 +302,12 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
             e.preventDefault();
             handleSendMessage();
           }}
-          className="flex items-center gap-3 rounded-2xl bg-slate-100 px-4 py-2.5 focus-within:ring-2 focus-within:ring-blue-600 focus-within:bg-white transition border border-transparent focus-within:border-slate-200"
+          className="flex items-center gap-3 rounded-2xl bg-slate-100 px-4 py-2.5 focus-within:ring-2 focus-within:ring-blue-900 focus-within:bg-white transition border border-transparent focus-within:border-slate-200"
         >
           <button
             type="button"
             onClick={handleShareLocation}
-            className="text-slate-400 hover:text-blue-600 transition shrink-0"
+            className="text-slate-400 hover:text-blue-900 transition shrink-0"
             title="Kirim Lokasi"
           >
             <MapPin className="h-5 w-5" />
@@ -317,9 +320,23 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
             className="flex-1 bg-transparent py-1 text-xs sm:text-sm text-slate-900 placeholder-slate-400 outline-none font-medium"
           />
           <button
+            type="button"
+            className="text-slate-400 hover:text-blue-900 transition shrink-0"
+            title="Lampirkan Berkas"
+          >
+            <Paperclip className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            className="text-slate-400 hover:text-blue-900 transition shrink-0"
+            title="Rekam Pesan Suara"
+          >
+            <Mic className="h-4 w-4" />
+          </button>
+          <button
             type="submit"
             disabled={!inputMessage.trim()}
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition shrink-0 shadow-sm"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-900 text-white hover:bg-blue-950 disabled:opacity-40 disabled:cursor-not-allowed transition shrink-0 shadow-sm"
           >
             <Send className="h-4 w-4 -ml-0.5" />
           </button>
@@ -328,4 +345,3 @@ export function ChatArea({ selectedStation, userLocation, onBack }: ChatAreaProp
     </section>
   );
 }
-
