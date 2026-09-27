@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { getToken, clearAuth } from "@/src/lib/tokenStorage";
 import { createReport } from "@/src/services/report.service";
 import { getCurrentUser } from "@/src/services/auth.service";
+import { fetchNearbyPoliceFromOSM } from "@/src/services/policeStation.service";
 import type { IncidentType, RiskLevel } from "@/src/types/report";
 import {
   MapPin,
@@ -71,8 +72,10 @@ interface NominatimSuggestion {
 }
 
 interface NearestPolsek {
+  id: string;
   name: string;
   distanceKm: number;
+  phone?: string;
 }
 
 interface ReportDraft {
@@ -175,10 +178,21 @@ async function reverseGeocode(lat: number, lng: number): Promise<string> {
   }
 }
 
-// TODO(BE): ganti stub ini dengan endpoint geospasial nearest-neighbor,
-// mis. GET /polsek/nearest?lat=..&lng=.. yang mengembalikan nama & jarak
-// polsek terdekat dari dataset lokasi polsek. Untuk sekarang selalu kosong.
-async function fetchNearestPolsek(_lat: number, _lng: number): Promise<NearestPolsek | null> {
+async function fetchNearestPolsek(lat: number, lng: number): Promise<NearestPolsek | null> {
+  try {
+    const stations = await fetchNearbyPoliceFromOSM(lat, lng);
+    if (stations.length > 0) {
+      const nearest = stations[0];
+      return {
+        id: nearest.id,
+        name: nearest.name,
+        distanceKm: nearest.distanceKm,
+        phone: nearest.phone,
+      };
+    }
+  } catch (err) {
+    console.error("Gagal mendapatkan polsek terdekat:", err);
+  }
   return null;
 }
 
@@ -207,9 +221,16 @@ function useLocationPicker() {
   };
 
   const selectPoint = async (lat: number, lng: number, knownAddress?: string) => {
+    const address = knownAddress ?? (await reverseGeocode(lat, lng));
+    
+    // Validasi area Depok
+    if (!address.toLowerCase().includes("depok")) {
+      alert("Maaf, layanan pelaporan SafeRoute saat ini hanya beroperasi untuk wilayah administratif Kota Depok.");
+      return;
+    }
+
     setSelectedLat(lat);
     setSelectedLng(lng);
-    const address = knownAddress ?? (await reverseGeocode(lat, lng));
     setSelectedAddress(address);
     setSearchQuery(address);
     lookupNearestPolsek(lat, lng);
@@ -1008,7 +1029,7 @@ export default function LaporPage() {
                         </span>
                       ) : (
                         <span className="text-neutral-400">
-                          Polsek terdekat belum tersedia — menunggu integrasi backend.
+                          Polsek terdekat tidak ditemukan.
                         </span>
                       )}
                     </div>
