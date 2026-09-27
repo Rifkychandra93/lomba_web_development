@@ -216,45 +216,53 @@ export default function AuthContainer({ initialMode }: AuthContainerProps) {
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-white flex">
       <div
-        className={`absolute top-0 bottom-0 left-0 w-1/2 bg-[#0B2540] hidden md:flex flex-col items-center justify-center px-12 overflow-hidden z-20 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+        className={`absolute top-0 bottom-0 left-0 w-1/2 hidden md:flex flex-col items-center justify-center px-12 overflow-hidden z-20 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
           isRegister ? "translate-x-0" : "translate-x-full"
         } ${
           isAnimating
             ? "scale-x-[0.01] scale-y-[0.1] opacity-0 rotate-[15deg] blur-md"
             : "scale-x-100 scale-y-100 opacity-100 rotate-0 blur-none"
         }`}
+        style={{
+          backgroundImage: "url('/images/auth-bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center"
+        }}
       >
+        {/* Overlay Blur */}
+        <div className="absolute inset-0 bg-[#0B2540]/70 backdrop-blur-sm z-0 pointer-events-none"></div>
+
         <div
-          className={`absolute inset-0 flex flex-col items-center justify-center px-12 text-center transition-all duration-500 ease-in-out ${
+          className={`absolute inset-0 z-10 flex flex-col items-center justify-center px-12 text-center transition-all duration-500 ease-in-out ${
             animationTarget ? "opacity-0 scale-95 pointer-events-none" : "opacity-100 scale-100"
           }`}
         >
-          <a href ="/" className="mb-6 flex items-center justify-center gap-3 text-3xl font-bold tracking-tight text-white">
+          <a href ="/" className="mb-6 flex items-center justify-center gap-3 text-3xl font-bold tracking-tight text-white drop-shadow-md">
             <RouteIcon />
             SafeRoute
           </a>
-          <h2 className="text-2xl font-medium text-white">
+          <h2 className="text-2xl font-medium text-white drop-shadow-md">
             Your Secure Journey Starts Here
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-neutral-300 max-w-sm">
+          <p className="mt-4 text-sm leading-relaxed text-white/90 max-w-sm drop-shadow">
             Access your dashboard to manage routes, track deliveries, and
             oversee your logistics operations with ease.
           </p>
         </div>
 
         <div
-          className={`absolute inset-0 flex flex-col items-center justify-center px-12 text-center transition-all duration-500 ease-in-out ${
+          className={`absolute inset-0 z-10 flex flex-col items-center justify-center px-12 text-center transition-all duration-500 ease-in-out ${
             animationTarget ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
           }`}
         >
-          <a href="/" className="mb-6 flex items-center justify-center gap-3 text-3xl font-bold tracking-tight text-white">
+          <a href="/" className="mb-6 flex items-center justify-center gap-3 text-3xl font-bold tracking-tight text-white drop-shadow-md">
             <RouteIcon />
             SafeRoute
           </a>
-          <h2 className="text-2xl font-medium text-white">
+          <h2 className="text-2xl font-medium text-white drop-shadow-md">
             Secure Your Journey
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-neutral-300 max-w-sm">
+          <p className="mt-4 text-sm leading-relaxed text-white/90 max-w-sm drop-shadow">
             Join SafeRoute and experience reliable, protected navigation
             tailored for your safety. Advanced routing with peace of mind.
           </p>
