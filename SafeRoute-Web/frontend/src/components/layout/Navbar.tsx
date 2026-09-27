@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { LogOut, Search, User, LayoutDashboard, Menu, X, MapPin, FileText, MessageSquare } from "lucide-react";
+import { LogOut, User, LayoutDashboard, Menu, X, MapPin, FileText, MessageSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getCurrentUser } from "@/src/services/auth.service";
 import { getToken, clearAuth } from "@/src/lib/tokenStorage";
@@ -29,8 +29,6 @@ export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" 
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-  const [navbarSearch, setNavbarSearch] = useState("");
-  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -42,29 +40,6 @@ export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const handleNavbarSearch = async () => {
-    if (!navbarSearch.trim()) return;
-    setLoadingSuggestions(true);
-    try {
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-          navbarSearch
-        )}&limit=5&countrycodes=id`,
-        { headers: { "User-Agent": "SafeRoute-NextJS" } }
-      );
-      const data = await res.json();
-      if (data && data.length > 0) {
-        const item = data[0];
-        router.push(`/home?lat=${item.lat}&lon=${item.lon}&zoom=15`);
-        setShowMobileMenu(false);
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoadingSuggestions(false);
-    }
-  };
 
   useEffect(() => {
     const token = getToken();
@@ -149,30 +124,8 @@ export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" 
           </div>
         </nav>
 
-        {/* Search & User Controls */}
-        <div className="flex items-center gap-2 sm:gap-4">
-          <div className="relative hidden lg:flex items-center">
-            <input
-              type="text"
-              placeholder="Cari lokasi tujuan..."
-              value={navbarSearch}
-              onChange={(e) => setNavbarSearch(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleNavbarSearch()}
-              className="w-48 xl:w-56 rounded-full py-1.5 pl-4 pr-10 text-xs font-semibold text-neutral-700 outline-none transition-all bg-neutral-100 focus:bg-white focus:ring-2 focus:ring-[#0B2540]/20"
-            />
-            <button
-              onClick={handleNavbarSearch}
-              className="absolute right-3 text-neutral-400 hover:text-[#0B2540] transition-colors"
-            >
-              {loadingSuggestions ? (
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-neutral-300 border-t-[#0B2540]" />
-              ) : (
-                <Search className="h-4 w-4" />
-              )}
-            </button>
-          </div>
-
-          {/* User Avatar & Dropdown */}
+        {/* User Controls */}
+        <div className="flex items-center gap-2 sm:gap-4">          {/* User Avatar & Dropdown */}
           <div className="relative">
             <button
               onClick={() => {
@@ -259,26 +212,7 @@ export function Navbar({ activePage }: { activePage?: "peta" | "lapor" | "chat" 
 
       {/* Mobile Slide-Down Navigation Menu */}
       {showMobileMenu && (
-        <div className="fixed top-16 left-0 right-0 z-[999] bg-white border-b border-slate-200 p-4 shadow-xl md:hidden animate-fade-in">
-          {/* Mobile Search Input */}
-          <div className="relative mb-4">
-            <input
-              type="text"
-              placeholder="Cari lokasi tujuan..."
-              value={navbarSearch}
-              onChange={(e) => setNavbarSearch(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleNavbarSearch()}
-              className="w-full rounded-xl py-2.5 pl-4 pr-10 text-xs font-semibold text-neutral-700 bg-slate-100 outline-none focus:bg-white focus:ring-2 focus:ring-[#0B2540]/20 border border-transparent focus:border-slate-200 transition"
-            />
-            <button
-              onClick={handleNavbarSearch}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-[#0B2540]"
-            >
-              <Search className="h-4 w-4" />
-            </button>
-          </div>
-
-          {/* Mobile Nav Links Grid */}
+        <div className="fixed top-16 left-0 right-0 z-[999] bg-white border-b border-slate-200 p-4 shadow-xl md:hidden animate-fade-in">          {/* Mobile Nav Links Grid */}
           <div className="grid grid-cols-3 gap-2">
             <Link
               href="/home"
