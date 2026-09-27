@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -19,6 +20,9 @@ export const metadata: Metadata = {
   title: "SafeRoute Temukan Jalur Teraman Untuk Perjalanan Anda",
   description:
     "SafeRoute membantu Anda menemukan jalur teraman berdasarkan data kriminalitas, penerangan jalan, dan laporan warga secara real-time.",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
