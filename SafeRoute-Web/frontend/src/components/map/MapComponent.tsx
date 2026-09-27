@@ -886,6 +886,8 @@ function LocationInputField({
   suggestions: NominatimSuggestion[];
   onSelectSuggestion: (item: NominatimSuggestion) => void;
   onLocate?: () => void;
+  isPicking?: boolean;
+  onTogglePick?: () => void;
   autoFocus?: boolean;
 }) {
   return (
@@ -920,6 +922,17 @@ function LocationInputField({
               title="Gunakan Lokasi GPS"
             >
               <Locate className="h-4.5 w-4.5" />
+            </button>
+          )}
+          {onTogglePick && (
+            <button
+              onClick={onTogglePick}
+              className={`rounded-xl border p-2.5 shadow-sm transition-all duration-200 ${
+                isPicking ? "bg-[#0B2540] border-[#0B2540] text-white" : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-blue-600"
+              }`}
+              title="Pilih di Peta"
+            >
+              <MapPin className="h-4.5 w-4.5" />
             </button>
           )}
         </div>
@@ -1186,6 +1199,8 @@ function DesktopSidebar({
                 onClear={onClearDest}
                 suggestions={location.dest.suggestions}
                 onSelectSuggestion={location.selectDestSuggestion}
+                isPicking={location.clickMode === "dest"}
+                onTogglePick={() => location.setClickMode("dest")}
               />
             </div>
           </div>
@@ -1362,6 +1377,8 @@ function MobileSearchOverlay({
           onClear={location.clearDest}
           suggestions={location.dest.suggestions}
           onSelectSuggestion={onSelectDest}
+          isPicking={location.clickMode === "dest"}
+          onTogglePick={() => onPickOnMap("dest")}
           autoFocus={mobile.activeFocus === "dest"}
         />
       </div>
