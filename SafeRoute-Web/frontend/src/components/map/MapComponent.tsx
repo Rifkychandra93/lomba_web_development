@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { getToken } from "@/src/lib/tokenStorage";
 import {
@@ -176,7 +176,9 @@ function getSafetyLevel(score: number): { label: string; dotClass: string; textC
 async function searchNominatim(query: string): Promise<NominatimSuggestion[]> {
   try {
     const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=id`,
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+        query
+      )}&limit=5&countrycodes=id&viewbox=${DEPOK_LNG_MIN},${DEPOK_LAT_MAX},${DEPOK_LNG_MAX},${DEPOK_LAT_MIN}&bounded=1`,
       { headers: NOMINATIM_HEADERS }
     );
     return (await res.json()) || [];
@@ -377,13 +379,25 @@ function useLocationPlanner(setRouteLoading: (v: boolean) => void, onReportPinDr
   const [showOutOfBounds, setShowOutOfBounds] = useState(false);
 
   const selectStartSuggestion = (item: NominatimSuggestion) => {
-    setStartPoint({ name: item.display_name, lat: parseFloat(item.lat), lng: parseFloat(item.lon) });
+    const lat = parseFloat(item.lat);
+    const lng = parseFloat(item.lon);
+    if (!isWithinDepokBounds(lat, lng)) {
+      setShowOutOfBounds(true);
+      return;
+    }
+    setStartPoint({ name: item.display_name, lat, lng });
     start.setValue(item.display_name);
     start.setSuggestions([]);
   };
 
   const selectDestSuggestion = (item: NominatimSuggestion) => {
-    setDestPoint({ name: item.display_name, lat: parseFloat(item.lat), lng: parseFloat(item.lon) });
+    const lat = parseFloat(item.lat);
+    const lng = parseFloat(item.lon);
+    if (!isWithinDepokBounds(lat, lng)) {
+      setShowOutOfBounds(true);
+      return;
+    }
+    setDestPoint({ name: item.display_name, lat, lng });
     dest.setValue(item.display_name);
     dest.setSuggestions([]);
   };
@@ -435,7 +449,7 @@ function useLocationPlanner(setRouteLoading: (v: boolean) => void, onReportPinDr
     setClickMode("none");
   };
 
-  const locateMe = () => {
+  const locateMe = (target: "start" | "dest" = "start") => {
     if (!navigator.geolocation) return;
     navigator.geolocation.getCurrentPosition(
       async (position) => {
@@ -445,8 +459,13 @@ function useLocationPlanner(setRouteLoading: (v: boolean) => void, onReportPinDr
           return;
         }
         const name = await reverseGeocode(lat, lng);
-        setStartPoint({ name, lat, lng });
-        start.setValue(name);
+        if (target === "start") {
+          setStartPoint({ name, lat, lng });
+          start.setValue(name);
+        } else {
+          setDestPoint({ name, lat, lng });
+          dest.setValue(name);
+        }
       },
       (error) => {
         console.error(error);
@@ -475,7 +494,7 @@ function useLocationPlanner(setRouteLoading: (v: boolean) => void, onReportPinDr
 }
 
 /** Hitung & kelola opsi rute (OSRM) dari satu titik awal ke satu tujuan. */
-function useSafeRouting(incidents: MapPoint[]) {
+function useSafeRouting(incidents: MapPoint[], travelMode: TravelMode) {
   const [routes, setRoutes] = useState<RouteOption[]>([]);
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
   const [routeLoading, setRouteLoading] = useState(false);
@@ -589,8 +608,21 @@ function useSafeRouting(incidents: MapPoint[]) {
     setMapBounds(null);
   };
 
-  const selectedRoute = routes.find((r) => r.id === selectedRouteId) ?? null;
-  const fastestRoute = routes.length > 0 ? routes.reduce((min, r) => (r.duration < min.duration ? r : min), routes[0]) : null;
+  const adjustedRoutes = useMemo(() => {
+    return routes.map((r: RouteOption) => {
+      let newDuration = r.duration;
+      // OSRM default (driving profile) digunakan sebagai baseline MOBIL.
+      if (travelMode === "MOTOR") {
+        newDuration = r.duration * 1.15; // Motor sedikit lebih lambat di perhitungan ini.
+      } else if (travelMode === "JALAN_KAKI") {
+        newDuration = r.distance / 1.4; // 1.4 m/s (rata-rata kecepatan jalan kaki 5km/jam)
+      }
+      return { ...r, duration: newDuration };
+    });
+  }, [routes, travelMode]);
+
+  const selectedRoute = adjustedRoutes.find((r: RouteOption) => r.id === selectedRouteId) ?? null;
+  const fastestRoute = adjustedRoutes.length > 0 ? adjustedRoutes.reduce((min: RouteOption, r: RouteOption) => (r.duration < min.duration ? r : min), adjustedRoutes[0]) : null;
   const incidentsNearRoute = selectedRoute?.incidents ?? [];
   const safetyScore = selectedRoute ? getSafetyScore(selectedRoute.riskScore) : 0;
   const safetyLevel = getSafetyLevel(safetyScore);
@@ -602,7 +634,7 @@ function useSafeRouting(incidents: MapPoint[]) {
     selectedRoute && fastestRoute ? Math.max(0, Math.round((selectedRoute.duration - fastestRoute.duration) / 60)) : 0;
 
   return {
-    routes,
+    routes: adjustedRoutes,
     selectedRouteId,
     setSelectedRouteId,
     routeLoading,
@@ -841,8 +873,7 @@ function LocationInputField({
   onClear,
   suggestions,
   onSelectSuggestion,
-  isPicking,
-  onTogglePick,
+  onLocate,
   autoFocus,
 }: {
   markerNode: React.ReactNode;
@@ -854,8 +885,7 @@ function LocationInputField({
   onClear: () => void;
   suggestions: NominatimSuggestion[];
   onSelectSuggestion: (item: NominatimSuggestion) => void;
-  isPicking: boolean;
-  onTogglePick: () => void;
+  onLocate?: () => void;
   autoFocus?: boolean;
 }) {
   return (
@@ -883,15 +913,15 @@ function LocationInputField({
               </button>
             )}
           </div>
-          <button
-            onClick={onTogglePick}
-            className={`rounded-xl border p-2.5 shadow-sm transition-all duration-200 ${
-              isPicking ? "bg-[#0B2540] border-[#0B2540] text-white" : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50"
-            }`}
-            title="Pilih di Peta"
-          >
-            <MapPin className="h-4.5 w-4.5" />
-          </button>
+          {onLocate && (
+            <button
+              onClick={onLocate}
+              className="rounded-xl border border-slate-200 bg-white p-2.5 text-slate-500 shadow-sm transition-all duration-200 hover:bg-slate-50 hover:text-blue-600"
+              title="Gunakan Lokasi GPS"
+            >
+              <Locate className="h-4.5 w-4.5" />
+            </button>
+          )}
         </div>
         {suggestions.length > 0 && (
           <div className="absolute left-0 right-0 mt-1 max-h-48 overflow-y-auto rounded-xl border border-slate-100 bg-white p-1 shadow-xl z-20">
@@ -1139,8 +1169,7 @@ function DesktopSidebar({
               onClear={onClearStart}
               suggestions={location.start.suggestions}
               onSelectSuggestion={location.selectStartSuggestion}
-              isPicking={location.clickMode === "start"}
-              onTogglePick={() => location.setClickMode("start")}
+              onLocate={() => location.locateMe("start")}
             />
 
             <div className="mt-4">
@@ -1157,8 +1186,6 @@ function DesktopSidebar({
                 onClear={onClearDest}
                 suggestions={location.dest.suggestions}
                 onSelectSuggestion={location.selectDestSuggestion}
-                isPicking={location.clickMode === "dest"}
-                onTogglePick={() => location.setClickMode("dest")}
               />
             </div>
           </div>
@@ -1190,7 +1217,7 @@ function DesktopSidebar({
             )}
 
             <div className="space-y-2">
-              {routing.routes.map((r) => (
+              {routing.routes.map((r: RouteOption) => (
                 <RouteOptionCard
                   key={r.id}
                   route={r}
@@ -1211,9 +1238,6 @@ function DesktopSidebar({
               <Compass className="h-8 w-8 text-slate-300" />
               <p className="mt-2.5 text-xs font-bold text-slate-500">Rute Belum Terbentuk</p>
               <p className="mt-1 text-[10px] text-slate-400">Masukkan titik awal dan tujuan Anda untuk menampilkan jalur teraman di peta.</p>
-              <button onClick={location.locateMe} className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-[#0B2540]/5 hover:bg-[#0B2540]/10 px-4 py-2 text-xs font-bold text-[#0B2540] transition-colors shadow-sm">
-                Gunakan Lokasi GPS Saya
-              </button>
             </div>
           </div>
         )}
@@ -1319,8 +1343,10 @@ function MobileSearchOverlay({
           onClear={location.clearStart}
           suggestions={location.start.suggestions}
           onSelectSuggestion={onSelectStart}
-          isPicking={location.clickMode === "start"}
-          onTogglePick={() => onPickOnMap("start")}
+          onLocate={() => {
+            location.locateMe("start");
+            mobile.setIsSearchOpen(false);
+          }}
         />
         <LocationInputField
           markerNode={
@@ -1336,8 +1362,6 @@ function MobileSearchOverlay({
           onClear={location.clearDest}
           suggestions={location.dest.suggestions}
           onSelectSuggestion={onSelectDest}
-          isPicking={location.clickMode === "dest"}
-          onTogglePick={() => onPickOnMap("dest")}
           autoFocus={mobile.activeFocus === "dest"}
         />
       </div>
@@ -1436,7 +1460,7 @@ export default function MapComponent() {
   const [tileLayerUrl, setTileLayerUrl] = useState<string>(TILE_LAYERS[0].url);
   const [travelMode, setTravelMode] = useState<TravelMode>("MOTOR");
 
-  const routing = useSafeRouting(incidents);
+  const routing = useSafeRouting(incidents, travelMode);
   const location = useLocationPlanner(routing.setRouteLoading, () => router.push("/lapor"));
   const mobile = useMobileNav();
 
@@ -1524,8 +1548,8 @@ export default function MapComponent() {
             {routing.routes.length > 0 && (
               <>
                 {routing.routes
-                  .filter((r) => r.id !== routing.selectedRouteId)
-                  .map((r) => (
+                  .filter((r: RouteOption) => r.id !== routing.selectedRouteId)
+                  .map((r: RouteOption) => (
                     <Polyline
                       key={r.id}
                       positions={r.polyline}
@@ -1541,8 +1565,8 @@ export default function MapComponent() {
                     />
                   ))}
                 {routing.routes
-                  .filter((r) => r.id === routing.selectedRouteId)
-                  .map((r) => (
+                  .filter((r: RouteOption) => r.id === routing.selectedRouteId)
+                  .map((r: RouteOption) => (
                     <Polyline
                       key={r.id}
                       positions={r.polyline}
@@ -1574,7 +1598,7 @@ export default function MapComponent() {
             sudah punya tombol "Lokasi Saya" sendiri di dalam modal search. */}
         <div className="hidden md:flex absolute right-6 top-6 z-10 flex-col gap-3">
           <MapTileSwitcher activeUrl={tileLayerUrl} onSelect={setTileLayerUrl} />
-          <button onClick={location.locateMe} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg hover:bg-slate-50 transition-colors" title="Lokasi Saya">
+          <button onClick={() => location.locateMe()} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg hover:bg-slate-50 transition-colors" title="Lokasi Saya">
             <Locate className="h-5 w-5" />
           </button>
           <button onClick={() => setMapZoom((prev) => Math.min(prev + 1, DEPOK_MAX_ZOOM))} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg hover:bg-slate-50 transition-colors" title="Perbesar">
@@ -1631,7 +1655,7 @@ export default function MapComponent() {
             onSelectStart={handleSelectStart}
             onSelectDest={handleSelectDest}
             onPickOnMap={handlePickOnMapFromMobile}
-            onLocateMe={location.locateMe}
+            onLocateMe={() => location.locateMe()}
             onStart={() => {
               if (location.startPoint && location.destPoint) void runNavigation(location.startPoint, location.destPoint);
             }}
