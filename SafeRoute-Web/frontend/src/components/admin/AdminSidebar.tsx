@@ -21,6 +21,8 @@ interface AdminSidebarProps {
   currentUser: AdminUser | null;
   onLogout: () => void;
   onToggleProfileMenu: () => void;
+  isMobileOpen?: boolean;
+  onCloseMobile?: () => void;
 }
 
 const NAV_ITEMS = [
@@ -35,9 +37,23 @@ const NAV_ITEMS = [
 export function AdminSidebar({
   activeTab,
   onSelectTab,
+  isMobileOpen,
+  onCloseMobile,
 }: AdminSidebarProps) {
   return (
-    <aside className="w-64 shrink-0 bg-white text-slate-900 flex flex-col p-5 z-20 border-r border-slate-200">
+    <>
+      {/* Mobile Backdrop */}
+      {isMobileOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/50 z-40 md:hidden"
+          onClick={onCloseMobile}
+        />
+      )}
+
+      <aside className={`
+        fixed md:relative top-0 left-0 h-full w-64 shrink-0 bg-white text-slate-900 flex flex-col p-5 z-50 border-r border-slate-200 transition-transform duration-300
+        ${isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
       {/* Logo Header */}
       <div className="flex items-center gap-3 px-2 py-3 mb-6">
         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-900 text-white font-bold text-lg shadow-md shadow-blue-900/30">
@@ -72,7 +88,10 @@ export function AdminSidebar({
           return (
             <button
               key={item.name}
-              onClick={() => onSelectTab(item.name)}
+              onClick={() => {
+                onSelectTab(item.name);
+                if (onCloseMobile) onCloseMobile();
+              }}
               className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 ${
                 isActive
                   ? "bg-blue-900 text-white shadow-lg shadow-blue-900/30 font-semibold"
@@ -86,5 +105,6 @@ export function AdminSidebar({
         })}
       </nav>
     </aside>
+    </>
   );
 }

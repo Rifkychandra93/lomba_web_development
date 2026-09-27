@@ -66,6 +66,11 @@ const AdminPengguna = dynamic(
   { ssr: false, loading: () => <div className="w-full h-full bg-slate-50 animate-pulse" /> }
 );
 
+const AdminPengaturan = dynamic(
+  () => import("./AdminPengaturan"),
+  { ssr: false, loading: () => <div className="w-full h-full bg-slate-50 animate-pulse" /> }
+);
+
 interface ReportItem {
   id: string;
   title: string;
@@ -133,6 +138,7 @@ export default function AdminDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showNotifMenu, setShowNotifMenu] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
 
   const [reports, setReports] = useState<ReportItem[]>([]);
@@ -387,14 +393,23 @@ export default function AdminDashboard() {
         currentUser={currentUser}
         onLogout={handleLogout}
         onToggleProfileMenu={() => setShowProfileMenu((prev) => !prev)}
+        isMobileOpen={isSidebarOpen}
+        onCloseMobile={() => setIsSidebarOpen(false)}
       />
 
       {/* --- MAIN CONTENT AREA --- */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* TOP NAVBAR / HEADER */}
-        <header className="h-20 bg-white border-b border-slate-200/80 px-8 py-4 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        <header className="h-20 bg-white border-b border-slate-200/80 px-4 md:px-8 py-4 flex items-center justify-between sticky top-0 z-30 shadow-xs">
           {/* Left: Title & Subtitle OR Search Bar */}
-          <div className="flex flex-col">
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden p-2 -ml-2 text-slate-500 hover:bg-slate-100 rounded-lg transition"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+            </button>
+            <div className="flex flex-col">
             {activeTab === "Laporan Masuk" ? (
               <>
                 <h1 className="text-xl font-extrabold text-slate-900 leading-tight">Laporan Masuk</h1>
@@ -410,12 +425,12 @@ export default function AdminDashboard() {
                 />
               </div>
             )}
+            </div>
           </div>
 
           {/* Center: Title (Only if not Laporan Masuk) */}
           {activeTab !== "Laporan Masuk" && (
             <div className="absolute left-1/2 -translate-x-1/2">
-              <h1 className="text-xl font-extrabold text-slate-800 tracking-tight">SafeRoute Admin</h1>
             </div>
           )}
 
@@ -540,6 +555,8 @@ export default function AdminDashboard() {
           <AdminDataBerita />
         ) : activeTab === "Pengguna" ? (
           <AdminPengguna />
+        ) : activeTab === "Pengaturan" ? (
+          <AdminPengaturan />
         ) : activeTab === "Peta Risiko" ? (
           <main className="flex-1 flex flex-col p-4 overflow-hidden h-full">
             <AdminRiskMap />
