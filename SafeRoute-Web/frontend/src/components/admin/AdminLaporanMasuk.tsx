@@ -6,7 +6,6 @@ import {
   ClipboardType,
   User,
   Newspaper,
-  Download,
   ChevronDown,
   MapPin,
   ChevronLeft,
@@ -15,7 +14,9 @@ import {
 import { getAllReports } from "@/src/services/report.service";
 import { getAllIncidents } from "@/src/services/incident.service";
 
-// Tipe data Laporan
+// =====================================================
+// TIPE DATA
+// =====================================================
 interface LaporanItem {
   id: string;
   title: string;
@@ -62,15 +63,15 @@ const ReportTable = ({
       <div className="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
         <h3 className="font-bold text-slate-800 flex items-center gap-2">
           {data[0]?.source === "Warga" ? (
-            <User className="w-5 h-5 text-blue-700" />
+            <User className="w-5 h-5 text-blue-950" />
           ) : (
-            <Newspaper className="w-5 h-5 text-blue-700" />
+            <Newspaper className="w-5 h-5 text-blue-950" />
           )}
 
           {title}
         </h3>
 
-        <span className="px-3 py-1 bg-blue-50 border border-blue-100 rounded-full text-xs font-bold text-blue-700">
+        <span className="px-3 py-1 bg-blue-50 border border-blue-100 rounded-full text-xs font-bold text-blue-950">
           {data.length} Total
         </span>
       </div>
@@ -129,7 +130,7 @@ const ReportTable = ({
                       />
 
                       <div>
-                        <p className="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors line-clamp-1">
+                        <p className="text-sm font-bold text-slate-900 group-hover:text-blue-950 transition-colors line-clamp-1">
                           {item.title}
                         </p>
 
@@ -137,7 +138,7 @@ const ReportTable = ({
                           {item.reporter}
                         </p>
 
-                        <span className="inline-flex px-2 py-0.5 text-[9px] font-extrabold rounded-md tracking-wide uppercase bg-blue-50 text-blue-700">
+                        <span className="inline-flex px-2 py-0.5 text-[9px] font-extrabold rounded-md tracking-wide uppercase bg-blue-50 text-blue-950">
                           {item.category}
                         </span>
                       </div>
@@ -147,7 +148,7 @@ const ReportTable = ({
                   {/* Detail */}
                   <td className="py-4 px-4">
                     <div className="flex items-start gap-1.5 text-slate-600 text-xs font-medium mb-1">
-                      <MapPin className="w-3.5 h-3.5 text-blue-600 mt-0.5 shrink-0" />
+                      <MapPin className="w-3.5 h-3.5 text-blue-950 mt-0.5 shrink-0" />
 
                       <span className="line-clamp-2">
                         {item.location}
@@ -164,14 +165,14 @@ const ReportTable = ({
                     <span
                       className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-extrabold tracking-wide uppercase whitespace-nowrap ${
                         item.status === "PENDING"
-                          ? "bg-blue-50 text-blue-700 border border-blue-100"
-                          : "bg-blue-700 text-white"
+                          ? "bg-blue-50 text-blue-950 border border-blue-100"
+                          : "bg-blue-950 text-white"
                       }`}
                     >
                       <span
                         className={`w-1.5 h-1.5 rounded-full ${
                           item.status === "PENDING"
-                            ? "bg-blue-500"
+                            ? "bg-blue-700"
                             : "bg-white"
                         }`}
                       />
@@ -196,17 +197,22 @@ const ReportTable = ({
             ? (currentPage - 1) * itemsPerPage + 1
             : 0}
           -
-          {Math.min(currentPage * itemsPerPage, data.length)} dari{" "}
-          {data.length} Laporan
+          {Math.min(
+            currentPage * itemsPerPage,
+            data.length
+          )}{" "}
+          dari {data.length} Laporan
         </p>
 
         <div className="flex items-center gap-1">
           <button
             disabled={currentPage === 1}
             onClick={() =>
-              setCurrentPage((prev) => Math.max(prev - 1, 1))
+              setCurrentPage((prev) =>
+                Math.max(prev - 1, 1)
+              )
             }
-            className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-blue-50 text-slate-400 hover:text-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-blue-50 text-slate-400 hover:text-blue-950 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -228,8 +234,8 @@ const ReportTable = ({
                 onClick={() => setCurrentPage(pageNum)}
                 className={`w-7 h-7 flex items-center justify-center rounded-lg text-sm font-bold transition ${
                   currentPage === pageNum
-                    ? "bg-blue-700 text-white shadow-sm"
-                    : "hover:bg-blue-50 hover:text-blue-700 text-slate-600"
+                    ? "bg-blue-950 text-white shadow-sm"
+                    : "hover:bg-blue-50 hover:text-blue-950 text-slate-600"
                 }`}
               >
                 {pageNum}
@@ -245,8 +251,10 @@ const ReportTable = ({
                 </span>
 
                 <button
-                  onClick={() => setCurrentPage(totalPages)}
-                  className="w-7 h-7 flex items-center justify-center rounded-lg text-sm font-bold hover:bg-blue-50 hover:text-blue-700 text-slate-600 transition"
+                  onClick={() =>
+                    setCurrentPage(totalPages)
+                  }
+                  className="w-7 h-7 flex items-center justify-center rounded-lg text-sm font-bold hover:bg-blue-50 hover:text-blue-950 text-slate-600 transition"
                 >
                   {totalPages}
                 </button>
@@ -255,14 +263,15 @@ const ReportTable = ({
 
           <button
             disabled={
-              currentPage === totalPages || totalPages === 0
+              currentPage === totalPages ||
+              totalPages === 0
             }
             onClick={() =>
               setCurrentPage((prev) =>
                 Math.min(prev + 1, totalPages)
               )
             }
-            className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-blue-50 text-slate-400 hover:text-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-blue-50 text-slate-400 hover:text-blue-950 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
@@ -279,11 +288,16 @@ export default function AdminLaporanMasuk() {
   const [reports, setReports] = useState<LaporanItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Filter
+  // ===================================================
+  // FILTER
+  // ===================================================
   const [selectedCategory, setSelectedCategory] =
     useState("SEMUA");
 
   const [selectedStatus, setSelectedStatus] =
+    useState("SEMUA");
+
+  const [selectedSource, setSelectedSource] =
     useState("SEMUA");
 
   // ===================================================
@@ -294,12 +308,15 @@ export default function AdminLaporanMasuk() {
       setLoading(true);
 
       try {
-        const [resReports, resIncidents] = await Promise.all([
-          getAllReports(),
-          getAllIncidents(),
-        ]);
+        const [resReports, resIncidents] =
+          await Promise.all([
+            getAllReports(),
+            getAllIncidents(),
+          ]);
 
-        // Data laporan warga
+        // =================================================
+        // DATA LAPORAN WARGA
+        // =================================================
         const mappedReports: LaporanItem[] = (
           resReports.success && resReports.data
             ? resReports.data
@@ -307,70 +324,101 @@ export default function AdminLaporanMasuk() {
         ).map((rep: any) => ({
           id: rep.id,
           title: rep.title,
+
           reporter: rep.user?.name
             ? `Dilaporkan oleh ${rep.user.name}`
             : "Dilaporkan oleh Warga",
+
           category: rep.incidentType,
+
           location:
             rep.address ||
             rep.location ||
             "Lokasi tidak diketahui",
+
           source: "Warga",
+
           status: rep.status,
-          date: new Date(rep.createdAt).toLocaleString(
-            "id-ID",
-            {
-              dateStyle: "medium",
-              timeStyle: "short",
-            }
-          ),
+
+          date: new Date(
+            rep.createdAt
+          ).toLocaleString("id-ID", {
+            dateStyle: "medium",
+            timeStyle: "short",
+          }),
+
           imageUrl:
             rep.imageUrl ||
-            "https://ui-avatars.com/api/?name=Warga&background=f1f5f9&color=64748b",
-          rawDate: new Date(rep.createdAt).getTime(),
+            "https://ui-avatars.com/api/?name=Warga&background=f1f5f9&color=0f2a5f",
+
+          rawDate: new Date(
+            rep.createdAt
+          ).getTime(),
         }));
 
-        // Data berita / ML crawler
+        // =================================================
+        // DATA BERITA / ML CRAWLER
+        // =================================================
         const mappedIncidents: LaporanItem[] = (
           resIncidents.success && resIncidents.data
             ? resIncidents.data
             : []
         ).map((inc: any) => {
           const dateStr =
-            inc.news?.publishedAt || inc.detectedAt;
+            inc.news?.publishedAt ||
+            inc.detectedAt;
 
           return {
             id: inc.id,
+
             title: inc.title,
+
             reporter: inc.news?.source
               ? `Sumber: ${inc.news.source}`
               : "Sumber: ML Crawler",
+
             category: inc.incidentType,
+
             location:
-              inc.address || "Lokasi tidak diketahui",
+              inc.address ||
+              "Lokasi tidak diketahui",
+
             source: "Berita",
+
             status: "TERVERIFIKASI",
-            date: new Date(dateStr).toLocaleString(
-              "id-ID",
-              {
-                dateStyle: "medium",
-                timeStyle: "short",
-              }
-            ),
+
+            date: new Date(
+              dateStr
+            ).toLocaleString("id-ID", {
+              dateStyle: "medium",
+              timeStyle: "short",
+            }),
+
             imageUrl:
-              "https://ui-avatars.com/api/?name=Berita&background=dbeafe&color=1d4ed8",
-            rawDate: new Date(dateStr).getTime(),
+              "https://ui-avatars.com/api/?name=Berita&background=eaf0ff&color=0f2a5f",
+
+            rawDate: new Date(
+              dateStr
+            ).getTime(),
           };
         });
 
+        // =================================================
+        // GABUNGKAN DATA
+        // =================================================
         const combined = [
           ...mappedReports,
           ...mappedIncidents,
-        ].sort((a, b) => b.rawDate - a.rawDate);
+        ].sort(
+          (a, b) => b.rawDate - a.rawDate
+        );
 
         setReports(combined);
       } catch (err) {
-        console.error("Failed to fetch reports", err);
+        console.error(
+          "Failed to fetch reports",
+          err
+        );
       } finally {
         setLoading(false);
       }
@@ -380,23 +428,42 @@ export default function AdminLaporanMasuk() {
   }, []);
 
   // ===================================================
-  // FILTER OPTIONS
-  // Diambil langsung dari data yang tersedia
+  // FILTER OPTIONS - KATEGORI
   // ===================================================
   const categoryOptions = useMemo(() => {
     const categories = reports
       .map((report) => report.category)
       .filter(Boolean);
 
-    return Array.from(new Set(categories)).sort();
+    return Array.from(
+      new Set(categories)
+    ).sort();
   }, [reports]);
 
+  // ===================================================
+  // FILTER OPTIONS - STATUS
+  // ===================================================
   const statusOptions = useMemo(() => {
     const statuses = reports
       .map((report) => report.status)
       .filter(Boolean);
 
-    return Array.from(new Set(statuses));
+    return Array.from(
+      new Set(statuses)
+    );
+  }, [reports]);
+
+  // ===================================================
+  // FILTER OPTIONS - SUMBER
+  // ===================================================
+  const sourceOptions = useMemo(() => {
+    return Array.from(
+      new Set(
+        reports
+          .map((report) => report.source)
+          .filter(Boolean)
+      )
+    );
   }, [reports]);
 
   // ===================================================
@@ -412,9 +479,22 @@ export default function AdminLaporanMasuk() {
         selectedStatus === "SEMUA" ||
         report.status === selectedStatus;
 
-      return categoryMatch && statusMatch;
+      const sourceMatch =
+        selectedSource === "SEMUA" ||
+        report.source === selectedSource;
+
+      return (
+        categoryMatch &&
+        statusMatch &&
+        sourceMatch
+      );
     });
-  }, [reports, selectedCategory, selectedStatus]);
+  }, [
+    reports,
+    selectedCategory,
+    selectedStatus,
+    selectedSource,
+  ]);
 
   // ===================================================
   // DATA PER SUMBER
@@ -437,7 +517,7 @@ export default function AdminLaporanMasuk() {
 
   // ===================================================
   // STATISTIK
-  // Statistik tetap berdasarkan seluruh data
+  // Tetap berdasarkan seluruh data
   // ===================================================
   const statTotal = reports.length;
 
@@ -453,8 +533,12 @@ export default function AdminLaporanMasuk() {
     (report) => report.source === "Berita"
   ).length;
 
+  // ===================================================
+  // RENDER
+  // ===================================================
   return (
     <div className="flex-1 flex flex-col p-8 bg-slate-50 min-h-full">
+
       {/* =================================================
           HEADER
       ================================================= */}
@@ -464,8 +548,8 @@ export default function AdminLaporanMasuk() {
         </h1>
 
         <p className="text-sm text-slate-500 mt-1">
-          Kelola dan pantau laporan warga serta data berita
-          SafeRoute.
+          Kelola dan pantau laporan warga serta data
+          berita SafeRoute.
         </p>
       </div>
 
@@ -473,9 +557,10 @@ export default function AdminLaporanMasuk() {
           STAT CARDS
       ================================================= */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+
         {/* Total */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 flex items-center gap-5 shadow-sm">
-          <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 shrink-0">
+          <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-950 shrink-0">
             <ClipboardList className="w-7 h-7" />
           </div>
 
@@ -485,14 +570,16 @@ export default function AdminLaporanMasuk() {
             </p>
 
             <h3 className="text-3xl font-extrabold text-slate-900">
-              {loading ? "..." : statTotal.toLocaleString()}
+              {loading
+                ? "..."
+                : statTotal.toLocaleString()}
             </h3>
           </div>
         </div>
 
         {/* Pending */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 flex items-center gap-5 shadow-sm">
-          <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 shrink-0">
+          <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-950 shrink-0">
             <ClipboardType className="w-7 h-7" />
           </div>
 
@@ -511,7 +598,7 @@ export default function AdminLaporanMasuk() {
 
         {/* Warga */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 flex items-center gap-5 shadow-sm">
-          <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 shrink-0">
+          <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-950 shrink-0">
             <User className="w-7 h-7" />
           </div>
 
@@ -521,14 +608,16 @@ export default function AdminLaporanMasuk() {
             </p>
 
             <h3 className="text-3xl font-extrabold text-slate-900">
-              {loading ? "..." : statWarga.toLocaleString()}
+              {loading
+                ? "..."
+                : statWarga.toLocaleString()}
             </h3>
           </div>
         </div>
 
         {/* Berita */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 flex items-center gap-5 shadow-sm">
-          <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 shrink-0">
+          <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-950 shrink-0">
             <Newspaper className="w-7 h-7" />
           </div>
 
@@ -549,86 +638,192 @@ export default function AdminLaporanMasuk() {
       {/* =================================================
           FILTER BAR
       ================================================= */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-4 mb-6 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="text-sm font-bold text-slate-700">
-              Filter:
-            </span>
+      <div className="bg-white border border-slate-200 rounded-2xl p-5 mb-6 shadow-sm">
+        <div className="flex flex-col gap-4">
 
-            {/* FILTER KATEGORI */}
-            <div className="relative">
-              <select
-                value={selectedCategory}
-                onChange={(e) =>
-                  setSelectedCategory(e.target.value)
-                }
-                className="appearance-none min-w-[180px] bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-2.5 text-sm font-semibold text-slate-700 outline-none cursor-pointer transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100 hover:border-blue-300"
-              >
-                <option value="SEMUA">
-                  Semua Kategori
-                </option>
+          {/* Filter Header */}
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-sm font-extrabold text-slate-900">
+                Filter Laporan
+              </h3>
 
-                {categoryOptions.map((category) => (
-                  <option
-                    key={category}
-                    value={category}
-                  >
-                    {category}
-                  </option>
-                ))}
-              </select>
-
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-700 pointer-events-none" />
+              <p className="text-xs text-slate-500 mt-0.5">
+                Gunakan filter untuk menampilkan laporan
+                sesuai kebutuhan.
+              </p>
             </div>
 
-            {/* FILTER STATUS */}
-            <div className="relative">
-              <select
-                value={selectedStatus}
-                onChange={(e) =>
-                  setSelectedStatus(e.target.value)
-                }
-                className="appearance-none min-w-[200px] bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-2.5 text-sm font-semibold text-slate-700 outline-none cursor-pointer transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100 hover:border-blue-300"
-              >
-                <option value="SEMUA">
-                  Semua Status
-                </option>
-
-                {statusOptions.map((status) => (
-                  <option key={status} value={status}>
-                    {status === "PENDING"
-                      ? "Menunggu Verifikasi"
-                      : "Terverifikasi"}
-                  </option>
-                ))}
-              </select>
-
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-700 pointer-events-none" />
-            </div>
-
-            {/* RESET */}
             {(selectedCategory !== "SEMUA" ||
-              selectedStatus !== "SEMUA") && (
+              selectedStatus !== "SEMUA" ||
+              selectedSource !== "SEMUA") && (
               <button
                 onClick={() => {
                   setSelectedCategory("SEMUA");
                   setSelectedStatus("SEMUA");
+                  setSelectedSource("SEMUA");
                 }}
-                className="px-4 py-2.5 rounded-xl text-sm font-bold text-blue-700 hover:bg-blue-50 transition"
+                className="px-3 py-2 rounded-lg text-xs font-bold text-blue-950 hover:bg-blue-50 transition"
               >
                 Reset Filter
               </button>
             )}
           </div>
 
-          {/* HASIL FILTER */}
-          <div className="text-sm font-semibold text-slate-500">
-            Menampilkan{" "}
-            <span className="text-blue-700 font-extrabold">
-              {filteredReports.length}
-            </span>{" "}
-            laporan
+          {/* =================================================
+              FILTER CONTROLS
+          ================================================= */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+            {/* KATEGORI */}
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-2">
+                Kategori Laporan
+              </label>
+
+              <div className="relative">
+                <select
+                  value={selectedCategory}
+                  onChange={(e) =>
+                    setSelectedCategory(
+                      e.target.value
+                    )
+                  }
+                  className="appearance-none w-full bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-3 text-sm font-semibold text-slate-700 outline-none cursor-pointer transition focus:border-blue-950 focus:ring-2 focus:ring-blue-100 hover:border-blue-300"
+                >
+                  <option value="SEMUA">
+                    Semua Kategori
+                  </option>
+
+                  {categoryOptions.map(
+                    (category) => (
+                      <option
+                        key={category}
+                        value={category}
+                      >
+                        {category}
+                      </option>
+                    )
+                  )}
+                </select>
+
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-950 pointer-events-none" />
+              </div>
+            </div>
+
+            {/* SUMBER */}
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-2">
+                Sumber Laporan
+              </label>
+
+              <div className="relative">
+                <select
+                  value={selectedSource}
+                  onChange={(e) =>
+                    setSelectedSource(
+                      e.target.value
+                    )
+                  }
+                  className="appearance-none w-full bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-3 text-sm font-semibold text-slate-700 outline-none cursor-pointer transition focus:border-blue-950 focus:ring-2 focus:ring-blue-100 hover:border-blue-300"
+                >
+                  <option value="SEMUA">
+                    Semua Sumber
+                  </option>
+
+                  {sourceOptions.map(
+                    (source) => (
+                      <option
+                        key={source}
+                        value={source}
+                      >
+                        {source === "Warga"
+                          ? "Laporan Warga"
+                          : "Berita / ML Crawler"}
+                      </option>
+                    )
+                  )}
+                </select>
+
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-950 pointer-events-none" />
+              </div>
+            </div>
+
+            {/* STATUS */}
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-2">
+                Status Verifikasi
+              </label>
+
+              <div className="relative">
+                <select
+                  value={selectedStatus}
+                  onChange={(e) =>
+                    setSelectedStatus(
+                      e.target.value
+                    )
+                  }
+                  className="appearance-none w-full bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-3 text-sm font-semibold text-slate-700 outline-none cursor-pointer transition focus:border-blue-950 focus:ring-2 focus:ring-blue-100 hover:border-blue-300"
+                >
+                  <option value="SEMUA">
+                    Semua Status
+                  </option>
+
+                  {statusOptions.map(
+                    (status) => (
+                      <option
+                        key={status}
+                        value={status}
+                      >
+                        {status === "PENDING"
+                          ? "Menunggu Verifikasi"
+                          : "Terverifikasi"}
+                      </option>
+                    )
+                  )}
+                </select>
+
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-950 pointer-events-none" />
+              </div>
+            </div>
+          </div>
+
+          {/* =================================================
+              HASIL FILTER
+          ================================================= */}
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+
+            <span className="text-xs font-bold text-slate-500">
+              Hasil:
+            </span>
+
+            <span className="px-3 py-1.5 rounded-lg bg-blue-950 text-white text-xs font-bold">
+              {filteredReports.length} Laporan
+            </span>
+
+            {selectedCategory !== "SEMUA" && (
+              <span className="px-3 py-1.5 rounded-lg bg-blue-50 border border-blue-100 text-blue-950 text-xs font-bold">
+                Kategori: {selectedCategory}
+              </span>
+            )}
+
+            {selectedSource !== "SEMUA" && (
+              <span className="px-3 py-1.5 rounded-lg bg-blue-50 border border-blue-100 text-blue-950 text-xs font-bold">
+                Sumber:{" "}
+                {selectedSource === "Warga"
+                  ? "Warga"
+                  : "Berita / Crawler"}
+              </span>
+            )}
+
+            {selectedStatus !== "SEMUA" && (
+              <span className="px-3 py-1.5 rounded-lg bg-blue-50 border border-blue-100 text-blue-950 text-xs font-bold">
+                Status:{" "}
+                {selectedStatus === "PENDING"
+                  ? "Menunggu Verifikasi"
+                  : "Terverifikasi"}
+              </span>
+            )}
           </div>
         </div>
       </div>
