@@ -44,6 +44,12 @@ model User {
   phone     String?
   password  String
   role      Role     @default(USER)
+  
+  // Preferences
+  notifNewReport    Boolean  @default(true)
+  notifHighRisk     Boolean  @default(true)
+  notifSystemUpdate Boolean  @default(false)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
