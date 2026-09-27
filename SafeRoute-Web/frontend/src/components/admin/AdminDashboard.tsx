@@ -410,43 +410,15 @@ export default function AdminDashboard() {
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
             </button>
             <div className="flex flex-col">
-            {activeTab === "Laporan Masuk" ? (
-              <>
-                <h1 className="text-xl font-extrabold text-slate-900 leading-tight">Laporan Masuk</h1>
+              <h1 className="text-xl font-extrabold text-slate-900 leading-tight">{activeTab}</h1>
+              {activeTab === "Laporan Masuk" && (
                 <p className="text-xs text-slate-500 font-medium mt-0.5">Kelola dan tinjau laporan yang perlu diverifikasi</p>
-              </>
-            ) : (
-              <div className="relative w-80">
-                <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-900 focus:bg-white transition"
-                />
-              </div>
-            )}
+              )}
             </div>
           </div>
 
-          {/* Center: Title (Only if not Laporan Masuk) */}
-          {activeTab !== "Laporan Masuk" && (
-            <div className="absolute left-1/2 -translate-x-1/2">
-            </div>
-          )}
-
           {/* Right: Action Icons & Profile Dropdown */}
           <div className="flex items-center gap-4" ref={profileMenuRef}>
-            {/* Search Bar on Right for Laporan Masuk */}
-            {activeTab === "Laporan Masuk" && (
-              <div className="relative w-64 mr-2 hidden md:block">
-                <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Cari laporan..."
-                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none focus:border-blue-900 focus:bg-white transition"
-                />
-              </div>
-            )}
             {/* Notification Button */}
             <div className="relative">
               <button
