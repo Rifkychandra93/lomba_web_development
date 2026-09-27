@@ -19,7 +19,7 @@ import {
   Pie,
   Cell,
 } from "recharts";
-import { AdminSidebar } from "@/src/components/admin/Adminsidebar";
+import { AdminSidebar } from "@/src/components/admin/AdminSidebar";
 import {
   MapIcon,
   LogoutIcon,
