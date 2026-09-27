@@ -15,6 +15,7 @@ interface UserProfile {
   id: string;
   name: string;
   email: string;
+  phone?: string;
   role: string;
 }
 
@@ -91,7 +92,7 @@ export default function ProfilePage() {
         <ProfileHeader user={user} stats={{ total, verified, pending }} />
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
           <div className="md:col-span-4 lg:col-span-3">
-            <SidebarSettings onLogout={handleLogout} />
+            <SidebarSettings user={user!} onLogout={handleLogout} onRefresh={() => window.location.reload()} />
           </div>
           <div className="md:col-span-8 lg:col-span-9">
             <ReportHistory reports={reports} />
