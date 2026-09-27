@@ -874,6 +874,8 @@ function LocationInputField({
   suggestions,
   onSelectSuggestion,
   onLocate,
+  isPicking,
+  onTogglePick,
   autoFocus,
 }: {
   markerNode: React.ReactNode;
